@@ -4,7 +4,40 @@ document.addEventListener('DOMContentLoaded', () => {
         topics: [],
         currentTopicIndex: 0,
         score: 0,
-        answers: {}
+        answers: {},
+        shuffleTopics: false, // Set to false to use fixed order
+        // Define your custom order here - this is a complete list of all available topics
+        // You can rearrange, remove, or comment out entries to create your desired order
+        customOrder: [
+            // Historical trends
+            "population",              // World population
+            "agriculture_labor",       // Share of labor force in agriculture in the UK
+            "working_hours",           // Annual working hours per worker in the UK
+            "caloric_supply",          // Daily caloric supply per person in the UK
+            "lighting_cost",           // Price of light in the UK
+            "energy",                  // Energy consumption per capita
+
+            // Health and development
+            "height",                  // Average human height by year of birth
+            "child_mortality",         // Child mortality worldwide
+            "extreme_poverty",         // Share of people living in extreme poverty
+            "life-expectancy",         // Life expectancy worldwide
+            "smallpox",                // Reported smallpox cases
+            
+            // Social progress
+            "literacy",                // World literacy rate
+            "democracy",               // Share of people living in democracies
+            "women_parliament",        // Share of women in parliaments (global)
+            "universal_vote",          // Countries with universal suffrage
+            "city_population",         // Share of population living in cities
+            
+            // Modern trends
+            "war_deaths",              // Deaths in wars
+            "air_passengers",          // Number of air passengers worldwide
+            "space_visits",            // Human visits to space
+            "internet_users",          // Number of internet users worldwide
+            "global_temperature"       // Global average temperature
+        ]     
     };
 
     // DOM elements
@@ -54,9 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.onload = function() {
                     gameData.topics.push(topic);
                     
-                    // If this is the first image loaded, shuffle and start
+                    // If this is the first image loaded, prepare topics
                     if (gameData.topics.length === 1) {
-                        shuffleArray(gameData.topics);
+                        prepareTopics();
                     }
                 };
                 
@@ -179,8 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Restart the game
     function restartGame() {
-        // Shuffle the topics again
-        shuffleArray(gameData.topics);
+        // Prepare topics (shuffle if enabled)
+        prepareTopics();
         
         // Reset game state
         gameData.currentTopicIndex = 0;
@@ -189,6 +222,33 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show the start screen
         resultsScreen.classList.add('hidden');
         startScreen.classList.remove('hidden');
+    }
+    
+    // Prepare topics based on configuration
+    function prepareTopics() {
+        if (gameData.customOrder && gameData.customOrder.length > 0) {
+            // Use custom order if provided
+            const validCustomOrder = gameData.customOrder.filter(topic => 
+                gameData.answers[topic] && gameData.topics.includes(topic)
+            );
+            
+            if (validCustomOrder.length > 0) {
+                gameData.topics = validCustomOrder;
+                console.log("Using custom topic order:", gameData.topics);
+                return;
+            } else {
+                console.warn("Custom order contains no valid topics, falling back to default order");
+            }
+        }
+        
+        if (gameData.shuffleTopics) {
+            // Shuffle topics if randomization is enabled
+            shuffleArray(gameData.topics);
+            console.log("Using shuffled topic order:", gameData.topics);
+        } else {
+            // Using default order from correct_answers.json
+            console.log("Using default topic order:", gameData.topics);
+        }
     }
 
     // Utility function to shuffle an array
