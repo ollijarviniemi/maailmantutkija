@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "working_hours",           // Annual working hours per worker in the UK
             "caloric_supply",          // Daily caloric supply per person in the UK
             "lighting_cost",           // Price of light in the UK
-            "energy",                  // Energy consumption per capita
+            "energy_per_capita",       // Energy consumption per capita
 
             // Health and development
             "height",                  // Average human height by year of birth
@@ -78,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Filter out topics that don't have corresponding images
             gameData.topics = [];
             
+            // Track how many images we've checked
+            let checkedCount = 0;
+            
             // Check each topic for image availability
             for (const topic of allTopics) {
                 const img = new Image();
@@ -86,9 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Add topic to the list if the image exists
                 img.onload = function() {
                     gameData.topics.push(topic);
+                    checkedCount++;
                     
-                    // If this is the first image loaded, prepare topics
-                    if (gameData.topics.length === 1) {
+                    // Once all images have been checked, prepare topics
+                    if (checkedCount === allTopics.length) {
                         prepareTopics();
                     }
                 };
@@ -96,6 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Handle image load error (missing image)
                 img.onerror = function() {
                     console.warn(`Image for topic "${topic}" not found. Skipping.`);
+                    checkedCount++;
+                    
+                    // Once all images have been checked, prepare topics
+                    if (checkedCount === allTopics.length) {
+                        prepareTopics();
+                    }
                 };
             }
             
@@ -253,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function prepareTopics() {
         if (gameData.customOrder && gameData.customOrder.length > 0) {
             // Use custom order if provided
+            // Filter to include only topics that exist in answers AND have valid images
             const validCustomOrder = gameData.customOrder.filter(topic => 
                 gameData.answers[topic] && gameData.topics.includes(topic)
             );
