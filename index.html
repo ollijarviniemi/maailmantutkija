@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maailmantutkija - Tunnista oikea data</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Maailmantutkija</h1>
+            <p>Tunnista oikea data! Kumpi kuvaaja on todellinen ja kumpi keksitty?</p>
+        </header>
+
+        <main>
+            <div id="game-container">
+                <div id="start-screen" class="screen">
+                    <h2>Tervetuloa pelaamaan!</h2>
+                    <p>Näet kuvia, joissa on kaksi kuvaajaa - yksi todellinen ja yksi keksitty.</p>
+                    <p>Valitse, onko todellinen data ylemmässä vai alemmassa kuvaajassa.</p>
+                    <button id="start-button" class="btn">Aloita peli</button>
+                </div>
+
+                <div id="game-screen" class="screen hidden">
+                    <div id="progress-container">
+                        <div id="progress-text">Kuva 1/18</div>
+                        <div id="score-text">Pisteet: 0</div>
+                    </div>
+                    
+                    <h2 id="graph-title">Kuvaajan nimi</h2>
+                    
+                    <div id="image-container">
+                        <img id="current-image" src="" alt="Kuvaaja">
+                    </div>
+                    
+                    <div id="buttons-container">
+                        <button id="top-button" class="btn choice-btn">Ylempi kuvaaja on todellinen</button>
+                        <button id="bottom-button" class="btn choice-btn">Alempi kuvaaja on todellinen</button>
+                    </div>
+                </div>
+
+                <div id="feedback-screen" class="screen hidden">
+                    <h2 id="feedback-title">Oikein!</h2>
+                    <p id="feedback-text"></p>
+                    <button id="next-button" class="btn">Seuraava</button>
+                </div>
+
+                <div id="results-screen" class="screen hidden">
+                    <h2>Peli päättyi!</h2>
+                    <p id="final-score">Sait 0/18 pistettä.</p>
+                    <p id="final-percentage">Onnistumisprosentti: 0%</p>
+                    <button id="restart-button" class="btn">Pelaa uudestaan</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Data: <a href="https://ourworldindata.org/" target="_blank">Our World in Data</a></p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
