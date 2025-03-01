@@ -168,18 +168,35 @@ document.addEventListener('DOMContentLoaded', () => {
             gameData.score++;
         }
         
-        // Show feedback
-        gameScreen.classList.add('hidden');
-        feedbackScreen.classList.remove('hidden');
-        
-        if (isCorrect) {
-            feedbackTitle.textContent = 'Oikein!';
-            feedbackTitle.style.color = '#2ecc71';
-        } else {
-            feedbackTitle.textContent = 'Väärin!';
-            feedbackTitle.style.color = '#e74c3c';
+        // Show feedback directly on the game screen
+        // Create temporary feedback elements if they don't exist
+        let tempFeedbackContainer = document.getElementById('temp-feedback-container');
+        if (!tempFeedbackContainer) {
+            tempFeedbackContainer = document.createElement('div');
+            tempFeedbackContainer.id = 'temp-feedback-container';
+            tempFeedbackContainer.style.textAlign = 'center';
+            tempFeedbackContainer.style.margin = '20px 0';
+            document.getElementById('image-container').after(tempFeedbackContainer);
         }
         
+        // Display feedback
+        tempFeedbackContainer.innerHTML = `
+            <h2 style="color: ${isCorrect ? '#2ecc71' : '#e74c3c'}">${isCorrect ? 'Oikein!' : 'Väärin!'}</h2>
+            <p>Oikea vastaus on ${correctPosition === 'top' ? 'ylempi' : 'alempi'} kuvaaja.</p>
+            <button id="temp-next-button" class="btn">Seuraava</button>
+        `;
+        
+        // Disable choice buttons
+        topButton.disabled = true;
+        bottomButton.disabled = true;
+        
+        // Add event listener to the temporary next button
+        document.getElementById('temp-next-button').addEventListener('click', showNextTopic);
+        
+        // Update feedback screen content (even though we're not showing it)
+        // This keeps the state consistent in case we need it later
+        feedbackTitle.textContent = isCorrect ? 'Oikein!' : 'Väärin!';
+        feedbackTitle.style.color = isCorrect ? '#2ecc71' : '#e74c3c';
         feedbackText.textContent = `Oikea vastaus on ${correctPosition === 'top' ? 'ylempi' : 'alempi'} kuvaaja.`;
     }
 
@@ -189,20 +206,28 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Check if the game is over
         if (gameData.currentTopicIndex >= gameData.topics.length) {
+            // Hide game screen and show results
+            gameScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
             showResults();
         } else {
+            // Remove temporary feedback elements
+            const tempFeedbackContainer = document.getElementById('temp-feedback-container');
+            if (tempFeedbackContainer) {
+                tempFeedbackContainer.innerHTML = '';
+            }
+            
+            // Re-enable choice buttons
+            topButton.disabled = false;
+            bottomButton.disabled = false;
+            
             // Show the next topic
-            feedbackScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
             showCurrentTopic();
         }
     }
 
     // Show the results screen
     function showResults() {
-        feedbackScreen.classList.add('hidden');
-        resultsScreen.classList.remove('hidden');
-        
         const totalTopics = gameData.topics.length;
         const percentage = Math.round((gameData.score / totalTopics) * 100);
         

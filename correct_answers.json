@@ -16,23 +16,23 @@
     },
     "population": {
         "nimi": "Maailman v\u00e4kiluku",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "literacy": {
         "nimi": "Maailman lukutaitoaste",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "universal_vote": {
         "nimi": "Maat, joissa on yleinen \u00e4\u00e4nioikeus",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "working_hours": {
         "nimi": "Vuosittaiset ty\u00f6tunnit ty\u00f6ntekij\u00e4\u00e4 kohden Iso-Britanniassa",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "space_visits": {
         "nimi": "Ihmisten vierailut avaruudessa",
@@ -41,13 +41,13 @@
     },
     "women_parliament": {
         "nimi": "Naisten osuus parlamenteissa (globaali)",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "extreme_poverty": {
         "nimi": "\u00c4\u00e4rimm\u00e4isess\u00e4 k\u00f6yhyydess\u00e4 el\u00e4vien ihmisten osuus",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "city_population": {
         "nimi": "Kaupungeissa asuvan v\u00e4est\u00f6n osuus maailmassa",
@@ -61,18 +61,18 @@
     },
     "child_mortality": {
         "nimi": "Alle viisivuotiaiden lasten kuolleisuus maailmassa",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "internet_users": {
         "nimi": "Internetin k\u00e4ytt\u00e4jien m\u00e4\u00e4r\u00e4 maailmassa",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "global_temperature": {
         "nimi": "Maapallon keskil\u00e4mp\u00f6tila",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "democracy": {
         "nimi": "Demokratioissa asuvien ihmisten osuus maailmassa",
@@ -81,8 +81,8 @@
     },
     "air_passengers": {
         "nimi": "Lentomatkustajien m\u00e4\u00e4r\u00e4 maailmassa",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "height": {
         "nimi": "Ihmisten keskipituus syntym\u00e4vuoden mukaan",
@@ -91,6 +91,16 @@
     },
     "agriculture_labor": {
         "nimi": "Maatalouden ty\u00f6voiman osuus Iso-Britanniassa",
+        "correct_is_top": true,
+        "position": "top"
+    },
+    "life-expectancy": {
+        "nimi": "Elinajanodote maailmassa",
+        "correct_is_top": true,
+        "position": "top"
+    },
+    "energy_per_capita": {
+        "nimi": "Energiankulutus henkil\u00f6\u00e4 kohti maailmassa",
         "correct_is_top": false,
         "position": "bottom"
     }
