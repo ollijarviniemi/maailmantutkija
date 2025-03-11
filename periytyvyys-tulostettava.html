@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ominaisuuksien periytyvyys - Galtonin pituusdata (Tulostettava)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            page-break-inside: auto;
+        }
+        
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+            }
+            
+            h1 {
+                font-size: 18pt;
+            }
+            
+            table {
+                font-size: 10pt;
+            }
+            
+            .no-print {
+                display: none;
+            }
+            
+            @page {
+                margin: 2cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print" style="text-align: center; margin-bottom: 20px;">
+        <button onclick="window.print();" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">Tulosta</button>
+        <a href="periytyvyys.html" style="margin-left: 20px; color: #0066cc; text-decoration: none;">Takaisin harjoitukseen</a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Isän pituus (cm)</th>
+                <th>Äidin pituus (cm)</th>
+                <th>Lapsen sukupuoli</th>
+                <th>Lapsen pituus (cm)</th>
+            </tr>
+        </thead>
+        <tbody id="data-table">
+            <!-- Data will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch and display the data
+        fetch('galton_height_data.txt')
+            .then(response => response.text())
+            .then(data => {
+                const lines = data.split('\n');
+                const tableBody = document.getElementById('data-table');
+                
+                // Skip the header line and process each data line
+                for (let i = 1; i < lines.length; i++) {
+                    if (lines[i].trim() === '') continue;
+                    
+                    const values = lines[i].split(',').map(val => val.trim());
+                    
+                    if (values.length >= 4) {
+                        const row = document.createElement('tr');
+                        
+                        // Create cells for each value
+                        for (let j = 0; j < 4; j++) {
+                            const cell = document.createElement('td');
+                            
+                            // Convert gender values from M/F to Mies/Nainen
+                            if (j === 2) { // Gender column
+                                if (values[j].trim() === 'M') {
+                                    cell.textContent = 'Mies';
+                                } else if (values[j].trim() === 'F') {
+                                    cell.textContent = 'Nainen';
+                                } else {
+                                    cell.textContent = values[j];
+                                }
+                            } else {
+                                cell.textContent = values[j];
+                            }
+                            
+                            row.appendChild(cell);
+                        }
+                        
+                        tableBody.appendChild(row);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading data:', error);
+                document.getElementById('data-table').innerHTML = '<tr><td colspan="4">Virhe datan lataamisessa.</td></tr>';
+            });
+    </script>
+</body>
+</html>

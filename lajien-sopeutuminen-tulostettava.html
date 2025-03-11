@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maailmantutkija - Lajien sopeutuminen (Tulostettava versio)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .image-pair {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            page-break-inside: avoid;
+        }
+        
+        .image-container {
+            width: 48%;
+        }
+        
+        .image-container img {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .print-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .print-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        @media print {
+            .print-button,
+            .back-link,
+            h1 {
+                display: none;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            .image-pair {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lajien sopeutuminen - Tulostettavat kuvat</h1>
+        
+        <button class="print-button" onclick="window.print()">Tulosta</button>
+        
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/pelecanus-onocrotalus-great-white-pelican-mount-registration-no-b-33022-331752-large.jpg" alt="Pelikaani">
+            </div>
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Lophophanes_cristatus_-_02.jpg" alt="Töyhtötiainen">
+            </div>
+        </div>
+        
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Eurasian_eagle-owl_(44088).jpg" alt="Huuhkaja">
+            </div>
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Accipiter_striatus,_Canet_Road,_San_Luis_Obispo_1.jpg" alt="Haukka">
+            </div>
+        </div>
+        
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Flamingos_Laguna_Colorada.jpg" alt="Flamingo">
+            </div>
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Struthio_camelus_-_Etosha_2014_(3).jpg" alt="Strutsi">
+            </div>
+        </div>
+        
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Flying_Fish_(PSF).png" alt="Liitokala">
+            </div>
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Cyprinus_carpio_2008_G1_(cropped).jpg" alt="Ruutana">
+            </div>
+        </div>
+        
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Eurasian_blue_tit_Lancashire.jpg" alt="Sinitiainen">
+            </div>
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/PileatedWoodpeckerFeedingonTree,_crop.jpg" alt="Tikka">
+            </div>
+        </div>
+        
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/OM1C2611_(53755898331).jpg" alt="Västäräkki">
+            </div>
+            <div class="image-container">
+                <img src="images/lajien-sopeutuminen/Hirundo_rustica_-Saxony,_Germany-8.jpg" alt="Pääsky">
+            </div>
+        </div>
+        
+        <a href="lajien-sopeutuminen.html" class="back-link">Takaisin peliin</a>
+    </div>
+</body>
+</html>

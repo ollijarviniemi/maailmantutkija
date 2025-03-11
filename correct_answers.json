@@ -1,13 +1,13 @@
 {
     "war_deaths": {
         "nimi": "Kuolemat sodissa",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "lighting_cost": {
         "nimi": "Valaistuksen hinta Iso-Britanniassa",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "smallpox": {
         "nimi": "Raportoidut isorokkotapaukset",
@@ -16,13 +16,13 @@
     },
     "population": {
         "nimi": "Maailman v\u00e4kiluku",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "literacy": {
         "nimi": "Maailman lukutaitoaste",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "universal_vote": {
         "nimi": "Maat, joissa on yleinen \u00e4\u00e4nioikeus",
@@ -31,8 +31,8 @@
     },
     "working_hours": {
         "nimi": "Vuosittaiset ty\u00f6tunnit ty\u00f6ntekij\u00e4\u00e4 kohden Iso-Britanniassa",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "space_visits": {
         "nimi": "Ihmisten vierailut avaruudessa",
@@ -41,8 +41,8 @@
     },
     "women_parliament": {
         "nimi": "Naisten osuus parlamenteissa (globaali)",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     },
     "extreme_poverty": {
         "nimi": "\u00c4\u00e4rimm\u00e4isess\u00e4 k\u00f6yhyydess\u00e4 el\u00e4vien ihmisten osuus",
@@ -51,18 +51,18 @@
     },
     "city_population": {
         "nimi": "Kaupungeissa asuvan v\u00e4est\u00f6n osuus maailmassa",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "caloric_supply": {
-        "nimi": "P\u00e4ivitt\u00e4inen kalorim\u00e4\u00e4r\u00e4 henkil\u00f6\u00e4 kohti Iso-Britanniassa",
+        "nimi": "P\u00e4ivitt\u00e4inen kalorituotanto henkil\u00f6\u00e4 kohti Iso-Britanniassa",
         "correct_is_top": false,
         "position": "bottom"
     },
     "child_mortality": {
         "nimi": "Alle viisivuotiaiden lasten kuolleisuus maailmassa",
-        "correct_is_top": true,
-        "position": "top"
+        "correct_is_top": false,
+        "position": "bottom"
     },
     "internet_users": {
         "nimi": "Internetin k\u00e4ytt\u00e4jien m\u00e4\u00e4r\u00e4 maailmassa",
@@ -101,7 +101,7 @@
     },
     "energy_per_capita": {
         "nimi": "Energiankulutus henkil\u00f6\u00e4 kohti maailmassa",
-        "correct_is_top": false,
-        "position": "bottom"
+        "correct_is_top": true,
+        "position": "top"
     }
 }

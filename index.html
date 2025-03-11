@@ -3,63 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maailmantutkija - Tunnista oikea data</title>
+    <title>Maailmantutkija - Lapsen pedagogiikka</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the landing page */
+        .hero {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .activities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .activity-card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .activity-card p {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .activity-card .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+        }
+        
+        .pdf-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .pdf-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .pdf-link {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .pdf-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <section class="hero">
             <h1>Maailmantutkija</h1>
-            <p>Tunnista oikea data! Kumpi kuvaaja on todellinen ja kumpi keksitty?</p>
-        </header>
+            <p>Tervetuloa Maailmantutkija-kirjan verkkosivuille! Täältä löydät kirjaan liittyviä interaktiivisia harjoituksia ja materiaaleja, jotka tukevat lapsen pedagogista kehitystä.</p>
+        </section>
 
-        <main>
-            <div id="game-container">
-                <div id="start-screen" class="screen">
-                    <h2>Tervetuloa pelaamaan!</h2>
-                    <p>Näet kuvia, joissa on kaksi kuvaajaa - yksi todellinen ja yksi keksitty.</p>
-                    <p>Valitse, onko todellinen data ylemmässä vai alemmassa kuvaajassa.</p>
-                    <button id="start-button" class="btn">Aloita peli</button>
-                </div>
 
-                <div id="game-screen" class="screen hidden">
-                    <div id="progress-container">
-                        <div id="progress-text">Kuva 1/18</div>
-                        <div id="score-text">Pisteet: 0</div>
-                    </div>
-                    
-                    <h2 id="graph-title">Kuvaajan nimi</h2>
-                    
-                    <div id="image-container">
-                        <img id="current-image" src="" alt="Kuvaaja">
-                    </div>
-                    
-                    <div id="buttons-container">
-                        <button id="top-button" class="btn choice-btn">Ylempi kuvaaja on todellinen</button>
-                        <button id="bottom-button" class="btn choice-btn">Alempi kuvaaja on todellinen</button>
-                    </div>
-                </div>
-
-                <div id="feedback-screen" class="screen hidden">
-                    <h2 id="feedback-title">Oikein!</h2>
-                    <p id="feedback-text"></p>
-                    <button id="next-button" class="btn">Seuraava</button>
-                </div>
-
-                <div id="results-screen" class="screen hidden">
-                    <h2>Peli päättyi!</h2>
-                    <p id="final-score">Sait 0/18 pistettä.</p>
-                    <p id="final-percentage">Onnistumisprosentti: 0%</p>
-                    <button id="restart-button" class="btn">Pelaa uudestaan</button>
-                </div>
+        <section class="activities">
+            <div class="activity-card">
+                <h2>Historiallisten tapahtumien aikajana</h2>
+                <p>Harjoittele historiallisten tapahtumien järjestämistä aikajärjestykseen. Tulostettava materiaali opetuskäyttöön.</p>
+                <a href="tapahtumat.pdf" class="btn">Avaa PDF</a>
             </div>
-        </main>
+            
+            <div class="activity-card">
+                <h2>Tunnista oikea data</h2>
+                <p>Harjoittele datan tunnistamista ja kriittistä ajattelua. Kumpi kuvaaja on todellinen ja kumpi keksitty?</p>
+                <a href="data-game.html" class="btn">Aloita harjoitus</a>
+            </div>
+            
+            <div class="activity-card">
+                <h2>Määrien arvioiminen</h2>
+                <p>Harjoittele määrien arvioimista kuvista. Kuinka monta muotoa näet kuvassa?</p>
+                <a href="maarien-arviointi.html" class="btn">Aloita harjoitus</a>
+            </div>
+            
+            <div class="activity-card">
+                <h2>Ominaisuuksien periytyvyys</h2>
+                <p>Tutki miten pituus periytyy vanhemmilta lapsille Galtonin kuuluisan pituusdatan avulla.</p>
+                <a href="periytyvyys.html" class="btn">Aloita harjoitus</a>
+            </div>
+            
+            <div class="activity-card">
+                <h2>Uskomusten muutos</h2>
+                <p>Harjoittele Bayesin säännön mukaista uskomusten päivittämistä kulhoista ja palikoista koostuvalla tehtävällä.</p>
+                <a href="uskomusten-muutos.html" class="btn">Aloita harjoitus</a>
+            </div>
+            
+            <div class="activity-card">
+                <h2>Lajien sopeutuminen</h2>
+                <p>Tutki eläinten sopeutumista ympäristöönsä. Päättele eläinten ominaisuuksia niiden ulkomuodosta.</p>
+                <a href="lajien-sopeutuminen.html" class="btn">Aloita harjoitus</a>
+            </div>
+        </section>
 
         <footer>
-            <p>Data: <a href="https://ourworldindata.org/" target="_blank">Our World in Data</a></p>
         </footer>
     </div>
-
-    <script src="game.js"></script>
 </body>
 </html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maailmantutkija - Lajien sopeutuminen</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the animal adaptation page */
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .image-box {
+            width: 48%;
+            text-align: center;
+        }
+        
+        .image-box img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .description {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .answer-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .answer-container.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .answer-text {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .animal-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .explanation {
+            font-style: italic;
+            color: #555;
+        }
+        
+        #progress-bar {
+            height: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        #progress-indicator {
+            height: 100%;
+            background-color: #3498db;
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Maailmantutkija</h1>
+            <p>Lajien sopeutuminen - Tunnista eläinten ominaisuuksia</p>
+        </header>
+
+        <main>
+            <div id="game-container">
+                <div id="start-screen" class="screen">
+                    <h2>Tervetuloa tutkimaan lajien sopeutumista!</h2>
+                    <p>Näet kuvapareja, joissa on esitettynä kaksi eläintä. Sinun tehtäväsi on päätellä, kumpi eläimistä omaa tietyn ominaisuuden.</p>
+                    <p>Voit päätellä vastauksen eläinten ulkomuodosta, kuten nokkien koosta, silmien koosta tai ruumiinrakenteesta.</p>
+                    <button id="start-button" class="btn">Aloita harjoitus</button>
+                    <p style="margin-top: 20px;"><a href="lajien-sopeutuminen-tulostettava.html" target="_blank" style="color: #3498db; text-decoration: none;">Tulostettava versio kuvista</a></p>
+                </div>
+
+                <div id="game-screen" class="screen hidden">
+                    <div id="progress-bar">
+                        <div id="progress-indicator"></div>
+                    </div>
+                    
+                    <div id="image-container" class="image-container">
+                        <div class="image-box">
+                            <img id="left-image" src="" alt="Eläin vasemmalla">
+                        </div>
+                        <div class="image-box">
+                            <img id="right-image" src="" alt="Eläin oikealla">
+                        </div>
+                    </div>
+                    
+                    <div id="question-text" class="description"></div>
+                    
+                    <div id="buttons-container">
+                        <button id="left-button" class="btn choice-btn">Vasemmanpuoleinen</button>
+                        <button id="right-button" class="btn choice-btn">Oikeanpuoleinen</button>
+                    </div>
+                    
+                    <div id="answer-container" class="answer-container">
+                        <div id="answer-text" class="answer-text"></div>
+                        <button id="next-button" class="btn">Seuraava</button>
+                    </div>
+                </div>
+
+                <div id="results-screen" class="screen hidden">
+                    <h2>Harjoitus suoritettu!</h2>
+                    <p>Olet nyt tutustunut erilaisiin eläinlajeihin ja niiden sopeutumiseen ympäristöönsä.</p>
+                    <p>Eläinten fyysiset ominaisuudet ovat sopeutuneet niiden elintapoihin ja elinympäristöihin. Tämä sopeutuminen on tapahtunut luonnonvalinnan kautta pitkän ajan kuluessa.</p>
+                    <button id="restart-button" class="btn">Aloita alusta</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p><a href="index.html">Takaisin etusivulle</a></p>
+        </footer>
+    </div>
+
+    <script src="lajien-sopeutuminen.js"></script>
+</body>
+</html>

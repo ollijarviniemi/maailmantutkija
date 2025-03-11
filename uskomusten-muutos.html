@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uskomusten muutos - Maailmantutkija</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Specific styles for the Bayesian belief updating page */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-group input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .bowl-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .bowl {
+            padding: 15px;
+            margin-bottom: 10px;
+            max-width: 250px;
+        }
+
+        .bowl h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .color-input {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .color-input label {
+            margin-right: 10px;
+            min-width: 100px;
+        }
+
+        .results-section {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .results-table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+            display: block;
+            max-width: 100%;
+        }
+
+        .results-table th, .results-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .results-table th {
+            background-color: #f2f2f2;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+        }
+
+        .results-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .explanation {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .explanation h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Uskomusten muutos</h1>
+            <p>Harjoittele Bayesin säännön mukaista uskomusten päivittämistä</p>
+        </header>
+
+        <div class="form-group">
+            <label for="bowl-count">Kulhojen määrä:</label>
+            <select id="bowl-count" class="form-control">
+                <option value="2">2 kulhoa</option>
+                <option value="3">3 kulhoa</option>
+            </select>
+        </div>
+
+        <div id="bowls-container" class="bowl-container">
+            <!-- Bowls will be generated here -->
+        </div>
+
+        <div id="error-message" class="error-message hidden"></div>
+
+        <button id="calculate-btn" class="btn">Laske todennäköisyydet</button>
+
+        <div id="results-container" class="results-section hidden">
+            <h2>Todennäköisyydet</h2>
+            <p>Alla olevassa taulukossa näet todennäköisyydet kullekin kulholle eri havaintojen jälkeen.</p>
+            <p>Jokainen solu näyttää todennäköisyysjakauman kulhoille muodossa "40/60" (2 kulhoa) tai "20/30/50" (3 kulhoa).</p>
+            
+            <div id="table-container">
+                <!-- Results table will be generated here -->
+            </div>
+        </div>
+
+        <div class="explanation">
+            <h3>Miten tämä toimii?</h3>
+            <p>Tämä harjoitus perustuu Bayesin sääntöön, joka on matemaattinen menetelmä uskomusten päivittämiseen uuden tiedon valossa.</p>
+            <p>Kuvittele, että yksi kulhoista on valittu satunnaisesti, ja siitä nostetaan palikoita yksi kerrallaan. Jokaisen noston jälkeen päivitämme uskomustamme siitä, mikä kulho on kyseessä.</p>
+            <p>Aluksi kaikki kulhot ovat yhtä todennäköisiä (tasainen priorijakauma). Kun palikoita nostetaan, todennäköisyydet muuttuvat sen mukaan, kuinka hyvin havainnot sopivat yhteen kunkin kulhon sisällön kanssa.</p>
+        </div>
+
+        <a href="index.html" class="back-link">← Takaisin etusivulle</a>
+
+        <footer>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bowlCountSelect = document.getElementById('bowl-count');
+            const bowlsContainer = document.getElementById('bowls-container');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultsContainer = document.getElementById('results-container');
+            const tableContainer = document.getElementById('table-container');
+            const errorMessage = document.getElementById('error-message');
+
+            // Initialize bowls
+            updateBowlInputs();
+
+            // Event listeners
+            bowlCountSelect.addEventListener('change', updateBowlInputs);
+            calculateBtn.addEventListener('click', calculateProbabilities);
+
+            // Function to update bowl inputs based on selected count
+            function updateBowlInputs() {
+                const bowlCount = parseInt(bowlCountSelect.value);
+                bowlsContainer.innerHTML = '';
+                
+                for (let i = 1; i <= bowlCount; i++) {
+                    const bowl = document.createElement('div');
+                    bowl.className = 'bowl';
+                    bowl.innerHTML = `
+                        <h3>Kulho ${i}</h3>
+                        <div class="color-input">
+                            <label for="red-${i}">Punaisia:</label>
+                            <input type="number" id="red-${i}" min="0" max="30" value="10" class="form-control">
+                        </div>
+                        <div class="color-input">
+                            <label for="blue-${i}">Sinisiä:</label>
+                            <input type="number" id="blue-${i}" min="0" max="30" value="${i === 1 ? 5 : 10}" class="form-control">
+                        </div>
+                    `;
+                    bowlsContainer.appendChild(bowl);
+                }
+                
+                // Hide results when inputs change
+                resultsContainer.classList.add('hidden');
+            }
+
+            // Function to calculate probabilities
+            function calculateProbabilities() {
+                const bowlCount = parseInt(bowlCountSelect.value);
+                const bowls = [];
+                
+                // Validate and collect bowl contents
+                errorMessage.classList.add('hidden');
+                
+                for (let i = 1; i <= bowlCount; i++) {
+                    const red = parseInt(document.getElementById(`red-${i}`).value);
+                    const blue = parseInt(document.getElementById(`blue-${i}`).value);
+                    
+                    if (isNaN(red) || isNaN(blue) || red < 0 || blue < 0 || red > 30 || blue > 30) {
+                        errorMessage.textContent = 'Virhe: Varmista, että kaikki arvot ovat välillä 0-30.';
+                        errorMessage.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    if (red === 0 && blue === 0) {
+                        errorMessage.textContent = 'Virhe: Kulhossa täytyy olla vähintään yksi palikka.';
+                        errorMessage.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    bowls.push({ red, blue });
+                }
+                
+                // Calculate maximum possible draws
+                const maxDraws = Math.min(...bowls.map(bowl => bowl.red + bowl.blue));
+                
+                // Generate table
+                generateResultsTable(bowls, maxDraws);
+                
+                // Show results
+                resultsContainer.classList.remove('hidden');
+                
+                // Scroll to results
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Function to generate results table
+            function generateResultsTable(bowls, maxDraws) {
+                // First determine the maximum meaningful rows and columns
+                let maxMeaningfulRed = 0;
+                let maxMeaningfulBlue = 0;
+                
+                // Find the maximum red and blue values that are possible in any bowl
+                const maxRedInAnyBowl = Math.max(...bowls.map(bowl => bowl.red));
+                const maxBlueInAnyBowl = Math.max(...bowls.map(bowl => bowl.blue));
+                
+                // Check each row and column to find the last meaningful one
+                for (let r = 0; r <= Math.min(maxDraws, maxRedInAnyBowl); r++) {
+                    let hasContent = false;
+                    
+                    for (let b = 0; b <= Math.min(maxDraws - r, maxBlueInAnyBowl); b++) {
+                        if (b + r <= maxDraws) {
+                            // Check if this combination is possible in any bowl
+                            const isPossible = bowls.some(bowl => 
+                                r <= bowl.red && b <= bowl.blue
+                            );
+                            
+                            if (isPossible) {
+                                hasContent = true;
+                                maxMeaningfulRed = Math.max(maxMeaningfulRed, r);
+                                maxMeaningfulBlue = Math.max(maxMeaningfulBlue, b);
+                            }
+                        }
+                    }
+                }
+                
+                // Create table
+                let tableHTML = '<table class="results-table">';
+                
+                // Header row
+                tableHTML += '<tr><th>Sinisiä \\ Punaisia</th>';
+                for (let r = 0; r <= maxMeaningfulRed; r++) {
+                    tableHTML += `<th>${r}</th>`;
+                }
+                tableHTML += '</tr>';
+                
+                // Data rows
+                for (let b = 0; b <= maxMeaningfulBlue; b++) {
+                    tableHTML += `<tr><th>${b}</th>`;
+                    
+                    for (let r = 0; r <= maxMeaningfulRed; r++) {
+                        // Skip if too many draws total
+                        if (b + r > maxDraws) {
+                            tableHTML += '<td>-</td>';
+                            continue;
+                        }
+                        
+                        // Check if this combination is possible in any bowl
+                        const isPossible = bowls.some(bowl => 
+                            r <= bowl.red && b <= bowl.blue
+                        );
+                        
+                        if (!isPossible) {
+                            tableHTML += '<td>-</td>';
+                            continue;
+                        }
+                        
+                        // Calculate probabilities
+                        const probs = calculatePosteriorProbabilities(bowls, b, r);
+                        
+                        // Format as "40/60" or "20/30/50"
+                        const formattedProbs = probs.map(p => Math.round(p * 100)).join('/');
+                        
+                        tableHTML += `<td>${formattedProbs}</td>`;
+                    }
+                    
+                    tableHTML += '</tr>';
+                }
+                
+                tableHTML += '</table>';
+                tableContainer.innerHTML = tableHTML;
+            }
+
+            // Function to calculate posterior probabilities
+            function calculatePosteriorProbabilities(bowls, blue, red) {
+                // Start with uniform prior
+                let probs = bowls.map(() => 1 / bowls.length);
+                
+                // Calculate likelihood for each bowl
+                const likelihoods = bowls.map(bowl => {
+                    // Calculate probability of drawing 'blue' blue and 'red' red from this bowl
+                    // Using hypergeometric distribution (sampling without replacement)
+                    return calculateLikelihood(bowl.blue, bowl.red, blue, red);
+                });
+                
+                // Calculate posterior using Bayes' rule
+                const totalLikelihood = likelihoods.reduce((sum, p, i) => sum + p * probs[i], 0);
+                
+                if (totalLikelihood === 0) {
+                    // If all likelihoods are zero, return uniform distribution
+                    return bowls.map(() => 1 / bowls.length);
+                }
+                
+                // P(bowl|data) = P(data|bowl) * P(bowl) / P(data)
+                const posterior = likelihoods.map((p, i) => (p * probs[i]) / totalLikelihood);
+                
+                return posterior;
+            }
+
+            // Function to calculate likelihood using hypergeometric distribution
+            function calculateLikelihood(bowlBlue, bowlRed, drawnBlue, drawnRed) {
+                // If we're trying to draw more than available, return 0
+                if (drawnBlue > bowlBlue || drawnRed > bowlRed) {
+                    return 0;
+                }
+                
+                // Calculate combinations
+                const blueWays = combinations(bowlBlue, drawnBlue);
+                const redWays = combinations(bowlRed, drawnRed);
+                const totalWays = combinations(bowlBlue + bowlRed, drawnBlue + drawnRed);
+                
+                // Return probability
+                return (blueWays * redWays) / totalWays;
+            }
+
+            // Function to calculate combinations (n choose k)
+            function combinations(n, k) {
+                if (k < 0 || k > n) return 0;
+                if (k === 0 || k === n) return 1;
+                
+                // Calculate using formula: n! / (k! * (n-k)!)
+                let result = 1;
+                for (let i = 1; i <= k; i++) {
+                    result *= (n - (k - i));
+                    result /= i;
+                }
+                return result;
+            }
+        });
+    </script>
+</body>
+</html>

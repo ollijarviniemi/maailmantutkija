@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maailmantutkija - Määrien arvioiminen</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the activity page */
+        .hero {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .pdf-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .pdf-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .pdf-link {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .pdf-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pdf-link h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .pdf-link p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .pdf-link .download-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .pdf-link .download-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .instructions h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            text-align: left;
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <h1>Määrien arvioiminen</h1>
+            <p>Harjoittele määrien arvioimista kuvista. Kuinka monta muotoa näet kuvassa?</p>
+        </section>
+        
+        <section class="instructions">
+            <h2>Ohjeet</h2>
+            <ol>
+                <li>Lataa haluamasi vaikeustason PDF-tiedosto alla olevista linkeistä.</li>
+                <li>Tulosta PDF-tiedosto kaksipuolisena (tai vaihtoehtoisesti vain parittomat sivut).</li>
+                <li>Katso kuvaa ja arvioi, kuinka monta muotoa siinä on.</li>
+                <li>Tarkista vastaus kääntämällä sivua (tai katsomalla vastaavaa parillista sivua).</li>
+                <li>Harjoittele säännöllisesti kehittääksesi määrien arviointitaitojasi!</li>
+            </ol>
+        </section>
+
+        <section class="pdf-section">
+            <h2>Harjoitusmateriaalit</h2>
+            <p>Valitse sopiva vaikeustaso ja lataa harjoitusmateriaalit:</p>
+            
+            <div class="pdf-links">
+                <div class="pdf-link">
+                    <h3>Taso 1</h3>
+                    <p>1-20 muotoa</p>
+                    <p>Sopii aloittelijoille ja pienille lapsille</p>
+                    <a href="maarien_arviointi_pdf/maarien_arviointi_taso1.pdf" class="download-btn">Lataa PDF</a>
+                </div>
+                
+                <div class="pdf-link">
+                    <h3>Taso 2</h3>
+                    <p>15-100 muotoa</p>
+                    <p>Keskitaso, sopii kouluikäisille</p>
+                    <a href="maarien_arviointi_pdf/maarien_arviointi_taso2.pdf" class="download-btn">Lataa PDF</a>
+                </div>
+                
+                <div class="pdf-link">
+                    <h3>Taso 3</h3>
+                    <p>50-1000 muotoa</p>
+                    <p>Edistynyt taso, haastetta vanhemmillekin</p>
+                    <a href="maarien_arviointi_pdf/maarien_arviointi_taso3.pdf" class="download-btn">Lataa PDF</a>
+                </div>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Takaisin etusivulle</a>
+
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>
