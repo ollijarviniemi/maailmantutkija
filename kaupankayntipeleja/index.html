@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11.3 Kaupankäyntipelejä - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 11: Pelejä</p>
+                
+                <h1>11.3 Kaupankäyntipelejä</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+Pelimerkkejä.
+
+Noppa.
+
+Korttipakka.
+
+Kynä ja paperia.
+</div>
+
+<p><strong>Peli 1: leipää ja vettä</strong></p>
+
+<p>Pelissä on kaksi osapuolta: lapsi on leipuri ja vanhempi on vedenhakija. Peli kestää kolme vuoroa. Kullakin vuorolla tapahtuu seuraavat kaksi asiaa:</p>
+
+<ol>
+  <li>Resurssien hankinta. Lapsi ja vanhempi heittävät noppaa. Lapsi saa tuotettua yhden leivän, jos nopasta tuli $1$ tai $2$, kaksi leipää, jos nopasta tuli $3$ tai $4$ ja kolme leipää, jos nopasta tuli $5$ tai $6$. Vanhempi puolestaan saa haettua vettä nopan silmäluvun verran.</li>
+  <li>Kaupankäynti. Pelaajat saavat vapaasti vaihtaa vettä ja leipää keskenään: “Minä annan sinulle kaksi leipää, jos sinä annat minulle yhden veden.” (Jos lapsi keksii ehdottaa tätä, kaupankäynnissä saa käyttää murto-osia leipää ja vettä.)</li>
+</ol>
+
+<p>Kolmannen vuoron jälkeen kukin pelaaja saa pisteitä sen mukaan, montako leipää ja vettä hänellä on. Tarkalleen pistemäärä on $\text{leipä} × \text{vesi}$. Tämä kannustaa siihen, että kummastakaan ei ole pulaa: jos pelaajalla on esimerkiksi 1 leipää ja 10 vettä, hän saa 10 pistettä ja jos hänellä on 3 leipää ja 5 vettä, hän saa 15 pistettä. Jos leipää tai vettä on 0, pisteitäkin tulee 0.</p>
+
+<p>Pelatkaa pari kierrosta. Leipää ja vettä voi havainnollistaa eri värisillä pelimerkeillä.</p>
+
+<p><strong>Peli 2: myyjä ja ostaja</strong></p>
+
+<p>Pelissä on kaksi roolia: myyjä ja ostaja. Arpokaa ennen pelaamista, kumpi on kumpi.</p>
+
+<p>Pelin aluksi myyjälle jaetaan korttipakasta viisi korttia ja ostajalle annetaan kymmenen pelimerkkiä.</p>
+
+<p>Pelin aikana myyjä ja ostaja neuvottelevat vapaasti siitä, millä hinnalla myyjä myy korttejansa ja ostaja ostaa. Myyjä ei saa paljastaa korttejansa ostajalle, vaan ostajan pitää ostaa ne näkemättä niitä. (Ostamisen jälkeen ostaja kuitenkin saa katsoa korttinsa.)</p>
+
+<p>Kun kauppa ei enää käy, myyjä saa kaksi pelimerkkiä kustakin kortistaan ja ostaja kuusi kustakin ostamastaan <em>kuva</em>kortista (muttei mitään numerokorteista tai ässistä).</p>
+
+<p>Pelatkaa muutama kierros.</p>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Kussakin pelissä pelaajilla on mahdollisuus positiivisen summan kauppaan: pelaajilla on mahdollisuus käydä kauppaa niin, että <em>molemmat</em> hyötyvät.</p>
+
+<p>Leipää ja vettä -pelissä pelaajat saavat 0 pistettä, jos he eivät käy kauppaa keskenään. Lisäksi jos pelaajalla on paljon yhtä asiaa ja vähän toista (esim. 1 leipä ja 10 vettä), hänen kannattaa vaihtaa leipää veteen tarvittaessa isollakin suhteella (esim. kolme vettä yhteen leipään, jolloin pelaajalle jää 2 leipää ja 7 vettä). Peli on suunniteltu niin, että leipää on todennäköisesti saatavilla vähemmän kuin vettä. Kysynnän ja tarjonnan lakia mukaillen tämä johtaa siihen, että yhden leivän saamiseksi täytyy antaa yli yksi vesi.</p>
+
+<p>(Pelin pisteytysmekanismilla on se heikkous, että pelaajien kannattaisi arpoa, kummalle pelaajalle annetaan kaikki resurssit. Tämä ei vastaa todellisuutta hyvin. Realistisempi tapa olisi painottaa resursseja ns. logaritmisesti, mutta tämä puolestaan tekisi pelistä vähemmän lapsiystävällisen.)</p>
+
+<p>Myyjä ja ostaja -peli on hieman monimutkaisempi. Ostaja ja myyjä mieluusti tekisivät kaupan, jossa kuvakortti myydään kolmen tai neljän pelimerkin hinnalla. Myyjä kuitenkin mielellään myisi myös numerokortteja samaan hintaan, kun taas ostaja ei halua ostaa niitä. Ostajalla ei myöskään ole tapaa tietää, mitkä kortit hän haluaa ja mitä ei, mikä saa hänet olemaan varovainen korttien ostossa. Tämä voi pahimmillaan johtaa siihen, että myyjälle jää kuvakortteja, joita ostaja ei uskalla ostaa.</p>
+
+<p>Reilun hinnan määrittäminen ei ole yksinkertainen juttu. Toisaalta neljä pelimerkkiä on puolivälissä: sekä ostaja että myyjä hyötyvät 2 pelimerkin verran. Toisaalta ostaja ottaa suuren riskin: jos kyseessä olikin numerokortti, ostaja on menettänyt 4 pelimerkkiä, kun taas myyjä joka tapauksessa hyötyy 2 pelimerkin edestä. Eriävät tavoitteet ja eriävä tieto tekevät reilun hinnan määrittämisestä ja kaupankäynnistä hankalaa.</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/neuvottelut-ja-kompromissit/">← 11.2 Neuvottelut ja kompromissit</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/peleja/">Luku 11: Pelejä</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/eriavat-uskomukset/">11.4 Eriävät uskomukset →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

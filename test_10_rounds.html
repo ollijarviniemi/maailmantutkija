@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Test Data</title>
+</head>
+<body>
+    <h1>Adding 10 rounds of test data...</h1>
+    <script>
+        // Create 10 rounds of test data
+        const testData = {
+            roundData: [],
+            currentRound: 10,
+            timestamp: new Date().toISOString()
+        };
+        
+        for (let i = 0; i < 10; i++) {
+            testData.roundData.push({
+                actualCount: 50 + Math.floor(Math.random() * 100),
+                anchorNumber: [75, 100, 125, 150, 175][Math.floor(Math.random() * 5)],
+                userComparison: Math.random() > 0.5 ? 'more' : 'fewer',
+                userEstimate: 50 + Math.floor(Math.random() * 100),
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('anchoringBiasData', JSON.stringify(testData));
+        
+        console.log('Added 10 rounds of test data:', testData);
+        document.body.innerHTML += '<p>Test data added! You can now go back to the main application.</p>';
+        document.body.innerHTML += '<p><a href="ankkurointivinouma-sovellus.html">Go to Anchoring Bias App</a></p>';
+    </script>
+</body>
+</html>
