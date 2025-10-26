@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribution Generators to Implement for Grids Game - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <p>This document lists all the distribution generator functions that need to be implemented in <code class="language-plaintext highlighter-rouge">grids-distributions.js</code> based on the updated <code class="language-plaintext highlighter-rouge">grids-rules.js</code>.</p>
+
+<h2 id="already-implemented-from-previous-version">Already Implemented (from previous version)</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">withBlackCount(count)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">anySymmetry()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">fullySymmetric()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn3x3()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn4x4()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">onePerRowAndColumn()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">almostOnePerRowColumn()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">max3Neighbors()</code></li>
+</ul>
+
+<h2 id="rule-1-at-most-6-cells">Rule 1: At Most 6 Cells</h2>
+<p>All needed generators already implemented (<code class="language-plaintext highlighter-rouge">withBlackCount</code>).</p>
+
+<h2 id="rule-2-symmetric-vertical-or-horizontal">Rule 2: Symmetric (Vertical OR Horizontal)</h2>
+
+<h3 id="positive">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">anySymmetry()</code> ✓ (already implemented)</li>
+  <li><code class="language-plaintext highlighter-rouge">fullySymmetric()</code> ✓ (already implemented)</li>
+</ul>
+
+<h3 id="round-specific-negative">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">almostSymmetric()</code> - symmetric except for 1-2 cells</li>
+  <li><code class="language-plaintext highlighter-rouge">leftRightEqual()</code> - left 3 columns equal to right 3 columns (not mirrored)</li>
+  <li><code class="language-plaintext highlighter-rouge">topBottomEqual()</code> - top 3 rows equal to bottom 3 rows (not mirrored)</li>
+  <li><code class="language-plaintext highlighter-rouge">copy3X3()</code> - some 3×3 region copied to another location</li>
+  <li><code class="language-plaintext highlighter-rouge">leftRightMirror()</code> - only left/right mirror (not vertical axis)</li>
+  <li><code class="language-plaintext highlighter-rouge">topBottomMirror()</code> - only top/bottom mirror (not horizontal axis)</li>
+  <li><code class="language-plaintext highlighter-rouge">180degreeRotInv()</code> - 180-degree rotational invariance (not vertical/horizontal symmetry)</li>
+</ul>
+
+<h2 id="rule-3-connected-one-blob">Rule 3: Connected (One Blob)</h2>
+
+<h3 id="positive-1">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">connectedLongSquiggle()</code> - long meandering connected path</li>
+  <li><code class="language-plaintext highlighter-rouge">connectedManyBlacks(count)</code> - large connected blob with specified count</li>
+  <li><code class="language-plaintext highlighter-rouge">twoBlobsConViaPath()</code> - two blobs connected by thin path</li>
+  <li><code class="language-plaintext highlighter-rouge">tree()</code> - tree-like structure (branching, no cycles)</li>
+  <li><code class="language-plaintext highlighter-rouge">thinkBlob()</code> - compact thick connected blob</li>
+</ul>
+
+<h3 id="round-specific-negative-1">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">twoLargeComponents()</code> - two separate large blobs (8-12 cells each)</li>
+  <li><code class="language-plaintext highlighter-rouge">threeMediumComponents()</code> - three separate medium blobs (5-8 cells each)</li>
+  <li><code class="language-plaintext highlighter-rouge">fourSquiggles()</code> - four separate squiggle shapes</li>
+  <li><code class="language-plaintext highlighter-rouge">fiveSquiggles()</code> - five separate small squiggles</li>
+  <li><code class="language-plaintext highlighter-rouge">many2-4()</code> - many small components of size 2-4</li>
+</ul>
+
+<h2 id="rule-4-border-only">Rule 4: Border Only</h2>
+
+<h3 id="positive-2">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">borderUniRand()</code> - uniform random on border cells</li>
+  <li><code class="language-plaintext highlighter-rouge">threeEdgesRand()</code> - random placement on 3 edges</li>
+  <li><code class="language-plaintext highlighter-rouge">twoEdgesRand()</code> - random placement on 2 edges</li>
+  <li><code class="language-plaintext highlighter-rouge">corner2x2sRand()</code> - random cells in corner 2×2 regions</li>
+</ul>
+
+<h3 id="round-specific-negative-2">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">noDeadCenter()</code> - everywhere except center 2×2</li>
+  <li><code class="language-plaintext highlighter-rouge">on3VerticalStripes()</code> - only on columns 0-1, 2-3, 4-5</li>
+  <li><code class="language-plaintext highlighter-rouge">on2HorizontalStripes()</code> - only on rows 0-2 and 3-5</li>
+  <li><code class="language-plaintext highlighter-rouge">noCenter2Columns()</code> - not on center 2 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">noCenter2Rows()</code> - not on center 2 rows</li>
+  <li><code class="language-plaintext highlighter-rouge">corner2x2s()</code> - only in corner 2×2 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">noBorders()</code> - only interior (no border cells)</li>
+</ul>
+
+<h2 id="rule-5-no-isolated">Rule 5: No Isolated</h2>
+
+<h3 id="positive-3">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">many2-4s()</code> - many components of size 2-4, no isolated</li>
+  <li><code class="language-plaintext highlighter-rouge">twoLargeComponents()</code> - (reuse from rule 3)</li>
+  <li><code class="language-plaintext highlighter-rouge">threeMediumComponents()</code> - (reuse from rule 3)</li>
+  <li><code class="language-plaintext highlighter-rouge">fourSquiqqles()</code> - four separate squiggles (note: typo variant)</li>
+  <li><code class="language-plaintext highlighter-rouge">many3s()</code> - many components of size exactly 3</li>
+  <li><code class="language-plaintext highlighter-rouge">longSquiqqle()</code> - single long meandering path (note: typo variant)</li>
+</ul>
+
+<h3 id="round-specific-negative-3">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">many1-4s()</code> - mix of sizes 1-4 including isolated</li>
+  <li><code class="language-plaintext highlighter-rouge">many1-2s()</code> - mix of sizes 1-2 including isolated</li>
+  <li><code class="language-plaintext highlighter-rouge">many1-3s()</code> - mix of sizes 1-3 including isolated</li>
+  <li><code class="language-plaintext highlighter-rouge">fourSquiqqlesOne1()</code> - four squiggles plus one isolated cell</li>
+  <li><code class="language-plaintext highlighter-rouge">isolatedDots(count)</code> - specified number of isolated single cells</li>
+</ul>
+
+<h2 id="rule-6-all-in-one-half">Rule 6: All in One Half</h2>
+
+<h3 id="positive-4">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalf()</code> - all blacks in one half (top/bottom/left/right)</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneThird()</code> - all in one third (e.g., rows 0-1)</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneCol()</code> - all in single column</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneRow()</code> - all in single row</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalfMiddleRemoved()</code> - in one half but not on middle row/col of that half</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalfEdgeRemoved()</code> - in one half but not on edge</li>
+  <li><code class="language-plaintext highlighter-rouge">allInCorner3x3()</code> - all in one corner 3×3</li>
+  <li><code class="language-plaintext highlighter-rouge">allInEdge2x3s()</code> - all in edge 2×3 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalfBordersOnly()</code> - in one half, only on borders</li>
+</ul>
+
+<h3 id="round-specific-negative-4">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">noCenter2RorC()</code> - not in center 2 rows or center 2 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">noEdge2RorC()</code> - not in edge 2 rows or edge 2 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">allInTwoThirds()</code> - fits in two thirds</li>
+  <li><code class="language-plaintext highlighter-rouge">allInCorner2x2s()</code> - distributed in corner 2×2 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">allInThreeRorC()</code> - all in any 3 rows or any 3 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">allInMiddle2RorC()</code> - all in middle 2 rows or middle 2 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">allInMiddle4x4()</code> - all in center 4×4</li>
+</ul>
+
+<h2 id="rule-7-one-per-rowcolumn">Rule 7: One Per Row/Column</h2>
+
+<h3 id="positive-5">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">onePerRowAndColumn()</code> ✓ (already implemented)</li>
+</ul>
+
+<h3 id="round-specific-negative-5">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">almostOnePerRowColumn()</code> ✓ (already implemented)</li>
+  <li><code class="language-plaintext highlighter-rouge">onePerRowColumnOneMissing()</code> - one per row/col but one row/col empty</li>
+  <li><code class="language-plaintext highlighter-rouge">onePerRowColumnOneExtra()</code> - one per row/col but one row/col has 2</li>
+</ul>
+
+<h2 id="rule-8-fits-in-44">Rule 8: Fits in 4×4</h2>
+
+<h3 id="positive-6">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn4x4()</code> ✓ (already implemented)</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn3x3()</code> ✓ (already implemented)</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn3x4()</code> - fits in 3×4 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x4()</code> - fits in 2×4 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x3()</code> - fits in 2×3 window</li>
+  <li><code class="language-plaintext highlighter-rouge">twoCompsIn4x4()</code> - two components both in same 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">pentominoIn4x4()</code> - pentomino shape (5 cells) with extras in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">randomTetris()</code> - tetris-like shapes in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">sextominoIn4x4()</code> - 6-cell polyomino with extras in 4×4</li>
+</ul>
+
+<h3 id="round-specific-negative-6">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x5()</code> - fits in 2×5 window (not 4×4)</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn3x5()</code> - fits in 3×5 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn4x5()</code> - fits in 4×5 window</li>
+  <li><code class="language-plaintext highlighter-rouge">sextominoNot4x4()</code> - 6-cell shape that doesn’t fit in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">septominoNot4x4()</code> - 7-cell shape that doesn’t fit in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsInTwo2x2s()</code> - fits in two disjoint 2×2 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsInTwo2x3s()</code> - fits in two disjoint 2×3 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsInTwo2x4s()</code> - fits in two disjoint 2×4 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x6()</code> - fits in 2×6 window (full row/column strip)</li>
+</ul>
+
+<h2 id="rule-9-has-22-square">Rule 9: Has 2×2 Square</h2>
+
+<h3 id="positive-7">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">has2x2Plus10-15()</code> - 2×2 square plus 10-15 extra cells</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x2Plus15-20()</code> - 2×2 square plus 15-20 extra cells</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x2Plus20-25()</code> - 2×2 square plus 20-25 extra cells</li>
+  <li><code class="language-plaintext highlighter-rouge">has3x3Square()</code> - 3×3 filled square (implies 2×2)</li>
+  <li><code class="language-plaintext highlighter-rouge">has4x4Square()</code> - 4×4 filled square</li>
+  <li><code class="language-plaintext highlighter-rouge">multiple2x2s()</code> - multiple 2×2 squares</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x3RectPlus()</code> - 2×3 rectangle plus extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has3x2RectPlus()</code> - 3×2 rectangle plus extras</li>
+  <li><code class="language-plaintext highlighter-rouge">hasTshape()</code> - T-shaped pattern (implies 2×2)</li>
+</ul>
+
+<h3 id="round-specific-negative-7">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">has2x1Plus()</code> - 2×1 domino shapes with extras (no 2×2)</li>
+  <li><code class="language-plaintext highlighter-rouge">has1x2Plus()</code> - 1×2 domino shapes with extras (no 2×2)</li>
+  <li><code class="language-plaintext highlighter-rouge">hasLshape()</code> - L-shaped patterns (3 cells)</li>
+  <li><code class="language-plaintext highlighter-rouge">hasPlusShape()</code> - plus/cross shapes (5 cells, no 2×2)</li>
+  <li><code class="language-plaintext highlighter-rouge">hasDiagonal3()</code> - diagonal patterns of length 3</li>
+  <li><code class="language-plaintext highlighter-rouge">hasDiagonal4()</code> - diagonal patterns of length 4</li>
+  <li><code class="language-plaintext highlighter-rouge">denseCheckerboard()</code> - dense checkerboard pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">denseStripedPattern()</code> - dense striped pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">denseSpiralPattern()</code> - dense spiral pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">denseZigzag()</code> - dense zigzag pattern</li>
+</ul>
+
+<h2 id="rule-10-has-cell-with-4-neighbors">Rule 10: Has Cell with 4 Neighbors</h2>
+
+<h3 id="positive-8">Positive:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">plusShapePlus10-15()</code> - plus shape (5 cells) plus 10-15 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">plusShapePlus15-20()</code> - plus shape plus 15-20 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">plusShapePlus20-25()</code> - plus shape plus 20-25 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">multiplePlusShapes()</code> - multiple plus shapes</li>
+  <li><code class="language-plaintext highlighter-rouge">has3x3Square()</code> - (reuse from rule 9)</li>
+  <li><code class="language-plaintext highlighter-rouge">has4x4Square()</code> - (reuse from rule 9)</li>
+  <li><code class="language-plaintext highlighter-rouge">crossShapePlus()</code> - cross/X shape with center having 4 neighbors</li>
+  <li><code class="language-plaintext highlighter-rouge">denseBlob4Neighbors()</code> - dense blob with multiple cells having 4 neighbors</li>
+  <li><code class="language-plaintext highlighter-rouge">largeBlobMany4Neighbors()</code> - large blob with many cells having 4 neighbors</li>
+</ul>
+
+<h3 id="round-specific-negative-8">Round-Specific Negative:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">max3Neighbors()</code> ✓ (already implemented)</li>
+  <li><code class="language-plaintext highlighter-rouge">denseMax3Neighbors()</code> - dense pattern where max is 3 neighbors</li>
+  <li><code class="language-plaintext highlighter-rouge">longSnake()</code> - long meandering path (max 2 neighbors)</li>
+  <li><code class="language-plaintext highlighter-rouge">treeMax3()</code> - tree structure (max 3 neighbors)</li>
+  <li><code class="language-plaintext highlighter-rouge">checkerboardDense()</code> - dense checkerboard (max 2 neighbors)</li>
+  <li><code class="language-plaintext highlighter-rouge">spiralNoCenter()</code> - spiral pattern without filled center</li>
+  <li><code class="language-plaintext highlighter-rouge">borderThickNoCenter()</code> - thick border but hollow center</li>
+  <li><code class="language-plaintext highlighter-rouge">multipleDisjointBlobs()</code> - multiple separate blobs</li>
+  <li><code class="language-plaintext highlighter-rouge">lShapesMany()</code> - many L-shaped patterns</li>
+  <li><code class="language-plaintext highlighter-rouge">tShapesMany()</code> - many T-shaped patterns (3 neighbors at junction)</li>
+</ul>
+
+<hr />
+
+<h2 id="summary-statistics">Summary Statistics</h2>
+
+<ul>
+  <li><strong>Total unique distribution types</strong>: 113</li>
+  <li><strong>Already implemented</strong>: ~8</li>
+  <li><strong>Need to implement</strong>: ~105</li>
+</ul>
+
+<h2 id="implementation-notes">Implementation Notes</h2>
+
+<p>Many distributions can share helper functions:</p>
+<ul>
+  <li>Random placement within regions</li>
+  <li>Component generation (squiggles, blobs, trees)</li>
+  <li>Symmetry operations</li>
+  <li>Polyomino generation</li>
+  <li>Neighbor counting utilities</li>
+  <li>Boundary detection</li>
+</ul>
+
+<p>Suggested implementation order:</p>
+<ol>
+  <li><strong>Helper utilities</strong> (random placement, neighbor counting)</li>
+  <li><strong>Simple spatial constraints</strong> (allInOneHalf, fitsInNxM)</li>
+  <li><strong>Component generators</strong> (connected blobs, squiggles, trees)</li>
+  <li><strong>Shape generators</strong> (polyominoes, L/T shapes, plus shapes)</li>
+  <li><strong>Pattern generators</strong> (checkerboard, spiral, striped)</li>
+  <li><strong>Complex combinations</strong> (component + density variations)</li>
+</ol>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

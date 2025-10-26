@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.2 Toisto - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 7: Ohjelmoinnin alkeet</p>
+                
+                <h1>7.2 Toisto</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+Kynä ja A4-paperia.
+
+Paljon paperilappuja (esim. muistilappuja).
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p>Edellisessä osiossa oli käytössä vain yksi operaatio: laske kahden lapun lukujen summa ja kirjoita se kolmannelle lapulle.</p>
+
+<p>Kerro lapselle, että nyt käytössä on seuraavat uudet operaatiot:</p>
+
+<p><em>Uusi komento 1: Lapun luvun kasvattaminen.</em> Nyt voi kirjoittaa esimerkiksi</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + 2 → a
+</code></pre></div></div>
+
+<p>Tämä komento kasvattaa $a$:ta (siis lapun $a$ lukua) kahdella.</p>
+
+<p><em>Uusi komento 2: Lappuun luvun kirjoittaminen.</em> Nyt voi kirjoittaa esimerkiksi</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3 → a
+</code></pre></div></div>
+
+<p>Tämä komento korvaa lapun $a$ luvun kolmosella. Saa myös kirjoittaa</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>b → a
+</code></pre></div></div>
+
+<p>mikä kopioi lapun $b$ luvun lappuun $a$. Tämä ei vaikuta lapun $b$ lukuun.</p>
+
+<p><em>Uusi komento 3: Toisto.</em> Tämän komennon avulla esimerkiksi komentosarjan</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → c
+a + b → c
+a + b → c
+a + b → c
+</code></pre></div></div>
+
+<p>saa kirjoittaa muodossa</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>toista 4:
+    a + b → c
+</code></pre></div></div>
+
+<p>(Tarvitsemme jonkin tavan merkitä, mitkä komennot toistetaan ja mitä ei. Tässä käytetään sisennyksiä.)</p>
+
+<p>Toistoon saa laittaa myös lapun nimen luvun sijasta. Esimerkiksi jos lapussa $b$ lukee $3$, niin</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>toista b:
+    a + a → a
+</code></pre></div></div>
+
+<p>tarkoittaa samaa kuin</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + a → a
+a + a → a
+a + a → a
+</code></pre></div></div>
+
+<p>(On monitulkintaista, mitä tapahtuu, jos lapun $b$ lukua olisi muutettu toistamisen aikana. Sano, että näin ei saa tehdä: lapun $b$ lukua ei saa muuttaa, jos sitä käytetään toistamisen määrän kirjoittamiseen.)</p>
+
+<p><strong>Aktiviteetti 1: komentojen ymmärrys</strong></p>
+
+<p>Testaa uusien komentojen ymmärrystä seuraavasti: Kirjoita lapulle $a$ luku $3$ ja lapulle $b$ luku $2$. Kysy lapselta, mitä seuraavat kolme komentosarjaa tekevät. Keksi lisää, jos nämä tuottavat vaikeuksia.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → a
+4 → b
+b + 2 → a
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>toista 4:
+    a + b → b
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → a
+1 → b
+toista a:
+    b + b → b
+</code></pre></div></div>
+
+<p>(Ensimmäisen sarjan lopuksi $a$:ssa lukee $6$ ja $b$:ssä $4$. Toisessa sarjassa $a$:ssa lukee $3$ ja $b$:ssä $14$. Kolmannessa sarjassa $a$:ssa lukee $5$ ja $b$:ssä $32$.)</p>
+
+<p><strong>Aktiviteetti 2: monimutkaisempia tehtäviä</strong></p>
+
+<p>Pyydä lasta kirjoittamaan kullekin seuraavista tehtävistä komentosarja, joka ratkaisee sen. Voit konkreettisuuden vuoksi kirjoittaa lappuihin joitakin lukuja etukäteen, mutta kuten edellisessä osiossa, komentosarjojen pitää toimia kaikissa tapauksissa.</p>
+
+<ol>
+  <li>Pöydällä on kolme lappua, joista kahteen on kirjoitettu luvut. Tavoitteena on vaihtaa näiden lappujen luvut. (Kolmannessa lapussa saa olla lopussa mitä vain.)</li>
+  <li>Pöydällä on kolme lappua. Tavoitteena on kirjoittaa lappujen $a$ ja $b$ lukujen kertolasku lappuun $c$.</li>
+  <li>Pöydällä on kaksi tyhjää lappua. Tavoitteena on kirjoittaa komentosarja, jonka suorittamalla laskun $1 + 2 + 3 + \ldots + 100$ vastaus ilmaantuu jommallekummalle lapulle.</li>
+</ol>
+
+<p><strong>Aktiviteetti 3: mahdollisimman suuri luku</strong></p>
+
+<p>Pöydällä on kolme lappua, joissa jokaisessa lukee aluksi $1$. Lapsen tavoitteena on kirjoittaa komentosarja, jonka suorittamalla saadaan mahdollisimman suuri luku.</p>
+
+<p>Komentosarjalla on kuitenkin seuraavat rajoitteet:</p>
+
+<ul>
+  <li>Siinä saa olla enintään viisi riviä.</li>
+  <li>Siinä saa käyttää vain kirjaimia, ei numeroita. Siis esimerkiksi komennot $1000 \to a$, $a + 1000 \to b$ tai “toista 1000:” eivät ole sallittuja.</li>
+</ul>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Toisto on hyödyllinen komento. Sillä saa kirjoitettua pitkiäkin komentosarjoja lyhyesti. Sen avulla voi myös tuottaa hyvin suuria lukuja.</p>
+
+<p>Tässä osiossa esiteltiin myös pari muuta uutta komentoa. Uusilla komennoilla saa tehtyä asioita, joita pelkästään yhteenlaskulla ei saanut, kuten esimerkiksi kertolaskun.</p>
+
+<p>Edelleen on kuitenkin ongelmia, joita pelkästään näillä komennoilla ei saa ratkaistua. Esimerkiksi vähennyslasku, jakolasku ja kahdesta lapusta pienimmän luvun kopiointi eivät vielä onnistu. Seuraavassa osiossa esitellään vielä uusia komentoja, joiden avulla nämä saadaan ratkaistua.</p>
+
+<p><strong>Ratkaisuja</strong></p>
+
+<p>Lappujen $a$ ja $b$ luvut voi vaihtaa näin:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a → c
+b → a
+c → b
+</code></pre></div></div>
+
+<p>Kertolasku onnistuu seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → c
+toista a:
+    b + c → c
+</code></pre></div></div>
+
+<p>Laskun $1 + 2 + \ldots + 100$ laskeminen onnistuu näin:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → a
+1 → b
+toista 100:
+    a + b → a
+    b + 1 → b
+</code></pre></div></div>
+
+<p>Tässä $b$ käy läpi luvut $1, 2, \ldots , 100$ (ja aivan lopuksi $101$), ja nämä arvot lisätään $a$:han yksitellen.</p>
+
+<p>Suuren luvun kirjoittamiseen paras ratkaisu vaikuttaa olevan seuraava:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + a → a
+a + a → b
+toista b:
+    toista b:
+        a + a → a
+</code></pre></div></div>
+
+<p>Tässä lapun $b$ luvuksi muodostuu $4$, joten viimeisen rivin komento $a + a \to a$ toistetaan $16$ kertaa. Koko komentosarjan aikana lapun $a$ luku tuplataan siis $17$ kertaa, ja siellä siten on lopuksi luku $2^{17} = 131\ 072$.</p>
+
+<p>(Lapsi tuskin keksii juuri tätä ratkaisua itse, mutta on myös muita ratkaisuja, joilla saa muodostettua sataa tai tuhatta suuremman luvun.)</p>
+
+<p>Jos rivejä saisi käyttää viiden sijasta kuusi, olisi mahdollista kirjoittaa <em>paljon</em> suurempia lukuja: ainakin yli $10^{100}$!</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/komentosarjat-ja-muuttujat/">← 7.1 Komentosarjat ja muuttujat</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/ohjelmoinnin-alkeet/">Luku 7: Ohjelmoinnin alkeet</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/jos-ehto/">7.3 Jos-ehto →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
