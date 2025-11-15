@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.3 Päätöspeli - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 4: Epävarmuus ja todennäköisyydet</p>
+                
+                <h1>4.3 Päätöspeli</h1>
+            </div>
+            
+            <div class="section-body">
+                <p>Tässä pelissä lapsi tekee päätöksiä, jotka saavat hänet miettimään eri epäilysten ja uskomusten vahvuuksia. Peli on muunnelma edellisen osion todennäköisyysjärjestyspelistä.</p>
+
+<div class="tyokalut"><b>Tarvikkeet</b>
+Punaisia, keltaisia, vihreitä ja sinisiä palikoita, jotka ovat keskenään samanlaisia. (Tarvittaessa eri väreillä väritetyt paperilaput kelpaavat myös.)
+
+Edellisen osion ehtolaput.
+
+Mustikoita.
+
+Kynä ja paperia.
+
+Kulho.
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p><strong>Aktiviteetti 1: värikkäät palikat</strong></p>
+
+<p>Valmistele peli kirjoittamalla yhdelle paperilapulle “kyllä” ja toiselle “ei”. Laita kulhoon $1$ punainen palikka, $2$ keltaista palikkaa ja $3$ vihreää palikkaa.</p>
+
+<p>Peli etenee seuraavasti. Vanhempi antaa lapselle aina jonkin yksivärisistä ehtolapuista, esimerkiksi keltaista palikkaa vastaavan lapun. Lapsen tehtävänä on veikata, toteutuuko lapun ehto vai ei. Lisäksi vanhempi aina kertoo, kuinka paljon oikeasta veikkauksesta saa pisteitä. Esimerkki: “Jos toteutui, oikeasta veikkaamisesta saa kolme mustikkaa. Jos ei, oikeasta veikkaamisesta saa yhden mustikan.”</p>
+
+<p>Havainnollista tätä laittamalla kolme mustikkaa “kyllä”-lapun päälle ja yksi mustikka “ei”-lapun päälle. Lapsi voi valita näistä lapuista jommankumman. Jos veikkaus osui oikeaan, lapsi saa valitsemansa mustikat. Muussa tapauksessa mustikat täytyy palauttaa vanhemmalle.</p>
+
+<p>Kun lapsi on tehnyt valintansa, nosta kulhosta palikka.</p>
+
+<p>Peliä voi pelata useamman kierroksen. Kierrosten välillä ei tarvitse välttämättä muuttaa mitään: voit seurata, tekeekö lapsi aina saman päätöksen samassa tilanteessa vai muuttuuko hänen mielensä. Voit myös muuttaa mustikoiden määriä ja katsoa, millä kertoimilla lapsi valitsee “kyllä” ja millä “ei”. Tämän avulla saa selvitettyä, kuinka todennäköisenä lapsi pitää eri vaihtoehtoja suhteessa toisiinsa.</p>
+
+<p>Jos ja kun pitää jokaisen palikan nostamista yhtä todennäköisenä ja haluaa saada paljon mustikoita, “rajan” pitäisi olla kertoimet $2 : 4$ (eli $1 : 2$), koska on $2$ tapaa, jolla keltainen palikka voidaan valita ja $4$ tapaa, jolla sitä ei valita. Jos siis kertoimet ovat $1 : 2$, molemmat valinnat ovat yhtä hyviä. Jos taas kertoimet ovat kovemmat (kuten $1 : 3$) – kannattaa valita “kyllä”-lappu ja jos taas lievemmät (kuten $1 : 1$) kannattaa valita “ei”-lappu.</p>
+
+<p>Yleisesti raja kulkee samassa kohdassa kuin palikoiden määrien suhde. Seuraa, tekeekö lapsi päätöksiä tämän strategian mukaisesti.</p>
+
+<p><strong>Aktiviteetti 2: monivärilaput</strong></p>
+
+<p>Pelatkaa sitten samaa peliä, mutta tällä kertaa hyödynnä monivärilappuja. Seuraa, toimiiko lapsi parhaan strategian mukaisesti tässä uudessa muunnelmassa. Paras strategia on nimittäin hyvin samanlainen kuin aiemmin. Jos monivärilappu on esimerkiksi punakeltainen, nyt vain lasketaan sekä punaiset että keltaiset palikat kelpaaviksi. Esimerkissä, jossa punaisia, keltaisia ja vihreitä palikoita on $1, 2$ ja $3$, saataisiin tasaiseksi suhteeksi siis $3 : 3$ eli $1 : 1$.</p>
+
+<p><strong>Aktiviteetti 3: kolme palikkaa</strong></p>
+
+<p>Kuten viime osiossa, tehtävää voi taas vaikeuttaa valtavasti lisäämällä palikoiden määrää ja ehtokorttien monimutkaisuutta. Taaskaan ei ole realistista eikä tarkoituksenmukaista odottaa, että lapsi saisi selvitettyä täsmälleen oikeat kertoimet kullekin ehdolle ja pelaisi matemaattisesti optimaalisen strategian mukaisesti, vaan tarkoituksena on testata ja kehittää lapsen intuitiota.</p>
+
+<p>Hyödynnä viime osion ehtolappuja. Voitte jälleen pelata useamman kierroksen samasta tilanteesta, jolloin lapsi pääsee halutessaan muuttamaan strategiaansa, jos toteaa kehittämisen varaa olevan.</p>
+
+<p>Voit myös käyttää edellisessä osiossa mainittuja palikkamääriä. Tällöin osiossa listatut prosentit ehtojen todennäköisyydelle antavat tiedon siitä, missä oikea raja menee. Prosentteja voi muuttaa suhteiksi seuraavan taulukon avulla.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$95\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$19 : 1$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$40\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$2 : 3$</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$90\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$9 : 1$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$33\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 2$</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$86\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$6 : 1$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$25\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 3$</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$80\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$4 : 1$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$20\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 4$</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$75\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$3 : 1$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$14\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 6$</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$67\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$2 : 1$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$10\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 9$</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$60\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$3 : 2$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$5\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 19$</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$50\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 1$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1\%$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$1 : 99$</td></tr>
+
+</table>
+
+</div>
+
+<p><strong>Aktiviteetti 4: viisi palikkaa</strong></p>
+
+<p>Niin ikään peliä voi pelata vielä viidellä palikalla ja monimutkaisemmilla ehtolapuilla.</p>
+
+<p>Voit halutessasi myös itse osallistua peliin. Peliä voi pelata niin, että joka kierroksella tarjotaan aina useammat eri kertoimet: esimerkiksi $4 : 1$, $2 : 1$, $1 : 1$, $1 : 2$ ja $1 : 4$. Näitä voi havainnollistaa viidellä parilla “kyllä”- ja “ei”-lappuja. Tehkää itsenäisesti omat päätöksenne, nostakaa sitten palikat ja laskekaa, montako pistettä kumpikin saa.</p>
+
+<p>Erityisen kiinnostavia ovat tilanteet, joissa pelaajat tekevät hyvin eri päätöksiä. Voitte myös seurata, jos jompikumpi saa pitkällä aikavälillä huomattavasti enemmän pisteitä. Tällöin paremmin pärjäävällä voi olla jotakin opetettavaa toiselle.</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/todennakoisyysjarjestys/">← 4.2 Todennäköisyysjärjestys</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/epavarmuus-ja-todennakoisyydet/">Luku 4: Epävarmuus ja todennäköisyydet</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/oikean-maailman-epavarmuutta/">4.4 Oikean maailman epävarmuutta →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

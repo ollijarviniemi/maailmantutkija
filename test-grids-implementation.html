@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grids Implementation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        .fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .grid-display {
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+        }
+        .grid-label {
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        canvas {
+            border: 2px solid #333;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Grids Game Implementation Test</h1>
+    <p><strong>Updated rules and sampling:</strong></p>
+    <ul>
+        <li>Rule 4: Border only (moved from position 9)</li>
+        <li>Rule 8: Changed from 3×3 to 4×4 subgrid</li>
+        <li>Rule 10: Changed from checkerboard to "has cell with 4 neighbors"</li>
+        <li>Sampling: 40% positive / 25% baseline / 35% round-specific (was 33/33/33)</li>
+        <li>Variance reduction: 2/1/1 minimum in every 6 rounds (was 3/3/3 in 15)</li>
+    </ul>
+
+    <div class="test-section">
+        <h2>Test 1: All Rules Have Required Components</h2>
+        <div id="test1-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: All Distribution Generators Work</h2>
+        <div id="test2-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Rule Check Functions Work</h2>
+        <div id="test3-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: Sample Grids from Each Rule</h2>
+        <div id="test4-results"></div>
+    </div>
+
+    <script type="module">
+        import { GRIDS_RULES } from './assets/js/rule-discovery/grids/grids-rules.js';
+        import * as GridDistributions from './assets/js/rule-discovery/grids/grids-distributions.js';
+
+        function renderGrid(grid, size = 100) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            const cellSize = size / 6;
+
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 6; j++) {
+                    ctx.fillStyle = grid[i][j] ? '#000' : '#fff';
+                    ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                    ctx.strokeStyle = '#999';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                }
+            }
+            return canvas;
+        }
+
+        // Test 1: Check rule structure
+        function test1() {
+            const results = document.getElementById('test1-results');
+            let allPass = true;
+
+            GRIDS_RULES.forEach((rule, idx) => {
+                const issues = [];
+
+                if (!rule.id) issues.push('missing id');
+                if (!rule.name) issues.push('missing name');
+                if (typeof rule.check !== 'function') issues.push('missing check function');
+                if (!rule.distribution || !rule.distribution.positive) issues.push('missing positive distribution');
+                if (!rule.roundSpecificNegative) issues.push('missing roundSpecificNegative');
+                if (typeof rule.generateNegative !== 'function') issues.push('missing generateNegative');
+
+                const div = document.createElement('div');
+                div.className = issues.length === 0 ? 'test-result pass' : 'test-result fail';
+                div.textContent = `Rule ${idx + 1} (${rule.id}): ${issues.length === 0 ? 'PASS' : 'FAIL - ' + issues.join(', ')}`;
+                results.appendChild(div);
+
+                if (issues.length > 0) allPass = false;
+            });
+
+            if (allPass) {
+                const summary = document.createElement('div');
+                summary.className = 'test-result pass';
+                summary.textContent = 'All 10 rules have required components!';
+                results.appendChild(summary);
+            }
+        }
+
+        // Test 2: Check distribution generators
+        function test2() {
+            const results = document.getElementById('test2-results');
+            const newGenerators = [
+                'anySymmetry',
+                'allInOneHalf',
+                'has2x2BlackSquare',
+                'fitsIn3x3',
+                'borderOnly',
+                'checkerboardPositions'
+            ];
+
+            newGenerators.forEach(name => {
+                const div = document.createElement('div');
+                if (typeof GridDistributions[name] === 'function') {
+                    try {
+                        const grid = GridDistributions[name]();
+                        if (grid && grid.length === 6 && grid[0].length === 6) {
+                            div.className = 'test-result pass';
+                            div.textContent = `${name}: PASS (generates valid 6x6 grid)`;
+                        } else {
+                            div.className = 'test-result fail';
+                            div.textContent = `${name}: FAIL (invalid grid structure)`;
+                        }
+                    } catch (e) {
+                        div.className = 'test-result fail';
+                        div.textContent = `${name}: FAIL (${e.message})`;
+                    }
+                } else {
+                    div.className = 'test-result fail';
+                    div.textContent = `${name}: FAIL (not found or not a function)`;
+                }
+                results.appendChild(div);
+            });
+        }
+
+        // Test 3: Rule check functions
+        function test3() {
+            const results = document.getElementById('test3-results');
+
+            GRIDS_RULES.forEach((rule, idx) => {
+                const div = document.createElement('div');
+                try {
+                    // Test with empty grid
+                    const emptyGrid = Array.from({ length: 6 }, () => Array(6).fill(false));
+                    const emptyResult = rule.check(emptyGrid);
+
+                    // Test with full grid
+                    const fullGrid = Array.from({ length: 6 }, () => Array(6).fill(true));
+                    const fullResult = rule.check(fullGrid);
+
+                    // Test with generateNegative
+                    const negGrid = rule.generateNegative();
+                    const negResult = rule.check(negGrid);
+
+                    if (negResult === false) {
+                        div.className = 'test-result pass';
+                        div.textContent = `Rule ${idx + 1}: PASS (generateNegative correctly fails check)`;
+                    } else {
+                        div.className = 'test-result fail';
+                        div.textContent = `Rule ${idx + 1}: FAIL (generateNegative should fail check but passes)`;
+                    }
+                } catch (e) {
+                    div.className = 'test-result fail';
+                    div.textContent = `Rule ${idx + 1}: FAIL (${e.message})`;
+                }
+                results.appendChild(div);
+            });
+        }
+
+        // Test 4: Sample grids
+        function test4() {
+            const results = document.getElementById('test4-results');
+
+            GRIDS_RULES.forEach((rule, idx) => {
+                const container = document.createElement('div');
+                container.style.marginBottom = '30px';
+
+                const title = document.createElement('h3');
+                title.textContent = `Rule ${idx + 1}: ${rule.name}`;
+                container.appendChild(title);
+
+                // Generate 5 positive examples
+                const posHeader = document.createElement('div');
+                posHeader.textContent = 'Positive examples:';
+                posHeader.style.fontWeight = 'bold';
+                container.appendChild(posHeader);
+
+                for (let i = 0; i < 5; i++) {
+                    const gridDisplay = document.createElement('div');
+                    gridDisplay.className = 'grid-display';
+
+                    try {
+                        // Use first positive distribution generator
+                        const distSpec = rule.distribution.positive[0];
+                        const generatorFn = GridDistributions[distSpec.type];
+                        let grid;
+
+                        if (distSpec.type === 'withBlackCount') {
+                            grid = generatorFn(distSpec.options.count);
+                        } else if (distSpec.type === 'blockResolution') {
+                            grid = generatorFn(distSpec.options.blockSize);
+                        } else {
+                            grid = generatorFn();
+                        }
+
+                        const passes = rule.check(grid);
+                        const label = document.createElement('div');
+                        label.className = 'grid-label';
+                        label.textContent = passes ? '✓' : '✗';
+                        label.style.color = passes ? 'green' : 'red';
+                        gridDisplay.appendChild(label);
+
+                        const canvas = renderGrid(grid);
+                        gridDisplay.appendChild(canvas);
+                    } catch (e) {
+                        gridDisplay.textContent = 'Error: ' + e.message;
+                    }
+
+                    container.appendChild(gridDisplay);
+                }
+
+                // Generate 5 negative examples
+                const negHeader = document.createElement('div');
+                negHeader.textContent = 'Round-specific negative examples:';
+                negHeader.style.fontWeight = 'bold';
+                negHeader.style.marginTop = '10px';
+                negHeader.style.clear = 'both';
+                container.appendChild(negHeader);
+
+                for (let i = 0; i < 5; i++) {
+                    const gridDisplay = document.createElement('div');
+                    gridDisplay.className = 'grid-display';
+
+                    try {
+                        // Use first round-specific negative distribution
+                        const distSpec = rule.roundSpecificNegative[i % rule.roundSpecificNegative.length];
+                        const generatorFn = GridDistributions[distSpec.type];
+                        let grid;
+
+                        if (distSpec.type === 'withBlackCount') {
+                            grid = generatorFn(distSpec.options.count);
+                        } else if (distSpec.type === 'blockResolution') {
+                            grid = generatorFn(distSpec.options.blockSize);
+                        } else {
+                            grid = generatorFn();
+                        }
+
+                        const passes = rule.check(grid);
+                        const label = document.createElement('div');
+                        label.className = 'grid-label';
+                        label.textContent = passes ? '✓' : '✗';
+                        label.style.color = passes ? 'green' : 'red';
+                        gridDisplay.appendChild(label);
+
+                        const canvas = renderGrid(grid);
+                        gridDisplay.appendChild(canvas);
+                    } catch (e) {
+                        gridDisplay.textContent = 'Error: ' + e.message;
+                    }
+
+                    container.appendChild(gridDisplay);
+                }
+
+                results.appendChild(container);
+            });
+        }
+
+        // Run all tests
+        test1();
+        test2();
+        test3();
+        test4();
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Interpreter Test</title>
+    <!-- Skulpt CDN -->
+    <script src="https://skulpt.org/js/skulpt.min.js"></script>
+    <script src="https://skulpt.org/js/skulpt-stdlib.js"></script>
+</head>
+<body>
+    <h1>Python Interpreter Test</h1>
+    
+    <div id="status">Loading...</div>
+    <div id="error-log" style="background: #ffebee; padding: 10px; margin: 10px; display: none; color: red;"></div>
+    
+    <textarea id="code" rows="5" cols="50" placeholder="Enter Python code">print("Hello, World!")</textarea><br><br>
+    
+    <button id="run" disabled>Run Code</button>
+    <button id="clear">Clear Output</button><br><br>
+    
+    <div id="output" style="background: #f0f0f0; padding: 10px; min-height: 100px; font-family: monospace; white-space: pre-wrap;"></div>
+    
+    <script>
+        console.log('Starting test...');
+        
+        function logError(message) {
+            console.error(message);
+            const errorLog = document.getElementById('error-log');
+            errorLog.textContent += message + '\n';
+            errorLog.style.display = 'block';
+        }
+        
+        function updateStatus(message) {
+            console.log(message);
+            document.getElementById('status').textContent = message;
+        }
+        
+        // Check if Skulpt loaded
+        if (typeof Sk === 'undefined') {
+            logError('Skulpt failed to load from CDN');
+        } else {
+            updateStatus('Skulpt loaded successfully');
+        }
+        
+        let outputElement = document.getElementById('output');
+        
+        function outf(text) {
+            outputElement.textContent += text;
+        }
+        
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+        
+        function initializeSkulpt() {
+            try {
+                updateStatus('Initializing Skulpt...');
+                
+                Sk.configure({
+                    output: outf,
+                    read: builtinRead,
+                    __future__: Sk.python3
+                });
+                
+                updateStatus('Skulpt initialized successfully');
+                document.getElementById('run').disabled = false;
+            } catch (error) {
+                logError('Skulpt initialization failed: ' + error.message);
+            }
+        }
+        
+        function runCode() {
+            try {
+                updateStatus('Running code...');
+                outputElement.textContent = '';
+                
+                const code = document.getElementById('code').value;
+                
+                Sk.misceval.asyncToPromise(function() {
+                    return Sk.importMainWithBody("<stdin>", false, code, true);
+                }).then(function(mod) {
+                    updateStatus('Code executed successfully');
+                }, function(err) {
+                    logError('Python execution error: ' + err.toString());
+                });
+            } catch (error) {
+                logError('JavaScript error during execution: ' + error.message);
+            }
+        }
+        
+        function clearOutput() {
+            outputElement.textContent = '';
+        }
+        
+        // Wait for DOM and initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('DOM loaded, checking Skulpt...');
+            
+            if (typeof Sk !== 'undefined') {
+                initializeSkulpt();
+            } else {
+                // Wait a moment for Skulpt to load
+                setTimeout(function() {
+                    if (typeof Sk !== 'undefined') {
+                        initializeSkulpt();
+                    } else {
+                        logError('Skulpt still not available after timeout');
+                    }
+                }, 1000);
+            }
+            
+            document.getElementById('run').addEventListener('click', runCode);
+            document.getElementById('clear').addEventListener('click', clearOutput);
+        });
+    </script>
+</body>
+</html>

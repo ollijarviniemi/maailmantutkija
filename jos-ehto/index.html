@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.3 Jos-ehto - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 7: Ohjelmoinnin alkeet</p>
+                
+                <h1>7.3 Jos-ehto</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+Kynä ja A4-paperia.
+
+Paljon paperilappuja (esim. muistilappuja).
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p>Aiempien komentojen lisäksi nyt on käytössä uusi jos-komento.</p>
+
+<p><em>Uusi komento: Jos.</em> Jos-komentoa käytetään seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jos a &lt; b:
+    a → c
+</code></pre></div></div>
+
+<p>Tämä kirjoittaa lapun $a$ luvun lappuun $c$ jos lapussa $a$ oleva luku on pienempi kuin lapun $b$ luku.</p>
+
+<p>Jos-lausekkeissa saa siis käyttää vertailuoperaatioita: $a &lt; b$, $a &gt; b$, $a = b$, $a \le b$, $a \ge b$.</p>
+
+<p><em>Uusien komentojen määrittely.</em> Lisäksi lapsi saa nyt määritellä omia komentojansa sen jälkeen, kun hän on kerran osannut toteuttaa ne itse. Esimerkiksi viime osiossa keksittiin, että lappujen $a$ ja $b$ kertolaskun saa tehtyä seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → c
+toista a:
+    b + c → c
+</code></pre></div></div>
+
+<p>Nyt kun lapsi osaa tehdä tämän, ei samaa asiaa tarvitse kirjoittaa joka kerta uudestaan, vaan hän käyttää kertolaskun merkitsemiseksi merkintää $×$ tai $\ast$ tai $⋅$, kuten alla:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a * b → c
+</code></pre></div></div>
+
+<p>Vastaavasti esimerkiksi kolmen luvun yhteen laskeminen tehtiin jo aiemmin, joten on kohtuullista ottaa käyttöön komennot kuten $a + b + c \to d$. (Lyhennysmerkintöjä käytettäessä pitää kuitenkin aina pystyä kirjoittamaan sama asia kokonaan auki.)</p>
+
+<p><strong>Aktiviteetti 1: sääntöjen ymmärrys</strong></p>
+
+<p>Tässä on taas kolme komentosarjaa, joilla voi testata ymmärrystä uudesta jos-komennosta. Pyydä lasta selittämään, mitä sarjoissa tapahtuu ja miten lapuissa olevat luvut muuttuvat. Keksi jälleen lisää, jos nämä tuottavat vaikeuksia tai epäselvyyksiä.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2 → a
+3 → b
+jos a &lt; b:
+    a + 2 → a
+jos a &lt; b:
+    a + 3 → a
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jos a ≤ b:
+    a → c
+jos a &gt; b:
+    b → c
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → a
+0 → b
+toista 30:
+    jos a &lt; 10:
+        a + 1 → a
+    b + 1 → b
+</code></pre></div></div>
+
+<p>(Ensimmäisessä sarjassa ensimmäinen jos-ehto toteutuu, ja $a$:n lukua kasvatetaan kahdella. Tämän seurauksena toinen jos-ehto ei enää toteudu ja siten komentoa $a + 3 \to a$ ei suoriteta. Toinen sarja kirjoittaa pienemmän lappujen $a$ ja $b$ luvuista lappuun $c$. Kolmannessa sarjassa toistosilmukassa lapun $b$ lukua kasvatetaan aina. Lapun $a$ lukua kasvatetaan vain ensimmäisellä kymmenellä kerralla, kunnes luku on $10$. Siis sarjan lopuksi $a$:ssa lukee $10$ ja $b$:ssä lukee $30$.)</p>
+
+<p><strong>Aktiviteetti 2: peruspalikoita</strong></p>
+
+<p>Näillä komennoilla saa kasattua monenlaisia hyödyllisiä peruspalikoita, joita ei vielä aiemmilla komennoilla saanut rakennettua.</p>
+
+<ol>
+  <li>Kirjoita komentosarja, joka kirjoittaa lapulle $d$ pienimmän luvun, joka lukee lapuissa $a, b$ ja $c$.</li>
+  <li>Kirjoita komentosarja, joka kirjoittaa lapulle $c$ lappujen $a$ ja $b$ lukujen vähennyslaskun. (Voi olettaa, että lapussa $a$ oleva luku on vähintään yhtä suuri kuin $b$:n.) Tämän tehtävän jälkeen lapsi saa käyttää vähennyslaskukomentoa suoraan seuraavasti: $a - b \to c$. Tätä komentoa saa myös käyttää luvuilla ($a - 2 \to c$), koska tämän voisi tehdä kirjoittamalla $2 \to b$ ja sitten $a - b \to c$.</li>
+  <li>Kirjoita komentosarja, joka kirjoittaa lapulle $c$ jakolaskun tuloksen, kun lapun $a$ luku jaetaan lapun $b$ luvulla. Tässä saa olettaa, että $b$:n luku jakaa $a$:n. (Tämän jälkeen lapsi saa käyttää jakolaskukomentoa: $\frac{a}{b} \to c$ tai $a/b \to c$ tai $a ÷ b \to c$.)</li>
+  <li>Kirjoita komentosarja, joka kirjoittaa lapulle $c$ luvun $1$ jos $a$ on jaollinen luvulla $b$ ja joka muuten kirjoittaa lapulle luvun $0$. (Tämän jälkeen lapsi saa käyttää jos-komentoja muotoa “jos $b$ jakaa $a$”.)</li>
+</ol>
+
+<p><strong>Aktiviteetti 3: järjestäminen</strong></p>
+
+<p>Tässä tehtävässä lapsen tavoitteena on järjestää annetut luvut pienimmästä suurimpaan. Edellisessä osiossa oli tehtävä, jossa piti vaihtaa kahden lapun luvut toisin päin. Tämä onnistui komentosarjalla</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a → c
+b → a
+c → b
+</code></pre></div></div>
+
+<p>Lyhennetään tämä komentosarja yksinkertaisesti muotoon</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a ⟷ b
+</code></pre></div></div>
+
+<p>Nyt kahden lapun luvut saisi järjestettyä seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jos a &gt; b:
+    a ⟷ b
+</code></pre></div></div>
+
+<p>Lapsen tehtävänä on kirjoittaa komentosarja, jolla saa järjestettyä kolmen lapun $a, b$ ja $c$ luvut. Komentosarjan pitää toimia kaikissa mahdollisissa tapauksissa. Tätä voi testata niin, että vanhempi tutkii komentosarjaa, miettii sen toimivuutta ja yrittää sitten keksiä tapauksen, jossa se toimii väärin. Jos vanhempi ei onnistu, ratkaisu toiminee kaikissa tapauksissa ja ratkaisu hyväksytään.</p>
+
+<p>Voitte kokeilla samaa myös useammalla lapulla. Lapsen voi myös haastaa käyttämään mahdollisimman pienen määrän jos-komentoja.</p>
+
+<p><strong>Aktiviteetti 4: hankalia ongelmia</strong></p>
+
+<p>Nyt käytössä olevilla komennoilla saa ratkaistua monimutkaisiakin ongelmia. Tässä on muutama, joista voit valita lapselle kiinnostavia ja sopivan haastavia:</p>
+
+<ol>
+  <li>Kirjoita komentosarja, joka laskee, monellako tavalla $10$ samanlaista palloa voi jakaa kolmen ihmisen kesken.</li>
+  <li>Kirjoita komentosarja, joka laskee, monellako tavalla $20$ pitsatäytteestä voi valita kolme täytettä. (Samaa täytettä ei saa valita useampaan kertaan ja täytteiden järjestyksellä ei ole väliä.)</li>
+  <li>Kirjoita komentosarja, joka laskee, kuinka monta kertaa paperi pitää taittaa, jotta siinä on yli miljoona kerrosta. Toisin sanoen laske, mikä on pienin luku $n$, jolla $2^n$ on suurempi kuin miljoona.</li>
+  <li>Kirjoita komentosarja, joka laskee, montako lukua $100$ pienempää alkulukua on olemassa. (Jos lapsi ei vielä tiedä, mitä alkuluvut ovat, hyppää tämän esimerkin yli. Voitte palata alkulukuihin ja lukujen tekijöihinjakoon jossakin muussa tilanteessa.)</li>
+</ol>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Uuden jos-komennon avulla voi ratkoa monia sellaisia ongelmia, joita aiemmin ei voinut. Esimerkiksi nyt on saatu rakennettua kaikki peruslaskutoimitukset (yhteen-, vähennys-, kerto- ja jakolasku).</p>
+
+<p>Lapsi saattaa ihmetellä, miksi näitä komentosarjoja kirjoitetaan. Eikö niitä ole ihan mahdottoman työlästä suorittaa? Tätä kysymystä käsitellään tarkemmin seuraavassa osiossa.</p>
+
+<h3 id="ratkaisuja">Ratkaisuja</h3>
+
+<p><em>Pienin luku:</em> Pienimmän lapuissa $a, b$ ja $c$ esiintyvän luvun saa laskettua seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a → d
+jos b &lt; d:
+    b → d
+jos c &lt; d:
+    c → d
+</code></pre></div></div>
+
+<p>Tämä laittaa lappuun $d$ aluksi lapun $a$ luvun ja sitten kokeilee, onko lappujen $b$ tai $c$ luvut pienempiä. Jos on, pienempi luku kirjoitetaan lapulle $d$.</p>
+
+<p><em>Vähennyslasku:</em> Vähennyslaskun voi laskea seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → c
+toista a:
+    jos b &lt; a:
+        c + 1 → c
+        b + 1 → b
+</code></pre></div></div>
+
+<p>Tämä kasvattaa $b$:n lukua yksitellen, kunnes $b$:n luku on yhtä suuri kuin $a$:n. Lapun $c$ luku pitää kirjaa siitä, montako kertaa $b$:tä on pitänyt kasvattaa, jotta luku on yhtä suuri kuin $a$:n. Se on siis lukujen vähennyslasku.</p>
+
+<p><em>Jakolasku:</em> Jakolaskun saa laskettua kertolaskun avulla seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 → d
+toista a:
+    b * d → e
+    jos a = e:
+        d → c
+    d + 1 → d
+</code></pre></div></div>
+
+<p>Tässä $d$ käy läpi luvut $1, 2, \ldots , a$. Joka kerralla tarkistetaan, onko nykyinen lapun $d$ luku jakolaskun tulos, eli päteekö $b ⋅ d = a$. (Tämä tehdään lisälapun $e$ avulla, jotta ei tarvitse kirjoittaa jos-komentoa “$\text{jos } a = b ⋅ d$”, jossa esiintyy kertolasku.) Jos se on, vastaus kirjataan lappuun $c$.</p>
+
+<p><em>Jaollisuus:</em> Jaollisuus onnistuu hyvin samanlaisella komentosarjalla:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → c
+1 → d
+toista a:
+    b * d → e
+    jos a = e:
+        1 → c
+    d + 1 → d
+</code></pre></div></div>
+
+<p>Ainoa ero on, että vastauksen sijaan lappuun $c$ kirjoitetaan $1$, jos vastaus löytyi.</p>
+
+<p><em>Järjestäminen:</em> Kolmen lapun luvut saa järjestettyä seuraavalla komentosarjalla:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jos a &gt; b:
+    a ⟷ b
+jos a &gt; c:
+    a ⟷ c
+jos b &gt; c:
+    b ⟷ c
+</code></pre></div></div>
+
+<p>Näistä ensimmäiset kaksi vaihtoa varmistavat, että lapusta $a$ löytyy pienin luku. Viimeinen vaihto vielä varmistaa, että lappujen $b$ ja $c$ luvut ovat oikein päin. Komentosarja on lyhyin mahdollinen: kahdella vertailulla ongelmaa ei pysty ratkaisemaan, vaan silloin jäisi aina jokin tapaus, jossa luvut eivät järjesty oikein.</p>
+
+<p>Yksi tapa tarkistaa, että komentosarja varmasti toimii, on kokeilla sen toiminta niissä kuudessa eri tapauksessa, joissa laput sisältävät luvut $1, 2$ ja $3$ jossakin järjestyksessä.</p>
+
+<p>Sama strategia toimii myös neljällä lapulla: siirretään ensin pienin luku lappuun $a$. Jäljelle jäävät kolme lappua saadaan järjestettyä tismalleen samaan tapaan kuin yllä.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jos a &gt; b:
+    a ⟷ b
+jos a &gt; c:
+    a ⟷ c
+jos a &gt; d:
+    a ⟷ d
+jos b &gt; c:
+    b ⟷ c
+jos b &gt; d:
+    b ⟷ d
+jos c &gt; d:
+    c ⟷ d
+</code></pre></div></div>
+
+<p>Ensimmäiset kolme vaihtoa siis varmistavat, että lapussa $a$ on pienin luku. Seuraavat kaksi varmistavat, että lapussa $b$ on toiseksi pienin luku. Viimeinen vaihto varmistaa lappujen $c$ ja $d$ lukujen olevan oikein päin.</p>
+
+<p>Nokkelammalla ratkaisulla saman saa tehtyä vain viidellä vertailulla.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jos a &gt; b:
+    a ⟷ b
+jos c &gt; d:
+    c ⟷ d
+jos b &gt; d:
+    b ⟷ d
+jos a &gt; c:
+    a ⟷ c
+jos b &gt; c:
+    b ⟷ c
+</code></pre></div></div>
+
+<p>Ei ole aivan helppo selittää, miksi tämä komentosarja toimii, mutta ensimmäiset kaksi vertailua varmistavat, että laput $a$ ja $b$ ovat oikein päin, kuten myös $c$ ja $d$. Kolmas vertailu varmistaa, että lappuun $d$ tulee suurin luku. Viimeiset kaksi komentoa järjestävät laput $a, b$ ja $c$. On oleellista, että ensimmäisen kolmen komennon jälkeen lappujen $a, b$ ja $c$ luku järjestyksestä “tiedetään” jotakin, nimittäin se, että lapun $b$ luku ei ole pienin näistä kolmesta luvusta (paitsi mahdollisesti jaetulla sijalla). Tämä mahdollistaa näiden kolmen lapun järjestämisen vain kahdella komennolla.</p>
+
+<p>Viisi vertailua on pienin määrä: mikään neljän vertailun komentosarja ei toimi oikein kaikissa mahdollisissa tapauksissa.</p>
+
+<p><em>Kymmenen pallon jakaminen kolmelle hengelle:</em> Voimme käydä läpi mahdollisia tapoja jakaa pallot. Jokainen saa vähintään nolla ja enintään kymmenen palloa. Lisäksi yhteensä palloja jaetaan kymmenen kappaletta. Seuraavassa komentosarjassa laput $a$, $b$ ja $c$ vastaavat mahdollista pallojen jakoa, lappuun $d$ lasketaan jaettujen pallojen määrä ja lapussa $e$ lasketaan kelpaavien jakojen määrä.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → e
+0 → a
+toista 11:
+    0 → b
+    toista 11:
+        0 → c
+        toista 11:
+            a + b + c → d
+            jos d = 10:
+                e + 1 → e
+            c + 1 → c
+        b + 1 → b
+    a + 1 → a
+</code></pre></div></div>
+
+<p><em>Kahdestakymmenestä pitsatäytteestä kolmen valitseminen:</em> Täytteet voi numeroida luvuin $1, 2, \ldots , 20$. Täytteet voi siten esittää kolmella luvulla, esimerkiksi $3, 8$ ja $15$. Pitää varoa, että samaa täyteyhdistelmää ei lasketa useampaa kertaa (esim. $3, 8, 15$ ja $8, 3, 15$). Tämä saadaan varmistettua niin, että täytteiden numerot aina kasvavat. Alla komentosarjassa $a$, $b$ ja $c$ ovat täytteet ja $d$ pitää kirjaa kelpaavien yhdistelmien määrästä.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → d
+1 → a
+1 → b
+1 → c
+toista 20:
+    toista 20:
+        toista 20:
+            jos a &lt; b:
+                jos b &lt; c:
+                    jos c ≤ 20:
+                        d + 1 → d
+            c + 1 → c
+        b + 1 → b
+    a + 1 → a
+</code></pre></div></div>
+
+<p><em>Pienin luku $n$, jolla $2^n$ ylittää miljoonan:</em> Tässä voi yksinkertaisesti laskea $2^n$ kasvavilla luvuilla $n$ ja pysähtyä, kun löydetään riittävän suuri luku.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 → b
+0 → c
+toista 1000:
+    jos b ≤ 1000000:
+        b * 2 → b
+        c + 1 → c
+</code></pre></div></div>
+
+<p><em>Alkulukujen laskeminen:</em> On kätevintä ensin määritellä komento, joka kertoo, onko luku alkuluku vai ei. Seuraava komentosarja kirjoittaa lappuun $b$ luvun $1$, jos lapun $a$ luku on alkuluku, ja muutoin $0$. (Luku $1$ ei ole alkuluku, ja se käsitellään ohjelmassa erikseen.)</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 → b
+jos a = 1:
+    0 → b
+2 → c
+toista a:
+    jos c jakaa a:
+        jos c &lt; a:
+            0 → b
+    c + 1 → c
+</code></pre></div></div>
+
+<p>Nyt voimme laskea, montako alkulukua on alle sadan.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → d
+1 → a
+toista 99:
+    jos a on alkuluku:
+        d + 1 → d
+    a + 1 → a
+</code></pre></div></div>
+
+<p>Vaikka se olisi hieman sotkuisempaa, nämä kaksi komentosarjaa voisi myös kirjoittaa yhtenä. Komentojen määrittely aiemmista komentosarjoista on sallittua vain käytännöllisyyden vuoksi, ja sillä ei siten saa tehtyä mitään “uutta”, mitä ei voisi tehdä muuten. Kokonaisuudessaan komentosarja näyttäisi tältä:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 → d
+1 → a
+toista 99:
+    1 → b
+    jos a = 1:
+        0 → b
+    2 → c
+    toista a:
+        jos c jakaa a:
+            jos c &lt; a:
+                0 → b
+        c + 1 → c
+    jos b = 1:
+        d + 1 → d
+    a + 1 → a
+</code></pre></div></div>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/toisto/">← 7.2 Toisto</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/ohjelmoinnin-alkeet/">Luku 7: Ohjelmoinnin alkeet</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/tietokoneella-ohjelmointi/">7.4 Tietokoneella ohjelmointi →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

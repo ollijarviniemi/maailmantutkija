@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.1 Komentosarjat ja muuttujat - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 7: Ohjelmoinnin alkeet</p>
+                
+                <h1>7.1 Komentosarjat ja muuttujat</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+Kynä ja paperia.
+
+Paljon paperilappuja (esim. muistilappuja).
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p>Kirjoita kahdelle lapulle yksi luku kummallekin (esim. $3$ ja $5$). Nimeä nämä laput kirjoittamalla niiden kulmiin “$a$” ja “$b$”. Laita pöydälle myös yksi tyhjä paperilappu ja nimeä se merkinnällä “$c$”. Lisäksi laita pöydälle yksi A4-paperiarkki.</p>
+
+<p>Selitä lapselle harjoituksen säännöt, jotka ovat seuraavat:</p>
+
+<p>Hänellä on käytössänsä yhteenlaskun plussa $+$, joka laskee kahdessa lapussa olevien lukujen yhteenlaskun ja kirjoittaa vastauksen kolmannelle paperilapulle. Esimerkiksi</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → c
+</code></pre></div></div>
+
+<p>kirjoittaisi lappujen $a$ ja $b$ lukujen summan lapulle $c$ (esim. $3 + 5 = 8$). Lappujen $a$ ja $b$ luvut pysyvät muuttumattomina.</p>
+
+<p>Käytetyt operaatiot kirjoitetaan A4-paperille muistiin.</p>
+
+<p>Operaatioita voi tehdä useammankin. Esimerkiksi jos paperille kirjoittaa</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → c
+a + c → c
+</code></pre></div></div>
+
+<p>suoritettaisiin ensiksi ensimmäinen operaatio (paperille $c$ kirjoitetaan $3 + 5 = 8$) ja sitten toinen operaatio (jolloin paperin $c$ luku korvataan luvulla $3 + 8 = 11$).</p>
+
+<p>Huomaa, että plus-operaatio ylikirjoittaa aiemman luvun tilalle uuden. Sitä voi soveltaa myös niin, että sama lappu esiintyy komennossa yli yhden kerran. Ylikirjoittaessa yliviivaa lapussa aiemmin ollut luku ja kirjoita uusi, ja jos paperi alkaa olla liian sotkuinen, korvaa se uudella.</p>
+
+<p>Huomaa, että operaatioihin ei vielä saa kirjoittaa <em>lukuja</em> (esim. $3$), vaan ainoastaan <em>lappujen nimiä</em> (esim. $a$).</p>
+
+<p><strong>Aktiviteetti 1: sääntöjen ymmärrys</strong></p>
+
+<p>Varmista, että lapsi ymmärtää tämän kaiken: Laita pöydälle muutama lappu ja kirjoita niihin lukuja. Kysy seuraavanlaisia kysymyksiä:</p>
+
+<ul>
+  <li>Mikä luku on kirjoitettu lappuun $c$?</li>
+  <li>Mihin lappuihin on kirjoitettu luku $3$?</li>
+  <li>Mitä komento $b + c \to a$ tekee: mikä luku kirjoitetaan mihin lappuun? Entä komento $b + b \to b$?</li>
+</ul>
+
+<p><strong>Aktiviteetti 2: tavoiteluvun muodostaminen</strong></p>
+
+<p>Anna lapselle aina alkutilanne, jossa kolmelle lapulle on kirjoitettu jotkin luvut, ja joissa lapsen täytyy sitten muodostaa tietty tavoiteluku. Haaste on kiinnostavampi, jos yrittää onnistua mahdollisimman pienellä määrällä siirtoja. Esimerkkejä:</p>
+
+<ol>
+  <li>Luvut: $3, 4$ ja $5$. Tavoiteluku: $8$. (Onnistuu yhdellä siirrolla.)</li>
+  <li>Luvut: $2, 3$ ja $4$. Tavoiteluku: $9$. (Onnistuu kahdella siirrolla.)</li>
+  <li>Luvut: $1, 2$ ja $3$. Tavoiteluku: $8$. (Onnistuu kahdella siirrolla.)</li>
+  <li>Luvut: $1, 3$ ja $5$. Tavoiteluku: $11$. (Onnistuu kahdella siirrolla.)</li>
+  <li>Luvut: $1, 2$ ja $3$. Tavoiteluku: $15$. (Onnistuu kolmella siirrolla.)</li>
+  <li>Luvut: $2, 5$ ja $6$. Tavoiteluku: $19$. (Onnistuu kolmella siirrolla.)</li>
+  <li>Luvut: $2, 3$ ja $5$. Tavoiteluku: $17$. (Onnistuu kolmella siirrolla.)</li>
+  <li>Luvut: $3, 4$ ja $5$. Tavoiteluku: $23$. (Onnistuu kolmella siirrolla.)</li>
+  <li>Luvut: $1, 2$ ja $3$. Tavoiteluku: $17$. (Onnistuu neljällä siirrolla.)</li>
+  <li>Luvut: $3, 4$ ja $6$. Tavoiteluku: $25$. (Onnistuu neljällä siirrolla.)</li>
+</ol>
+
+<p>Pyydä lasta aina kirjoittamaan tehtävän ratkaiseva komentosarja paperille. Jos lapsi ei osaa kirjoittaa tai se olisi muuten epämiellyttävää, voit myös kirjoittaa komentosarjan itse lapsen kuvaillessa sen. Näytä valmista komentosarjaa lapselle aina tehtävän valmistuttua – se valmistaa häntä monimutkaisemmille komentosarjoille.</p>
+
+<p>Voit myös kokeilla antaa lapselle tehtävän, jossa kaikki luvut ovat parillisia (esim. $2, 4$ ja $6$) ja tavoiteluku on pariton (esim. $25$). Seuraa, hoksaako lapsi, että tämä ei ole mahdollista.</p>
+
+<p>Jos haluaa vielä lisäpuuhaa, niin voi yrittää selvittää, kuinka monta siirtoa tarvitaan aloitusluvuista $1, 1$ ja $1$ eri tavoitelukuihin pääsemiseksi. Alla olevasta taulukosta löytyy minimimäärä siirtoja tavoiteluvuille, jotka ovat enintään $50$.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse;">
+
+  <tr><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333;">1</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333;">0</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333; border-left: 2px solid #333;">11</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333;">5</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333; border-left: 2px solid #333;">21</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333;">6</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333; border-left: 2px solid #333;">31</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333;">7</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333; border-left: 2px solid #333;">41</td><td style="padding: 8px 12px; text-align: center; border-top: 1px solid #333;">7</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">2</td><td style="padding: 8px 12px; text-align: center;">1</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">12</td><td style="padding: 8px 12px; text-align: center;">4</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">22</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">32</td><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">42</td><td style="padding: 8px 12px; text-align: center;">7</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">3</td><td style="padding: 8px 12px; text-align: center;">2</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">13</td><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">23</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">33</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">43</td><td style="padding: 8px 12px; text-align: center;">7</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">4</td><td style="padding: 8px 12px; text-align: center;">2</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">14</td><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">24</td><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">34</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">44</td><td style="padding: 8px 12px; text-align: center;">7</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center;">3</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">15</td><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">25</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">35</td><td style="padding: 8px 12px; text-align: center;">7</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">45</td><td style="padding: 8px 12px; text-align: center;">7</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center;">3</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">16</td><td style="padding: 8px 12px; text-align: center;">4</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">26</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">36</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">46</td><td style="padding: 8px 12px; text-align: center;">7</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">7</td><td style="padding: 8px 12px; text-align: center;">4</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">17</td><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">27</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">37</td><td style="padding: 8px 12px; text-align: center;">7</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">47</td><td style="padding: 8px 12px; text-align: center;">8</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">8</td><td style="padding: 8px 12px; text-align: center;">3</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">18</td><td style="padding: 8px 12px; text-align: center;">5</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">28</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">38</td><td style="padding: 8px 12px; text-align: center;">7</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">48</td><td style="padding: 8px 12px; text-align: center;">6</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center;">9</td><td style="padding: 8px 12px; text-align: center;">4</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">19</td><td style="padding: 8px 12px; text-align: center;">6</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">29</td><td style="padding: 8px 12px; text-align: center;">7</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">39</td><td style="padding: 8px 12px; text-align: center;">7</td><td style="padding: 8px 12px; text-align: center; border-left: 2px solid #333;">49</td><td style="padding: 8px 12px; text-align: center;">7</td></tr>
+
+  <tr><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333;">10</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333;">4</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333; border-left: 2px solid #333;">20</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333;">5</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333; border-left: 2px solid #333;">30</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333;">6</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333; border-left: 2px solid #333;">40</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333;">6</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333; border-left: 2px solid #333;">50</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #333;">7</td></tr>
+
+</table>
+
+</div>
+
+<p><strong>Aktiviteetti 3: kaikissa tapauksissa toimivat ratkaisut</strong></p>
+
+<p>Käsittele sitten seuraavaa tehtävää: Pöydällä on viisi lappua. Niistä neljään on kirjoitettu jotkin luvut. Tavoitteena on saada kirjoitettua viidenteen lappuun luku, joka on suurempi kuin mikään näistä neljästä luvusta. (Ensimmäisen neljän lapun lukuja ei saa ylikirjoittaa muilla komennoilla.)</p>
+
+<p>Lapsi voi tarjota tähän monenlaisia ratkaisuja riippuen lappuihin kirjoitetuista luvuista. Jos lappujen luvut esimerkiksi ovat $1, 2, 3, 4$, voisi lapsi tarjota komentosarjan</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c + d → e
+</code></pre></div></div>
+
+<p>Komentosarja toimii tässä tapauksessa, mutta ei toimisi, jos lappujen luvut olisivat vaikkapa $4, 3, 2, 1$.</p>
+
+<p>Siispä kysy lapselta, toimiiko tämä komentosarja jokaisessa mahdollisessa tapauksessa. Pyydä häntä keksimään ratkaisu, joka toimii kaikissa tilanteissa.</p>
+
+<p>Voit konkretisoida tätä seuraavilla tavoilla:</p>
+
+<ul>
+  <li>Kirjoita lappuihin luvut lapselta piilossa ja laita laput ylösalaisin pöydälle. Nyt lapsen tulee sanoa komennot ilman, että hän tietää lappujen lukuja. (Huomaa, että hän voi silti onnistua yhdessä tapauksessa, vaikka ratkaisu ei toimisikaan aina.)</li>
+  <li>
+    <p>Kysy lapselta, toimisiko esimerkiksi komentosarja</p>
+
+    <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → e
+a + c → e
+</code></pre></div>    </div>
+
+    <p>kaikissa tapauksissa. (Tämä ei toimi, jos lapun $d$ luku olisi hyvin suuri, siis esimerkiksi $1, 2, 3, 10$.) Pyydä häntä keksimään tapaus, jossa se ei toimi.</p>
+  </li>
+  <li>Pyydä lasta kirjoittamaan komentosarja paperille etukäteen ennen kuin sinä kirjoitat luvut lapulle. Tällöin jos komentosarja ei toimi kaikissa tapauksissa, voit valita juuri sellaiset luvut, joissa se epäonnistuu.</li>
+</ul>
+
+<p>Tässä on lista tehtävistä, joissa halutaan ratkaisu, joka toimii kaikissa tapauksissa.</p>
+
+<ol>
+  <li>Yllä mainittu esimerkki: neljällä lapulla on luvut ja viidenteen halutaan luku, joka on suurempi kuin kaikki neljä edellistä.</li>
+  <li>Kahdelle lapulle on kirjoitettu luvut. Kolmanteen lappuun halutaan luku, joka on suurempi kuin $15$.</li>
+  <li>Kahdelle lapulle on kirjoitettu luvut. Kolmanteen lappuun halutaan luku, joka on parillinen.</li>
+  <li>Kahdelle lapulle kirjoitetaan luvut. Ensimmäisen lapun luku on vähintään $5$ ja enintään $10$. Toisen lapun luku on väliltä $20$ ja $30$. Kolmanteen lappuun halutaan luku, joka on väliltä $25$ ja $40$.</li>
+  <li>Kahdelle lapulle kirjoitetaan luvut. Ensimmäisen lapun luku on vähintään $2$ ja enintään $6$. Toisen lapun luku on väliltä $6$ ja $8$. Kolmanteen lappuun halutaan luku, joka on väliltä $20$ ja $30$.</li>
+</ol>
+
+<p>(Kaikissa näissä tehtävissä oletetaan, että luvut ovat positiivisia kokonaislukuja: ei negatiivisia lukuja eikä desimaalilukuja.)</p>
+
+<p>Voit myös käyttää tehtävää, jossa kahdesta luvusta halutaan tuottaa pariton luku kolmannelle lapulle. Tähän ei ole ratkaisua, joka toimisi aina. Erityisesti mikään komentosarja ei toimi tapauksessa, jossa molemmat aloitusluvut ovat parillisia. Testaa, huomaako lapsi tämän.</p>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Tämä harjoitus tutustuttaa lapselle kolmea hyödyllistä konseptia.</p>
+
+<p>Yksi on idea <em>komentosarjoista</em>. Erilaisia prosesseja pystyy kuvaamaan sarjalla yksinkertaisia, yksiselitteisiä komentoja. Tietokoneet osoittavat, kuinka pitkillä ja monimutkaisilla komentosarjoilla pystyy ratkomaan yllättävänkin vaikeita ja tärkeitä oikean maailman ongelmia. (Lapselle ei kuitenkaan vielä tarvitse puhua tietokoneista.)</p>
+
+<p>Toinen on <em>muuttujat</em>. Monessa tilanteessa on kätevää, kun lukuihin voi viitata jollakin nimellä. Tehtävissä tulikin vastaan tällainen tilanne: lapussa oleva luku ei ollut tiedossa (koska vanhempi oli kääntänyt paperin ylösalaisin tai koska sitä muutettiin eri tapauksien välillä). Tällöin on kätevää pystyä puhumaan “siitä luvusta, joka on tuossa lapussa”. Yleensä kätevyyden vuoksi nimet ovat yksikirjaimisia tai muuten lyhyitä.</p>
+
+<p>(Ja vaikka lapputehtävät ovatkin keinotekoisia, vastaavaa ilmiötä tulee jatkuvasti vastaan oikeassa elämässä: esimerkiksi “tuon puun korkeus metreinä” ja “kaupan tänään myymien mehupurkkien määrä” ovat nimiä luvuille, joita ei tiedetä.)</p>
+
+<p>Kolmas on <em>validi päättely</em>. Yksi ajattelun kulmakivi on johtopäätösten tekeminen havainnoista ja oletuksista: “<em>jos</em> tämä ja tuo asia pätevät, <em>niin</em> sitten pätee myös tämä asia”. Näissä tehtävissä tätä harjoitellaan muodossa “<em>jos</em> tämä komentosarja suoritetaan ja lappujen luvut ovat positiivisia, <em>niin</em> lopuksi tuossa lapussa oleva luku on suurempi kuin minkään muun lapun luku”.</p>
+
+<p>Päättelyssä on tärkeää, että se toimii kaikissa mahdollisissa tapauksissa: ei saisi tapahtua niin, että oletukset pätevät ja niistä kuitenkin saadaan “pääteltyä” jotakin, mikä ei päde. Jos näin käy, niin päättelyssä on mennyt jotakin vikaan (tai oletukset eivät pädekään).</p>
+
+<p>Siten vaikka esimerkiksi komento “$c + d \to e$” tuottaisikin joissakin tapauksissa halutun lopputuloksen, ei olisi oikein sanoa “jos lappujen luvut ovat positiivisia ja tämä komento suoritetaan, niin lopuksi viidennessä lapussa on suurempi luku kuin muissa lapuissa”: johtopäätös ei seuraa oletuksista.</p>
+
+<h3 id="ratkaisuja">Ratkaisuja</h3>
+
+<p>Tässä on valikoituihin tehtäviin ratkaisuja.</p>
+
+<p>“Luvut: $2, 3$ ja $4$. Tavoiteluku: $9$. (Onnistuu kahdella siirrolla.)”</p>
+
+<p>Jos lapuilla $a$, $b$ ja $c$ on luvut $2$, $3$ ja $4$, luvun $9$ voi tuottaa lappuun $c$ seuraavalla komentosarjalla:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → a
+a + c → c
+</code></pre></div></div>
+
+<p>“Luvut: $3, 4$ ja $5$. Tavoiteluku: $23$. (Onnistuu kolmella siirrolla.)”</p>
+
+<p>Yksi muttei ainut ratkaisu:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c + c → c
+c + c → c
+a + c → c
+</code></pre></div></div>
+
+<p>“Neljällä lapulla on luvut ja viidenteen halutaan luku, joka on suurempi kuin kaikki neljä edellistä.”</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + b → e
+c + e → e
+d + e → e
+</code></pre></div></div>
+
+<p>Tällöin lapussa $e$ on lappujen $a, b, c$ ja $d$ lukujen summa. Kun luvut ovat positiivisia, on summa suurempi kuin mikään luku yksinään.</p>
+
+<p>Ongelmaa ei pysty ratkaisemaan vain kahdella komennolla: silloin jää aina joitakin tapauksia, joissa komentosarja ei toimi.</p>
+
+<p>Lukua $15$ suurempi luku muodostuu seuraavasti:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a + a → c
+c + c → c
+c + c → c
+c + c → c
+</code></pre></div></div>
+
+<p>Tehtävissä oletetaan, että lapuissa aluksi olevat luvut ovat positiivisia kokonaislukuja ja siten vähintään $1$. Tästä huomataan, että lappuun $c$ kirjoitetaan aluksi luku, joka on vähintään $1 + 1 = 2$. Toisen komennon jälkeen lapun luku on vähintään $2 + 2 = 4$, kolmannen komennon jälkeen vähintään $4 + 4 = 8$ ja neljännen komennon jälkeen vähintään $8 + 8 = 16$.</p>
+
+<p>Mikään kolmen komennon sarja ei toimi, jos lappuihin $a$ ja $b$ on aluksi kumpaankin kirjoitettu $1$.</p>
+
+<p>“Kahdelle lapulle kirjoitetaan luvut. Ensimmäisen lapun luku on vähintään $2$ ja enintään $6$. Toisen lapun luku on väliltä $6$ ja $8$. Kolmanteen lappuun halutaan luku, joka on väliltä $20$ ja $30$.”</p>
+
+<p>Tähän toimii seuraava komentosarja:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>b + b → c
+b + c → c
+a + c → c
+</code></pre></div></div>
+
+<p>Koska lapun $a$ luku on vähintään $2$ ja lapun $b$ luku on vähintään $6$, lappuun $c$ kirjoitetaan aluksi luku joka on vähintään $12$, sitten vähintään $18$ ja lopuksi vähintään $20$.</p>
+
+<p>Vastaavasti koska lapun $a$ luku on enintään $6$ ja lapun $b$ enintään $8$, lappuun $c$ kirjoitetaan järjestyksessä luvut, jotka ovat enintään $16, 24$ ja $30$.</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/ohjelmoinnin-alkeet/">← Luku 7: Ohjelmoinnin alkeet</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/ohjelmoinnin-alkeet/">Luku 7: Ohjelmoinnin alkeet</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/toisto/">7.2 Toisto →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

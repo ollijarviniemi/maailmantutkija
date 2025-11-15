@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12.5 Koordinaatiomekanismeja - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 12: Koordinaatio</p>
+                
+                <h1>12.5 Koordinaatiomekanismeja</h1>
+            </div>
+            
+            <div class="section-body">
+                <h3 id="ohjeet">Ohjeet</h3>
+
+<p>Kerro lapselle seuraavanlaisia ongelmatilanteita. Kysy aina lopuksi: miten tällaisen ongelman voisi ratkaista?</p>
+
+<p>Jos lapsella on ehdotuksia, jotka toimivat hyvin joissakin tilanteissa muttei toisissa, kehu lasta ratkaisun saamisesta ja lisää sitten tarinaan yksityiskohtia niin, että siihen tarvitaan uudenlainen ratkaisu.</p>
+
+<p><strong>Ongelma 1: jonotus.</strong> Kerran eräässä kaupungissa avattiin uusi jäätelökioski. Jäätelö oli todella hyvää ja kioski saavutti laajan suosion. Suosiolla oli kuitenkin haittapuoli: kioskin jonot kasvoivat hyvin pitkiksi.</p>
+
+<p>Pitkä jono ei tehnyt jäätelön valmistuksesta yhtään sen nopeampaa: oli jono sitten kahden minuutin tai kahden tunnin mittainen, jäätelöä valmistui tasaista tahtia. Ihmisillä siis vain kului paljon aikaa jonottaessa hukkaan ilman, että tästä saatiin mitään hyötyä. Asialle oli löydettävä ratkaisu.</p>
+
+<p><strong>Ongelma 2: työvuoro.</strong> Kerran eräässä kaupassa oli kaksi työntekijää, joiden täytyi sopia seuraavan päivän työvuoroista. Jommankumman täytyisi hoitaa iltavuoro, mutta molemmilla olisi illalla tärkeää menoa. He siis mielellään jättäisivät iltavuoron hoitamisen toiselle ja ottaisivat iltavuoron vastuulleen jonakin toisena päivänä.</p>
+
+<p>He neuvottelivat asiasta hetken, mutta molemmista olisi tuntunut liian ikävältä jäädä paitsi seuraavan illan tapahtumista. Kumpikaan ei siis halunnut antaa periksi eikä yhteisymmärrystä syntynyt. Ilmapiiri muuttui hetki hetkeltä kireämmäksi.</p>
+
+<p><strong>Ongelma 3: hajonnut auto.</strong> Kerran oli eräs henkilö, joka matkusti autolla töihin. Valitettavasti yhtenä päivänä auto rikkoutui. Hän kysyi paikalliselta autonkorjaajalta apua, mutta hän kertoi, että autoa ei saa korjattua: paras ratkaisu olisi hankkia uusi auto.</p>
+
+<p>Auton omistaja kauhistui: “Ei minulla ole noin vain rahaa ostaa uutta autoa!” Käymällä töissä hän kyllä saisi tienattua rahaa, josta osan voisi laittaa säästöön uuden auton ostamista varten. Tarvittavan summan kasaan saaminen kuitenkin veisi aikaa, ja ilman autoa hän ei pystyisi matkustamaan töihin.</p>
+
+<p><strong>Ongelma 4: autokorjaamon perustaminen.</strong> Kerran oli eräs henkilö, joka oli taitava korjaamaan autoja. Hän oli vapaa-ajallaan selvittänyt vikoja omassa ja kavereidensa autoissa, ymmärsi auton toiminnan ja osasi ratkoa hankaliakin ongelmia. Hän myös huomasi, että kaupungissa oli alue, jossa ei oikeastaan ollut autokorjaamoja. Hän sai idean: hänhän voisi perustaa korjaamon ja tehdä autojen korjaamista työkseen!</p>
+
+<p>Oli kuitenkin yksi ongelma: Korjaamon perustaminen vaatisi paljon rahaa. Hänen täytyisi ostaa rakennus, työkaluja ja varaosia, jotta hän voisi hoitaa työnsä kunnolla. Tämä harmitti häntä, koska hänellä ei juuri nyt ollut paljoa rahaa. Hän aikoi tienata rahaa perustamalla autokorjaamon, mutta autokorjaamon perustaminen vaatii rahaa – noidankehä!</p>
+
+<p><strong>Ongelma 5: opetusvideot.</strong> Kerran eräässä maassa haluttiin kehittää koulutusta tekemällä opettavaisia ja viihdyttäviä opetusvideoita. Siispä maan hallitus palkkasi työntekijöitä, jotka tekivät näitä videoita.</p>
+
+<p>Valitettavasti tämä ei mennyt aivan nappiin: videot eivät olleet kovin hyviä. Ne olivat tylsiä, ne käsittelivät asiaa keskinkertaisesti ja niissä ei ollut selkeyttäviä visualisaatioita. Videoita myös valmistui melko hidasta tahtia.</p>
+
+<p>Projektinjohtajat miettivät hanketta uudestaan. “Ei tämän pitäisi olla mahdoton homma”, yksi sanoi. “Minä olen nähnyt hyviäkin opetusvideoita, kyllä niitä on mahdollista tehdä!”, toinen huudahti. “Mutta on se vaikeaa: pitää ymmärtää asia, selittää se mielenkiintoisesti ja luoda hyvät grafiikat”, kolmas pohti. “Tuottavuuteenkin olisi hyvä kannustaa. Yhteen videoon ei voi käyttää ikuisuutta”, neljäs lisäsi. “Täytyy myöntää, työntekijämme eivät olleet ne kaikkein parhaimmat osaajat”, viides voivotteli. “Mutta varmasti on olemassa jokin tapa hyvien opetusvideoiden teettämiseen, meidän täytyy vain keksiä se”, kuudes järähti.</p>
+
+<p><strong>Ongelma 6: lahjottavat poliitikot.</strong> Kerran eräässä maassa oli poliitikkoja, jotka eivät olleet luotettavia. He usein ottivat lahjuksia vastaan tahoilta, jotka halusivat tiettyjä päätöksiä tehtävän.</p>
+
+<p>Ongelmaa yritettiin ratkoa niin, että pankit seurasivat poliitikkojen tileille tulevaa rahaa ja tutkivat asiaa, jos siellä oli jotakin epäilyttävää. Näin napattiinkin joitakin lahjontatapauksia, ja kiinni jääneet poliitikot jättäytyivät virastaan.</p>
+
+<p>Pian kuitenkin lahjonta alkoi tapahtumaan käteisellä, jota ei pystytty samalla tavalla valvomaan. Maassa piti siis keksiä uusi tapa, jolla voisi napata lahjomista.</p>
+
+<p><strong>Ongelma 7: sähköpotkulaudoista päättäminen.</strong> Kerran eräässä kaupungissa oli yritys, joka valmisti sähköpotkulautoja eli potkulautoja, jotka liikkuivat nopeasti akusta saatavan sähkön avulla. Yritys halusi tuoda sähköpotkulautansa laajempaan käyttöön.</p>
+
+<p>Kaupunginhallituksessa päättäjät olivat kuitenkin varuillaan lautojen käyttöönotosta. Heitä huoletti, että sähköpotkulaudat liikkuvat liian nopeasti. Tämä aiheuttaisi loukkaantumisriskin ajajien lisäksi myös jalankulkijoille.</p>
+
+<p>Yritys vakuutteli, että he olivat tehneet koeajoja laudoilla ja todenneet, etteivät ne kulje liian nopeasti. Päättäjät olivat kuitenkin epäileväisiä: yrityksellä on tietysti intressinä vakuuttaa turvallisuudesta, eivätkä koeajot kerro kaikkea siitä, kuinka paljon loukkaantumisia tulisi laajemmasta käyttöönotosta.</p>
+
+<p>Keskusteluun osallistui myös muita ihmisiä. Eräs asiantuntija kertoi, millaisilla tavoilla sähköpotkulautojen koeajot eroavat tositilanteesta, mutta ei osannut kertoa, kuinka paljon onnettomuuksia käytännössä tulisi. Monelta muultakin asiantuntijalta kysyttiin heidän näkemyksiään, eivätkä nekään olleet yksimielisiä. Ihmiset myös vaihtelivat neutraaliudessaan: jotkut olivat sähköpotkulautayritysten työntekijöitä, jotkut taas polkupyöräyritysten.</p>
+
+<p>Päättäjien oli vaikea tehdä tästä kaikesta selkoa: Kuinka paljon eri ihmisten kertomuksiin voi luottaa? Ketkä tietävät asiasta parhaiten, ketkä huonommin? Kuinka rehellisiä eri osapuolet olivat, keiden näkemykset kumpusivat rahallisista motivaatioista? He eivät tienneet keihin luottaa ja kuinka paljon, mutta heidän oli silti päätettävä, ovatko laudat riittävän turvallisia niiden laajempaan käyttöönottoon.</p>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>On monia eri mekanismeja, joita voi hyödyntää erilaisten koordinaatio-ongelmien ratkomiseen.</p>
+
+<p>Jonotusongelmassa on kahden tyyppisiä ratkaisuja: kysynnän vähentäminen ja tarjonnan lisääminen. Kysyntää voi vähentää nostamalla jäätelöiden hintaa niin, että jono lyhenee. Kunhan hintoja ei nosta liikaa, kaikki tuotettu jäätelö saadaan edelleen myytyä saman tien. Siten sama määrä ihmisiä saa edelleen samaa jäätelöä, mutta jonottamiseen käytettävä kokonaisaika vähenee. Tarjontaa voi kasvattaa joko tehostamalla jäätelöiden tekoa (esimerkiksi palkkaamalla uuden työntekijän) tai rakentamalla toisen jäätelökioskin. Näihin voikin saada rahaa nostamalla jäätelön hintaa.</p>
+
+<p>Työvuoro-ongelmaa helpottaa, jos kaupassa on muita työntekijöitä, jotka voivat tuurata. Mutta jos todella on niin, että jommankumman täytyy jättää oma tärkeä asiansa välistä ja jäädä töihin, voivat työntekijät arpoa, kumpi joutuu ottamaan työvuoron itselleen ja kumpi saa pitää vapaan illan. Toinen lähestymistapa on neuvotella hinnasta. Hintaa voi mitata joko suoraan rahassa (“hoidatko sinä huomisen vuoron, jos annan sinulle 30 euroa?”) tai myöhemmissä vuoroissa (“minä voin hoitaa huomisen vuoron, jos saan päättää seuraavan viikon ajan, mitkä iltavuorot minä otan ja mitkä jäävät sinulle”).</p>
+
+<p>Hajonneen auton ongelman voi ratkoa lainalla. Henkilö lainaa rahaa, ostaa sillä uuden auton, pääsee käymään töissä ja maksaa rahat myöhemmin takaisin, kun hän on saanut säästettyä. Lainaa saa hankittua esimerkiksi pankeista. Ongelman olisi voinut myös ennaltaehkäistä vakuutuksella: varakkaampi vakuutusyhtiö pystyy kantamaan riskin ja korvaamaan rahaa auton hajotessa, tietysti maksua vastaan.</p>
+
+<p>Autokorjaamo-ongelmaakin voi lähestyä lainalla, mutta korjaamon perustaja ei välttämättä halua ottaa suurta riskiä siltä varalta, jos korjaamoideasta ei tulekaan mitään. Toinen ratkaisu on sijoittaminen: joku antaa rahaa korjaamon perustamista varten sillä ehdolla, että myöhemmin hän saa pienen osuuden korjaamon voitoista. Tällöin riskin ottaa perustajan sijasta varakkaampi taho, jolle korjaamon konkurssi ei olisi niin suuri ongelma.</p>
+
+<p>Opetusvideo-ongelmaan yksi idea on palkkiot: projektinjohtajat ilmoittavat, että he tulevat maksamaan näin suuren rahasumman kustakin videosta, joka toteuttaa heidän laatuvaatimuksensa. Tämä kannustaa hyviä videontekijöitä luomaan videoita, ja maan hallituksen tarvitsee ainoastaan maksaa tuloksista. Toinen huomio on, että epäonnistuneen projektin jälkeen on syytä harkita projektinjohtajien korvaamista osaavammilla johtajilla.</p>
+
+<p>Lahjustapauksessa yksi idea on, että jotkut ihmiset tarkoituksella tekevät lahjustarjouksia poliitikoille. Tällaisia ansoja virittämällä saadaan napattua epäluotettavat poliitikot. Samaan tapaan kuin junan lipuntarkastajat tekevät liputta matkustamisesta vähemmän houkuttelevaa, ansojen virittäminen tekee lahjusten vastaanottamisesta riskialttiimpaa ja vähemmän houkuttelevaa.</p>
+
+<p>Sähköpotkulaudoista päättämiseen on useita ideoita. Yksi on sakottaa lautailijoita, jos he toimivat liikennesääntöjen vastaisesti. Toinen on sakottaa yritystä tai rajoittaa jälkikäteen lautojen käyttöä, jos lautojen käytöstä aiheutuu paljon vahinkoja jalankulkijoille. Kolmas on laittaa puhujat “seisomaan sanojensa takana” ja tekemään arviot tulevaisuudessa saatavista onnettomuusluvuista niin, että huonommin arvioineet joutuvat maksamaan rahaa paremmin arvioineille. Jos joku ei enää annakaan arviota, hän tuskin todella uskoo omiin puheisiinsa.</p>
+
+<p>Nämä menetelmät ja tilanteet itsessään lepäävät monien muiden koordinaatiomekanismien varassa: Ihmiset voivat tehdä keskenään sitovia sopimuksia, joilla on oikeusjärjestelmän tuki. Ihmiset voivat ostaa asioita rahalla, mahdollistaen helpon kaupankäynnin, erikoistumisen ja yritysten perustamisen. On ihmisiä, jotka päättävät yhteisistä asioista kuntien ja valtioiden tasolla.</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/delegointi-luottamus-ja-integriteetti/">← 12.4 Delegointi, luottamus ja integriteetti</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/koordinaatio/">Luku 12: Koordinaatio</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/kognitio/">Luku 13: Kognitio →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

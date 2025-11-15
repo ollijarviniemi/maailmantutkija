@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shapes Game Distribution Improvement Plan - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="problem-analysis">Problem Analysis</h2>
+
+<p><strong>Current Issue:</strong> Negative examples are too closely tailored to each rule, creating side-channel information leakage.</p>
+
+<h3 id="examples-of-side-channel-leakage">Examples of Side-Channel Leakage:</h3>
+
+<ol>
+  <li><strong>Rule: “All same color”</strong>
+    <ul>
+      <li>Negatives: 60% have exactly 2 colors, 20% have 3 colors, 20% random</li>
+      <li><strong>Leak:</strong> If you see lots of 2-color examples in negatives, you can guess the rule is about same color</li>
+    </ul>
+  </li>
+  <li><strong>Rule: “Contains green”</strong>
+    <ul>
+      <li>Negatives: 100% have 0 greens</li>
+      <li><strong>Leak:</strong> If you NEVER see green in negatives, the rule is obviously about green</li>
+    </ul>
+  </li>
+  <li><strong>Rule: “At least two circles”</strong>
+    <ul>
+      <li>Negatives: 40% exactly 1 circle, 35% zero circles</li>
+      <li><strong>Leak:</strong> If negatives consistently have 0-1 circles, rule is about circles</li>
+    </ul>
+  </li>
+  <li><strong>Rule: “Exactly two colors”</strong>
+    <ul>
+      <li>Negatives: 25% one color, 30% three colors, 30% four colors</li>
+      <li><strong>Leak:</strong> Negatives avoid exactly 2 colors, revealing the rule</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="solution-broad-baseline-distribution">Solution: Broad Baseline Distribution</h2>
+
+<h3 id="key-principle">Key Principle</h3>
+<p><strong>Negatives should come from a rich, diverse baseline that doesn’t change per rule.</strong></p>
+
+<p>The baseline should contain:</p>
+<ul>
+  <li>High diversity across all attributes</li>
+  <li>Natural variation that’s rule-agnostic</li>
+  <li>No obvious gaps that reveal what’s being tested</li>
+</ul>
+
+<h3 id="proposed-baseline-mixture-30-generators">Proposed Baseline Mixture (30+ generators)</h3>
+
+<p><strong>Color Diversity (7 patterns):</strong></p>
+<ul>
+  <li>uniformRandom (15%)</li>
+  <li>allSameColor (8%)</li>
+  <li>exactlyKColors k=2 (10%)</li>
+  <li>exactlyKColors k=3 (10%)</li>
+  <li>allDifferentColors (8%)</li>
+  <li>symmetricColors (palindrome) (5%)</li>
+  <li>firstAndLastSameColor (5%)</li>
+</ul>
+
+<p><strong>Shape Diversity (7 patterns):</strong></p>
+<ul>
+  <li>uniformRandom (already counted above)</li>
+  <li>allSameType (8%)</li>
+  <li>exactlyKTypes k=2 (10%)</li>
+  <li>exactlyKTypes k=3 (10%)</li>
+  <li>allDifferentTypes (8%)</li>
+  <li>symmetricTypes (palindrome) (5%)</li>
+  <li>firstAndLastSameType (5%)</li>
+</ul>
+
+<p><strong>Combined Patterns (4 patterns):</strong></p>
+<ul>
+  <li>allDifferentColorsAndTypes (5%)</li>
+  <li>allDifferentColorsAndSameShape (4%)</li>
+  <li>allDifferentShapesAndSameColor (4%)</li>
+  <li>noAdjacentSameColor (3%)</li>
+  <li>noAdjacentSameType (3%)</li>
+</ul>
+
+<p><strong>Specific Attributes (weighted by population):</strong></p>
+<ul>
+  <li>Contains green (proportional to 1/6 in random)</li>
+  <li>Contains triangle (proportional to 1/6 in random)</li>
+  <li>Contains red circle at position 0 (proportional to 1/24 in random)</li>
+  <li>1 circle, 2 circles, 3 circles (various counts)</li>
+</ul>
+
+<p><strong>Total:</strong> ~100% weight distributed across 30+ generator types</p>
+
+<h3 id="implementation-strategy">Implementation Strategy</h3>
+
+<p><strong>Phase 1: Create BASELINE_DISTRIBUTION</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">BASELINE_DISTRIBUTION</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">uniformRandom</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.15</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">allSameColor</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">allSameType</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">exactlyKColors</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.10</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">k</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">exactlyKColors</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.10</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">k</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">exactlyKTypes</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.10</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">k</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">exactlyKTypes</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.10</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">k</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">allDifferentColors</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">allDifferentTypes</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">allDifferentColorsAndTypes</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">symmetricColors</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">symmetricTypes</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">firstAndLastSame</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">attribute</span><span class="p">:</span> <span class="dl">'</span><span class="s1">color</span><span class="dl">'</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">firstAndLastSame</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">attribute</span><span class="p">:</span> <span class="dl">'</span><span class="s1">shape</span><span class="dl">'</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">allDifferentColorsAndSameShape</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.04</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">allDifferentShapesAndSameColor</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.04</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">noAdjacentSameColor</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.03</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">noAdjacentSameType</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.03</span> <span class="p">},</span>
+    <span class="c1">// Specific counts for various shapes</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withGreenCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numGreen</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withGreenCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numGreen</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withGreenCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.015</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numGreen</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withGreenCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numGreen</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withTriangleCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numTriangles</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withTriangleCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numTriangles</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withTriangleCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.015</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numTriangles</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withCircleCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numCircles</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withCircleCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numCircles</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withCircleCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.015</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numCircles</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">withCircleCount</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">numCircles</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre></div></div>
+
+<p><strong>Phase 2: Per-Rule Adjustments (Optional)</strong></p>
+
+<p>For each rule, we can ADD a small weight to near-misses without REMOVING the baseline:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">distribution</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">positive</span><span class="p">:</span> <span class="p">[...],</span>
+    <span class="nx">negative</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">...</span><span class="nx">BASELINE_DISTRIBUTION</span><span class="p">,</span>  <span class="c1">// 70% baseline</span>
+        <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">nearMiss1</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.15</span> <span class="p">},</span>  <span class="c1">// 15% near-miss</span>
+        <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">nearMiss2</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.15</span> <span class="p">}</span>   <span class="c1">// 15% near-miss</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The key is that baseline patterns still appear frequently, masking which near-miss is relevant.</p>
+
+<p><strong>Phase 3: Validation Filter</strong></p>
+
+<p>Instead of generating distributions that AVOID satisfying the rule, we:</p>
+<ol>
+  <li>Sample from baseline</li>
+  <li>Check if it satisfies the rule</li>
+  <li>If it does (for negative) → reject and resample</li>
+  <li>Use fallback generateNegative() after N attempts</li>
+</ol>
+
+<p>This way the baseline can include ANYTHING, and we just filter out false negatives.</p>
+
+<h2 id="benefits">Benefits</h2>
+
+<ol>
+  <li><strong>No side-channel:</strong> Baseline is same for all rules</li>
+  <li><strong>Rich diversity:</strong> 30+ patterns ensure variety</li>
+  <li><strong>Natural distribution:</strong> Reflects broad space of possibilities</li>
+  <li><strong>Harder to guess:</strong> Can’t use “what’s missing” heuristic</li>
+  <li><strong>Easier to maintain:</strong> Change baseline once, affects all rules</li>
+</ol>
+
+<h2 id="risks--mitigations">Risks &amp; Mitigations</h2>
+
+<p><strong>Risk 1: Collision rate too high</strong></p>
+<ul>
+  <li>Some rules might satisfy 50% of baseline (e.g., “contains any color”)</li>
+  <li><strong>Mitigation:</strong> Use retry + fallback. After 100 attempts, use generateNegative()</li>
+</ul>
+
+<p><strong>Risk 2: Baseline too uniform</strong></p>
+<ul>
+  <li>If everything is uniform random, no pedagogical value</li>
+  <li><strong>Mitigation:</strong> Include structured patterns (palindromes, exactly K, etc.)</li>
+</ul>
+
+<p><strong>Risk 3: Too slow</strong></p>
+<ul>
+  <li>Rejecting many samples could be slow</li>
+  <li><strong>Mitigation:</strong> Profile and optimize. 100 attempts at &lt;1ms each = acceptable</li>
+</ul>
+
+<h2 id="testing-plan">Testing Plan</h2>
+
+<ol>
+  <li>Generate 1000 negatives for each rule</li>
+  <li>Measure collision rate (how many satisfy the rule)</li>
+  <li>Visualize distribution of patterns in negatives</li>
+  <li>Confirm no obvious gaps or biases</li>
+  <li>Playtest: Can humans exploit side-channels?</li>
+</ol>
+
+<h2 id="implementation-steps">Implementation Steps</h2>
+
+<ol>
+  <li>Create BASELINE_DISTRIBUTION in shapes-distributions.js</li>
+  <li>Update shapes-rules.js to use BASELINE_DISTRIBUTION for all rules</li>
+  <li>Add optional per-rule near-miss boosters (15-30% extra weight)</li>
+  <li>Test collision rates</li>
+  <li>Adjust weights if needed</li>
+  <li>Remove or minimize uniformRandom if collision rates too high for some rules</li>
+  <li>Document final distribution in comments</li>
+</ol>
+
+<h2 id="expected-outcome">Expected Outcome</h2>
+
+<p>Players face a rich, diverse set of negative examples that:</p>
+<ul>
+  <li>Don’t telegraph the rule</li>
+  <li>Require genuine hypothesis testing</li>
+  <li>Include interesting near-misses organically</li>
+  <li>Feel natural and unpredictable</li>
+</ul>
+
+<p>This makes the game significantly harder and more intellectually engaging.</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>
