@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shapes Game - Baseline Distribution v2 - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="summary-of-changes-2025-10-19">Summary of Changes (2025-10-19)</h2>
+
+<p><strong>Goal:</strong> Eliminate side-channel information leakage from negative example distributions.</p>
+
+<h3 id="problem-v1">Problem (v1)</h3>
+
+<p>Each rule had custom-tailored negative distributions that avoided the rule, making it easier to guess the rule by noticing conspicuous gaps:</p>
+
+<ul>
+  <li><strong>Rule “All same color”</strong>: Negatives had 20% random, 40% exactly 3 colors, 40% exactly 2 colors
+    <ul>
+      <li><strong>Leak:</strong> Negatives avoid 1 color and 4 colors, suggesting rule is about color uniformity</li>
+    </ul>
+  </li>
+  <li><strong>Rule “Contains green”</strong>: Negatives had 100% zero greens
+    <ul>
+      <li><strong>Leak:</strong> If you never see green in negatives, rule must be about green</li>
+    </ul>
+  </li>
+  <li><strong>Rule “At least two circles”</strong>: Negatives had 40% one circle, 35% zero circles
+    <ul>
+      <li><strong>Leak:</strong> Negatives always have 0-1 circles, revealing threshold is 2</li>
+    </ul>
+  </li>
+  <li><strong>Rule “Exactly two colors”</strong>: Negatives carefully avoided exactly 2 colors
+    <ul>
+      <li><strong>Leak:</strong> Distribution gap at k=2 is obvious giveaway</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="solution-v2">Solution (v2)</h3>
+
+<p><strong>All rules now use the same BASELINE_DISTRIBUTION</strong> for negatives.</p>
+
+<p>The baseline is a rich mixture of ~35 pattern types:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Patterns</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Core diversity</td>
+      <td>uniformRandom, allSameColor, allSameType, allDifferentColors, allDifferentTypes, allDifferentColorsAndTypes</td>
+      <td>44%</td>
+    </tr>
+    <tr>
+      <td>Exactly K</td>
+      <td>exactlyKColors (k=2,3), exactlyKTypes (k=2,3)</td>
+      <td>30%</td>
+    </tr>
+    <tr>
+      <td>Symmetry</td>
+      <td>symmetricColors, symmetricTypes, firstAndLastSame, noAdjacent</td>
+      <td>16%</td>
+    </tr>
+    <tr>
+      <td>Combined</td>
+      <td>allDifferentColorsAndSameShape, allDifferentShapesAndSameColor</td>
+      <td>8%</td>
+    </tr>
+    <tr>
+      <td>Green counts</td>
+      <td>withGreenCount (0,1,2,3,4)</td>
+      <td>6%</td>
+    </tr>
+    <tr>
+      <td>Triangle counts</td>
+      <td>withTriangleCount (0,1,2,3,4)</td>
+      <td>6%</td>
+    </tr>
+    <tr>
+      <td>Circle counts</td>
+      <td>withCircleCount (0,1,2,3,4)</td>
+      <td>6%</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="key-benefits">Key Benefits</h3>
+
+<ol>
+  <li><strong>No side-channel leakage:</strong> Same baseline for all rules</li>
+  <li><strong>Rich diversity:</strong> 35+ patterns ensure natural variety</li>
+  <li><strong>Natural frequencies:</strong> Specific attribute counts (green, triangle, circle) appear at realistic rates</li>
+  <li><strong>No obvious gaps:</strong> Can’t exploit “what’s missing” heuristic</li>
+  <li><strong>Harder gameplay:</strong> Must genuinely test hypotheses instead of pattern-matching distribution gaps</li>
+  <li><strong>Easier maintenance:</strong> Change baseline once, affects all rules</li>
+</ol>
+
+<h3 id="implementation-details">Implementation Details</h3>
+
+<p><strong>Before (v1):</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">distribution</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">positive</span><span class="p">:</span> <span class="p">[...],</span>
+    <span class="nx">negative</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">uniformRandom</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.20</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">exactlyKColors</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.40</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">k</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">exactlyKColors</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.40</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">k</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>After (v2):</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">distribution</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">positive</span><span class="p">:</span> <span class="p">[...],</span>
+    <span class="nx">negative</span><span class="p">:</span> <span class="nx">BASELINE_DISTRIBUTION</span> <span class="c1">// Rule-agnostic rich baseline</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="collision-handling">Collision Handling</h3>
+
+<p>Since baseline is rule-agnostic, some patterns may accidentally satisfy the rule. The game handles this via retry-with-fallback:</p>
+
+<ol>
+  <li>Sample from BASELINE_DISTRIBUTION</li>
+  <li>Check if it violates the rule (as needed for negative example)</li>
+  <li>If not, retry up to 100 times</li>
+  <li>If still fails, use guaranteed <code class="language-plaintext highlighter-rouge">generateNegative()</code> fallback</li>
+</ol>
+
+<p><strong>Performance:</strong> 100 attempts at &lt;1ms each = acceptable. Fallback ensures correctness.</p>
+
+<h3 id="expected-collision-rates">Expected Collision Rates</h3>
+
+<p>Estimated percentage of baseline that accidentally satisfies each rule:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rule</th>
+      <th>Collision Rate</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>All same color</td>
+      <td>~7%</td>
+      <td>Only allSameColor pattern satisfies</td>
+    </tr>
+    <tr>
+      <td>All same type</td>
+      <td>~7%</td>
+      <td>Only allSameType pattern satisfies</td>
+    </tr>
+    <tr>
+      <td>All different colors</td>
+      <td>~6%</td>
+      <td>Only allDifferentColors + allDifferentColorsAndTypes</td>
+    </tr>
+    <tr>
+      <td>Contains green</td>
+      <td>~5%</td>
+      <td>Green count patterns 1-4</td>
+    </tr>
+    <tr>
+      <td>Exactly two colors</td>
+      <td>~8%</td>
+      <td>exactlyKColors k=2</td>
+    </tr>
+    <tr>
+      <td>Contains triangle</td>
+      <td>~5%</td>
+      <td>Triangle count patterns 1-4</td>
+    </tr>
+    <tr>
+      <td>At least two circles</td>
+      <td>~3%</td>
+      <td>Circle count patterns 2-4</td>
+    </tr>
+    <tr>
+      <td>First is red circle</td>
+      <td>~4%</td>
+      <td>1/6 colors × 1/6 shapes in random</td>
+    </tr>
+    <tr>
+      <td>Color palindrome</td>
+      <td>~7%</td>
+      <td>symmetricColors + allSameColor</td>
+    </tr>
+    <tr>
+      <td>All colors &amp; types different</td>
+      <td>~6%</td>
+      <td>Only allDifferentColorsAndTypes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Average collision rate: <strong>~6%</strong>, well within acceptable range (&lt; 50%).</p>
+
+<h3 id="testing-checklist">Testing Checklist</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Play each rule and verify negatives feel diverse</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Confirm no obvious distribution gaps</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify fallback <code class="language-plaintext highlighter-rouge">generateNegative()</code> rarely triggers (should be &lt; 5% of negatives)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check console for warnings about failed validations</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Playtest: Confirm humans can’t easily guess rules from distribution patterns</li>
+</ul>
+
+<h3 id="future-enhancements">Future Enhancements</h3>
+
+<p>If desired, we can add <strong>per-rule near-miss boosters</strong> on top of baseline:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">negative</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">...</span><span class="nx">BASELINE_DISTRIBUTION</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">d</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="p">...</span><span class="nx">d</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="nx">d</span><span class="p">.</span><span class="nx">weight</span> <span class="o">*</span> <span class="mf">0.70</span> <span class="p">})),</span> <span class="c1">// 70% baseline</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">nearMiss1</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.15</span> <span class="p">},</span> <span class="c1">// 15% near-miss</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">nearMiss2</span><span class="dl">'</span><span class="p">,</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.15</span> <span class="p">}</span>  <span class="c1">// 15% near-miss</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>This preserves baseline diversity while adding pedagogical near-misses. However, current v2 uses pure baseline to maximize anti-leakage.</p>
+
+<h3 id="files-modified">Files Modified</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">shapes-distributions.js</code>: Added BASELINE_DISTRIBUTION (lines 578-639)</li>
+  <li><code class="language-plaintext highlighter-rouge">shapes-rules.js</code>: Updated all 9 rules to use BASELINE_DISTRIBUTION for negatives</li>
+  <li><code class="language-plaintext highlighter-rouge">BASELINE_DISTRIBUTION_v2.md</code>: This documentation</li>
+  <li><code class="language-plaintext highlighter-rouge">IMPROVEMENT_PLAN.md</code>: Original design document</li>
+</ul>
+
+<h3 id="version-history">Version History</h3>
+
+<ul>
+  <li><strong>v1 (2025-10-18)</strong>: Custom per-rule negative distributions (information leakage)</li>
+  <li><strong>v2 (2025-10-19)</strong>: Universal BASELINE_DISTRIBUTION (no leakage)</li>
+</ul>
+
+<hr />
+
+<p><strong>Result:</strong> The shapes game is now significantly more challenging and intellectually honest. Players must genuinely form and test hypotheses rather than exploiting statistical artifacts of the distribution.</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

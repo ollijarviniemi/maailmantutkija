@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Load DSL Test</title>
+</head>
+<body>
+    <h1>Loading test level...</h1>
+    <script>
+        fetch('test-dsl-simple.json')
+            .then(r => r.json())
+            .then(level => {
+                localStorage.setItem('testLevel', JSON.stringify(level));
+                window.location.href = 'test.html';
+            })
+            .catch(err => {
+                document.body.innerHTML = '<h1>Error loading test: ' + err.message + '</h1>';
+            });
+    </script>
+</body>
+</html>

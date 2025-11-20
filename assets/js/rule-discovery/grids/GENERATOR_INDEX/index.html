@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Generator Index - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <p>All 138 implemented generators organized alphabetically with their purpose.</p>
+
+<h2 id="a">A</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">allInCorner2x2s</code> - All blacks in corner 2×2 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">allInCorner3x3</code> - All blacks in one corner 3×3</li>
+  <li><code class="language-plaintext highlighter-rouge">allInEdge2x3s</code> - All blacks in edge 2×3 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">allInMiddle2RorC</code> - All in middle 2 rows or 2 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">allInMiddle4x4</code> - All in center 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneCol</code> - All in single column</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalf</code> - All in one half (top/bottom/left/right)</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalfBordersOnly</code> - In one half, only on borders</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalfEdgeRemoved</code> - In one half but not on edge</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneHalfMiddleRemoved</code> - In one half, middle row/col removed</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneRow</code> - All in single row</li>
+  <li><code class="language-plaintext highlighter-rouge">allInOneThird</code> - All in one third (2 rows or 2 cols)</li>
+  <li><code class="language-plaintext highlighter-rouge">allInThreeRorC</code> - All in any 3 rows or 3 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">allInTwoThirds</code> - Fits in two thirds</li>
+  <li><code class="language-plaintext highlighter-rouge">almost3x3Square</code> - 3×3 square with one cell removed</li>
+  <li><code class="language-plaintext highlighter-rouge">almostBlockResolution</code> - Block resolution with one break</li>
+  <li><code class="language-plaintext highlighter-rouge">almostNonDecreasing</code> - Non-decreasing rows with one violation</li>
+  <li><code class="language-plaintext highlighter-rouge">almostOnePerRowColumn</code> - One per row/col with slight break</li>
+  <li><code class="language-plaintext highlighter-rouge">almostSymmetric</code> - Symmetric except 1-2 cells</li>
+  <li><code class="language-plaintext highlighter-rouge">almostTiled</code> - Tiled 3×3 pattern with one break</li>
+  <li><code class="language-plaintext highlighter-rouge">anySymmetry</code> - Vertical OR horizontal symmetry</li>
+</ul>
+
+<h2 id="b">B</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">blockResolution</code> - Quantized to block grid</li>
+  <li><code class="language-plaintext highlighter-rouge">borderOnly</code> - Only on border cells</li>
+  <li><code class="language-plaintext highlighter-rouge">borderPattern</code> - Border-based pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">borderThickNoCenter</code> - Thick border but hollow center</li>
+  <li><code class="language-plaintext highlighter-rouge">borderUniRand</code> - Uniform random on border</li>
+</ul>
+
+<h2 id="c">C</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">checkerboardDense</code> - Dense checkerboard pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">checkerboardPattern</code> - Checkerboard-based</li>
+  <li><code class="language-plaintext highlighter-rouge">checkerboardPositions</code> - On checkerboard positions</li>
+  <li><code class="language-plaintext highlighter-rouge">connectedBlobs</code> - Single connected blob</li>
+  <li><code class="language-plaintext highlighter-rouge">connectedLongSquiggle</code> - Long meandering path</li>
+  <li><code class="language-plaintext highlighter-rouge">connectedManyBlacks</code> - Large connected blob (parameterized)</li>
+  <li><code class="language-plaintext highlighter-rouge">copy3X3</code> - 3×3 pattern copied to another location</li>
+  <li><code class="language-plaintext highlighter-rouge">corner2x2s</code> - Only in corner 2×2 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">corner2x2sRand</code> - Random in corner 2×2 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">crossShapePlus</code> - Cross/X shape with extras</li>
+</ul>
+
+<h2 id="d">D</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">denseBlob4Neighbors</code> - Dense blob with 4-neighbor cells</li>
+  <li><code class="language-plaintext highlighter-rouge">denseCheckerboard</code> - Dense checkerboard</li>
+  <li><code class="language-plaintext highlighter-rouge">denseConnectedBlob</code> - Large dense connected blob</li>
+  <li><code class="language-plaintext highlighter-rouge">denseMax3Neighbors</code> - Dense pattern, max 3 neighbors</li>
+  <li><code class="language-plaintext highlighter-rouge">denseSpiralPattern</code> - Dense spiral pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">denseStripedPattern</code> - Dense striped pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">denseZigzag</code> - Dense zigzag pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">diagonalPattern</code> - Diagonal-based pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">disconnectedBlobs</code> - Multiple separate blobs</li>
+  <li><code class="language-plaintext highlighter-rouge">downwardRightCascade</code> - Triangular cascade pattern</li>
+</ul>
+
+<h2 id="e">E</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">evenSumCoordinates</code> - Positions where (row+col) is even</li>
+</ul>
+
+<h2 id="f">F</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fewIsolatedBlacks</code> - Mix of isolated and non-isolated</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x3</code> - Fits in 2×3 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x4</code> - Fits in 2×4 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x5</code> - Fits in 2×5 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn2x6</code> - Fits in 2×6 window (full strip)</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn3x3</code> - Fits in 3×3 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn3x4</code> - Fits in 3×4 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn3x5</code> - Fits in 3×5 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn4x4</code> - Fits in 4×4 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsIn4x5</code> - Fits in 4×5 window</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsInTwo2x2s</code> - In two disjoint 2×2 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsInTwo2x3s</code> - In two disjoint 2×3 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">fitsInTwo2x4s</code> - In two disjoint 2×4 regions</li>
+  <li><code class="language-plaintext highlighter-rouge">fiveSquiggles</code> - Five separate squiggles</li>
+  <li><code class="language-plaintext highlighter-rouge">fourSquiggles</code> - Four separate squiggles</li>
+  <li><code class="language-plaintext highlighter-rouge">fourSquiqqles</code> - Four squiggles (typo variant)</li>
+  <li><code class="language-plaintext highlighter-rouge">fourSquiqqlesOne1</code> - Four squiggles plus isolated cell</li>
+  <li><code class="language-plaintext highlighter-rouge">fullySymmetric</code> - All 4 symmetries</li>
+</ul>
+
+<h2 id="h">H</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">has1x2Plus</code> - 1×2 dominoes with extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x1Plus</code> - 2×1 dominoes with extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x2BlackSquare</code> - Has 2×2 square (with extras)</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x2Plus10-15</code> - 2×2 square + 10-15 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x2Plus15-20</code> - 2×2 square + 15-20 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x2Plus20-25</code> - 2×2 square + 20-25 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has2x3RectPlus</code> - 2×3 rectangle with extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has3x2RectPlus</code> - 3×2 rectangle with extras</li>
+  <li><code class="language-plaintext highlighter-rouge">has3x3BlackSquare</code> - 3×3 filled square</li>
+  <li><code class="language-plaintext highlighter-rouge">has3x3Square</code> - 3×3 filled square</li>
+  <li><code class="language-plaintext highlighter-rouge">has4x4Square</code> - 4×4 filled square</li>
+  <li><code class="language-plaintext highlighter-rouge">hasCellWith4Neighbors</code> - Cell with all 4 neighbors</li>
+  <li><code class="language-plaintext highlighter-rouge">hasDiagonal3</code> - Diagonal patterns length 3</li>
+  <li><code class="language-plaintext highlighter-rouge">hasDiagonal4</code> - Diagonal patterns length 4</li>
+  <li><code class="language-plaintext highlighter-rouge">hasLshape</code> - L-shaped patterns</li>
+  <li><code class="language-plaintext highlighter-rouge">hasPlusShape</code> - Plus/cross shapes (no 4 neighbors)</li>
+  <li><code class="language-plaintext highlighter-rouge">hasTshape</code> - T-shaped patterns</li>
+  <li><code class="language-plaintext highlighter-rouge">highCellCount</code> - Very high cell count (25-32)</li>
+  <li><code class="language-plaintext highlighter-rouge">highDensityRandom</code> - High density random (18-28)</li>
+  <li><code class="language-plaintext highlighter-rouge">horizontalSymmetry</code> - Horizontal mirror symmetry</li>
+</ul>
+
+<h2 id="i">I</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">invertedPattern</code> - Inverted (mostly filled)</li>
+  <li><code class="language-plaintext highlighter-rouge">isolatedDots</code> - Specified number of isolated cells</li>
+</ul>
+
+<h2 id="l">L</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">largeBlobMany4Neighbors</code> - Large blob with many 4-neighbor cells</li>
+  <li><code class="language-plaintext highlighter-rouge">leftRightEqual</code> - Left 3 cols equal right 3 cols</li>
+  <li><code class="language-plaintext highlighter-rouge">leftRightMirror</code> - Left-right mirror (not symmetric)</li>
+  <li><code class="language-plaintext highlighter-rouge">longSnake</code> - Long meandering snake</li>
+  <li><code class="language-plaintext highlighter-rouge">longSquiqqle</code> - Long squiggle (typo variant)</li>
+  <li><code class="language-plaintext highlighter-rouge">lShapesMany</code> - Many L-shapes</li>
+</ul>
+
+<h2 id="m">M</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">many1_2s</code> - Many size-1 and size-2 components</li>
+  <li><code class="language-plaintext highlighter-rouge">many1_3s</code> - Many size-1, 2, and 3 components</li>
+  <li><code class="language-plaintext highlighter-rouge">many1_4s</code> - Many size-1 to 4 components</li>
+  <li><code class="language-plaintext highlighter-rouge">many2_4</code> - Many size-2 to 4 components</li>
+  <li><code class="language-plaintext highlighter-rouge">many2_4s</code> - Many size-2 to 4 components</li>
+  <li><code class="language-plaintext highlighter-rouge">many3s</code> - Many size-3 components</li>
+  <li><code class="language-plaintext highlighter-rouge">max3Neighbors</code> - Max 3 orthogonal neighbors</li>
+  <li><code class="language-plaintext highlighter-rouge">multiple2x2s</code> - Multiple 2×2 squares</li>
+  <li><code class="language-plaintext highlighter-rouge">multipleDisjointBlobs</code> - Multiple separate blobs</li>
+  <li><code class="language-plaintext highlighter-rouge">multipleLargeBlobs</code> - Multiple large blobs</li>
+  <li><code class="language-plaintext highlighter-rouge">multiplePlusShapes</code> - Multiple plus shapes</li>
+</ul>
+
+<h2 id="n">N</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">noBorders</code> - Only interior cells</li>
+  <li><code class="language-plaintext highlighter-rouge">noCenter2Columns</code> - Not in center 2 columns</li>
+  <li><code class="language-plaintext highlighter-rouge">noCenter2RorC</code> - Not in center 2 rows/cols</li>
+  <li><code class="language-plaintext highlighter-rouge">noCenter2Rows</code> - Not in center 2 rows</li>
+  <li><code class="language-plaintext highlighter-rouge">noDeadCenter</code> - Everywhere except center 2×2</li>
+  <li><code class="language-plaintext highlighter-rouge">noEdge2RorC</code> - Not in edge 2 rows/cols</li>
+  <li><code class="language-plaintext highlighter-rouge">noIsolatedBlacks</code> - No isolated cells</li>
+  <li><code class="language-plaintext highlighter-rouge">nonDecreasingRows</code> - Non-decreasing in each row</li>
+</ul>
+
+<h2 id="o">O</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">on2HorizontalStripes</code> - Only on 2 horizontal stripes</li>
+  <li><code class="language-plaintext highlighter-rouge">on3VerticalStripes</code> - Only on 3 vertical stripes</li>
+  <li><code class="language-plaintext highlighter-rouge">onePerRowAndColumn</code> - Exactly one per row AND column</li>
+  <li><code class="language-plaintext highlighter-rouge">onePerRowColumnOneExtra</code> - One per row/col but one has 2</li>
+  <li><code class="language-plaintext highlighter-rouge">onePerRowColumnOneMissing</code> - One per row/col but one empty</li>
+</ul>
+
+<h2 id="p">P</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pathPattern</code> - Path-like pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">pentominoIn4x4</code> - Pentomino shape in 4×4 window</li>
+  <li><code class="language-plaintext highlighter-rouge">plusShapePlus10-15</code> - Plus shape + 10-15 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">plusShapePlus15-20</code> - Plus shape + 15-20 extras</li>
+  <li><code class="language-plaintext highlighter-rouge">plusShapePlus20-25</code> - Plus shape + 20-25 extras</li>
+</ul>
+
+<h2 id="r">R</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">randomTetris</code> - Tetromino shapes with extras</li>
+</ul>
+
+<h2 id="s">S</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">septominoNot4x4</code> - 7-cell shape not fitting in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">sextominoIn4x4</code> - 6-cell shape in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">sextominoNot4x4</code> - 6-cell shape not fitting in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">spiralNoCenter</code> - Spiral with hollow center</li>
+</ul>
+
+<h2 id="t">T</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">thinkBlob</code> - Thick compact blob</li>
+  <li><code class="language-plaintext highlighter-rouge">threeEdgesRand</code> - Random on 3 edges</li>
+  <li><code class="language-plaintext highlighter-rouge">threeMediumComponents</code> - Three medium-sized blobs</li>
+  <li><code class="language-plaintext highlighter-rouge">tiled3x3</code> - Tiled 3×3 pattern</li>
+  <li><code class="language-plaintext highlighter-rouge">topBottomEqual</code> - Top 3 rows equal bottom 3 rows</li>
+  <li><code class="language-plaintext highlighter-rouge">topBottomMirror</code> - Top-bottom mirror (not symmetric)</li>
+  <li><code class="language-plaintext highlighter-rouge">tree</code> - Tree structure (branching)</li>
+  <li><code class="language-plaintext highlighter-rouge">treeMax3</code> - Tree with max 3 neighbors</li>
+  <li><code class="language-plaintext highlighter-rouge">tShapesMany</code> - Many T-shapes</li>
+  <li><code class="language-plaintext highlighter-rouge">twoBlobsConViaPath</code> - Two blobs connected by path</li>
+  <li><code class="language-plaintext highlighter-rouge">twoCompsIn4x4</code> - Two components both in 4×4</li>
+  <li><code class="language-plaintext highlighter-rouge">twoEdgesRand</code> - Random on 2 edges</li>
+  <li><code class="language-plaintext highlighter-rouge">twoLargeComponents</code> - Two large separate blobs</li>
+</ul>
+
+<h2 id="u">U</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">uniformRandom</code> - Uniform random placement</li>
+  <li><code class="language-plaintext highlighter-rouge">upwardCascade</code> - Upward triangular cascade</li>
+</ul>
+
+<h2 id="v">V</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">verticalSymmetry</code> - Vertical mirror symmetry</li>
+</ul>
+
+<h2 id="w">W</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">withBlackCount</code> - Exactly N black cells</li>
+</ul>
+
+<h2 id="special-exports">Special Exports</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">180degreeRotInv</code> - 180-degree rotational invariance</li>
+  <li><code class="language-plaintext highlighter-rouge">BASELINE_DISTRIBUTION</code> - Weighted distribution for baseline</li>
+  <li><code class="language-plaintext highlighter-rouge">GridDistributions</code> - Object containing all generators</li>
+  <li><code class="language-plaintext highlighter-rouge">sampleFromDistribution</code> - Sample from weighted distribution</li>
+</ul>
+
+<h2 id="total-138-exports">Total: 138 Exports</h2>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

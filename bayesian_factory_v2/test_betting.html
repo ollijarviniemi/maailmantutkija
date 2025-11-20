@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Betting Interface</title>
+</head>
+<body>
+    <div id="test-container" style="padding: 20px; background: #f8f8f8;"></div>
+    
+    <script src="bayesian/betting-interface.js"></script>
+    <script>
+        const container = document.getElementById('test-container');
+        const bettingInterface = new BettingInterface(container, {
+            sackId: 'test-sack',
+            granularity: 2,
+            distributions: [
+                { dist: {red: 70, blue: 30}, prob: 0.5 },
+                { dist: {red: 30, blue: 70}, prob: 0.5 }
+            ]
+        });
+    </script>
+</body>
+</html>

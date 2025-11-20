@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Levels - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <p>This directory contains 3 comprehensive test levels for testing the revised components.</p>
+
+<h2 id="quick-loading">Quick Loading</h2>
+
+<p><strong>Easiest way:</strong> Open <code class="language-plaintext highlighter-rouge">../load-test-levels.html</code> in your browser and click the buttons!</p>
+
+<p>The loader page provides:</p>
+<ul>
+  <li>One-click loading into localStorage</li>
+  <li>“Load &amp; Open Editor” buttons for instant testing</li>
+  <li>View/manage existing levels</li>
+  <li>Clear description of each test level</li>
+</ul>
+
+<h2 id="test-levels">Test Levels</h2>
+
+<h3 id="1-comprehensive-test-leveljson">1. comprehensive-test-level.json</h3>
+<p><strong>Best to start with this one!</strong></p>
+<ul>
+  <li>Tests all revised components in integration</li>
+  <li>23 components, 30 balls, 4 hypotheses</li>
+  <li>Moderate complexity, good for initial validation</li>
+</ul>
+
+<h3 id="2-edge-cases-test-leveljson">2. edge-cases-test-level.json</h3>
+<ul>
+  <li>Tests parameter limits and edge cases</li>
+  <li>27 components, 50 balls</li>
+  <li>Max/min configurations, overflow scenarios</li>
+</ul>
+
+<h3 id="3-inference-chain-test-leveljson">3. inference-chain-test-level.json</h3>
+<ul>
+  <li>Tests complex Bayesian inference</li>
+  <li>30 components, 20 balls, 16 hypotheses</li>
+  <li>Cross-cycle retention dependencies, multi-source tracking</li>
+</ul>
+
+<h2 id="manual-loading">Manual Loading</h2>
+
+<p>If you prefer to load manually:</p>
+
+<ol>
+  <li>Open <code class="language-plaintext highlighter-rouge">editor.html</code></li>
+  <li>Open browser DevTools (F12) → Console</li>
+  <li>Paste and execute:</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Fetch and load a test level</span>
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">levels/comprehensive-test-level.json</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">level</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">levels</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">bayesianFactoryLevels</span><span class="dl">'</span><span class="p">)</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">[]</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">levels</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">level</span><span class="p">);</span>
+    <span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">bayesianFactoryLevels</span><span class="dl">'</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">levels</span><span class="p">));</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Level loaded! Reload the page.</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Reload page</li>
+  <li>Click “Load Level” button in editor</li>
+  <li>Select test level from list</li>
+</ol>
+
+<h2 id="testing">Testing</h2>
+
+<p>See <code class="language-plaintext highlighter-rouge">../TESTING_CHECKLIST.md</code> for systematic testing procedures.</p>
+
+<p>See <code class="language-plaintext highlighter-rouge">../QUICK_START_TESTING.md</code> for 15-minute quick test guide.</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

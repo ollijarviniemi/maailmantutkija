@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Factory - Level Editor</title>
+    <link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+    <div class="editor-container">
+        <header>
+            <h1>Level Editor</h1>
+            <div class="header-actions">
+                <button id="new-level">Clear</button>
+                <button id="load-level">Load Level</button>
+                <button id="save-level">Save Level</button>
+                <button id="test-level">Test Level</button>
+            </div>
+        </header>
+
+        <div class="editor-main">
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <h3>Tools</h3>
+                <div class="tool-group">
+                    <button class="tool-btn active" data-tool="select" title="Select (V)">
+                        <span class="icon">↖</span>
+                        <span class="label">Select</span>
+                        <span class="hotkey">V</span>
+                    </button>
+                    <button class="tool-btn" data-tool="move" title="Move (M)">
+                        <span class="icon">✥</span>
+                        <span class="label">Move</span>
+                        <span class="hotkey">M</span>
+                    </button>
+                    <button class="tool-btn" data-tool="connect" title="Connect (C)">
+                        <span class="icon">→</span>
+                        <span class="label">Connect</span>
+                        <span class="hotkey">C</span>
+                    </button>
+                    <button class="tool-btn" data-tool="delete" title="Delete (D)">
+                        <span class="icon">×</span>
+                        <span class="label">Delete</span>
+                        <span class="hotkey">D</span>
+                    </button>
+                </div>
+
+                <h3>Components</h3>
+                <div class="component-palette" id="component-palette">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <h3>Properties</h3>
+                <div class="properties-panel" id="properties-panel">
+                    <p class="help-text">Select a component to edit properties</p>
+                </div>
+
+                <h3>Simulation</h3>
+                <div class="simulation-settings">
+                    <label>
+                        Balls to spawn:
+                        <input type="number" id="balls-to-spawn" min="1" max="100" value="10" style="width: 60px;">
+                    </label>
+                    <label>
+                        Betting buckets:
+                        <input type="number" id="betting-buckets" min="2" max="10" value="2" style="width: 60px;">
+                    </label>
+                </div>
+
+                <h3>Shortcuts</h3>
+                <div class="shortcuts">
+                    <div><kbd>V</kbd> Select</div>
+                    <div><kbd>M</kbd> Move</div>
+                    <div><kbd>D</kbd> Delete</div>
+                    <div><kbd>Del</kbd> Remove</div>
+                    <div><kbd>R</kbd> Rotate</div>
+                    <div><kbd>P</kbd> Plex Glass</div>
+                    <div><kbd>Ctrl+Z</kbd> Undo</div>
+                    <div><kbd>Ctrl+Y</kbd> Redo</div>
+                    <div><kbd>Ctrl+C</kbd> Copy</div>
+                    <div><kbd>Ctrl+V</kbd> Paste</div>
+                </div>
+            </div>
+
+            <!-- Canvas Area -->
+            <div class="canvas-area">
+                <div class="canvas-controls">
+                    <div class="level-info">
+                        <label>Width: <span id="grid-width-display">10</span></label>
+                        <button id="decrease-width">−</button>
+                        <button id="increase-width">+</button>
+                        <label style="margin-left: 20px;">Height: <span id="grid-height-display">8</span></label>
+                        <button id="decrease-height">−</button>
+                        <button id="increase-height">+</button>
+                    </div>
+                    <div class="status" id="status">Ready</div>
+                </div>
+                <canvas id="editor-canvas" width="640" height="512"></canvas>
+            </div>
+
+            <!-- Hypothesis Script Panel -->
+            <div class="hypothesis-panel">
+                <h3>Hypothesis Script</h3>
+                <div class="script-editor">
+                    <textarea id="hypothesis-script" spellcheck="false">const list = new List();
+list.define([
+  {red: 70, blue: 30},
+  {red: 30, blue: 70}
+]);
+list.permute();
+
+export const sackA = list.select(0).forBetting();
+export const sackB = list.select(1);
+
+// Define sampling schedule: [sack, time]
+schedule([
+  [sackA, 0],
+  [sackB, 0],
+  [sackA, 1],
+  [sackB, 2],
+  [sackA, 3],
+  [sackB, 3]
+]);
+
+// Define betting buckets (required)
+buckets(2);</textarea>
+                </div>
+                <button id="execute-script" class="execute-btn">Execute</button>
+
+                <h3>Template Palette</h3>
+                <div class="template-palette" id="template-palette">
+                    <p class="help-text">Execute script to create templates</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configuration -->
+    <script src="config/colors.js"></script>
+
+    <!-- Core System -->
+    <script src="core/rng.js"></script>
+    <script src="core/trajectory.js"></script>
+    <script src="core/ball.js"></script>
+    <script src="core/component-registry.js"></script>
+    <script src="core/simulation.js"></script>
+    <script src="core/renderer.js"></script>
+
+    <!-- Components -->
+    <script src="components/sack.js"></script>
+    <script src="components/conveyor.js"></script>
+    <script src="components/conveyor-turn.js"></script>
+    <script src="components/arm.js"></script>
+    <script src="components/shuffler.js"></script>
+    <script src="components/splitter.js"></script>
+    <script src="components/observation.js"></script>
+    <script src="components/black-pit.js"></script>
+    <script src="components/duplicator.js"></script>
+    <script src="components/filter.js"></script>
+    <script src="components/merger.js"></script>
+
+    <!-- Bayesian Hypothesis System (Playback) - not used by editor but loaded for compatibility -->
+    <!-- OLD VERSION (v1) - commented out, using v2 now -->
+    <!-- <script src="bayesian/hypothesis-playback.js"></script> -->
+
+    <!-- Level Editor -->
+    <!-- OLD VERSION (v1) - commented out, using v2 now -->
+    <!-- <script src="editor/hypothesis-editor.js"></script> -->
+
+    <!-- NEW VERSION (v2) - shared DSL core with immediate select fix -->
+    <script src="bayesian/hypothesis-dsl-core.js"></script>
+    <script src="editor/hypothesis-editor-v2.js"></script>
+    <script src="editor/level-editor.js"></script>
+</body>
+</html>

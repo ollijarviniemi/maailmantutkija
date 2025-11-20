@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule Discovery Games - Implementation Status - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="overview">Overview</h2>
+
+<p>The Rule Discovery application implements the “Säännön keksiminen” (Rule Discovery) section from the planned Chapter 15: Tieteen työkaluja (Science Tools).</p>
+
+<h2 id="active-games-4">Active Games (4)</h2>
+
+<h3 id="1--värikkäät-muodot-colored-shapes">1. ✅ Värikkäät muodot (Colored Shapes)</h3>
+<p><strong>Status:</strong> Fully functional</p>
+
+<p>Sequences of 4 colored shapes with various rules:</p>
+<ul>
+  <li>All same color, all different shapes, contains specific color/shape</li>
+  <li>At least 2 same, exactly 2 same, etc.</li>
+  <li>16 rounds implemented</li>
+</ul>
+
+<p><strong>Location:</strong> <code class="language-plaintext highlighter-rouge">/shapes/</code></p>
+
+<h3 id="2--lukujonot-number-sequences">2. ✅ Lukujonot (Number Sequences)</h3>
+<p><strong>Status:</strong> Functional</p>
+
+<p>Number sequence pattern discovery:</p>
+<ul>
+  <li>Arithmetic progressions</li>
+  <li>Geometric progressions</li>
+  <li>Fibonacci-like sequences</li>
+  <li>Prime numbers</li>
+  <li>Polynomial patterns</li>
+</ul>
+
+<p><strong>Location:</strong> <code class="language-plaintext highlighter-rouge">/sequences/</code></p>
+
+<h3 id="3--funktiokoneet-function-machines">3. ✅ Funktiokoneet (Function Machines)</h3>
+<p><strong>Status:</strong> Functional</p>
+
+<p>Function discovery with input/output pairs:</p>
+<ul>
+  <li>Linear functions (f(x) = x + k, f(x) = kx)</li>
+  <li>Parity checks (even/odd)</li>
+  <li>Modulo operations</li>
+  <li>Floor division</li>
+  <li>Combinations</li>
+</ul>
+
+<p><strong>Location:</strong> <code class="language-plaintext highlighter-rouge">/functions/</code></p>
+
+<h3 id="4--kolmen-luvun-peli-three-numbers-game">4. ✅ Kolmen luvun peli (Three Numbers Game)</h3>
+<p><strong>Status:</strong> Functional</p>
+
+<p>Classic 2-4-6 game variants with 3 numbers:</p>
+<ul>
+  <li>Arithmetic sequence</li>
+  <li>Geometric sequence</li>
+  <li>All even/odd</li>
+  <li>Increasing/decreasing</li>
+  <li>Sum constraints</li>
+  <li>Product constraints</li>
+</ul>
+
+<p><strong>Location:</strong> <code class="language-plaintext highlighter-rouge">/threeNumbers/</code></p>
+
+<h2 id="deprecated-games">Deprecated Games</h2>
+
+<h3 id="-pisteet-tasossa-points-in-plane">❌ Pisteet tasossa (Points in Plane)</h3>
+<p><strong>Status:</strong> Deprecated 2025-10-19 - Dysfunctional</p>
+
+<p><strong>Reason:</strong> Over-engineered system with 65 generators, 27+ files, complex architecture that ultimately didn’t work correctly.</p>
+
+<p><strong>Location:</strong> <code class="language-plaintext highlighter-rouge">/_deprecated/points_BROKEN_20251019/</code></p>
+
+<p>See <code class="language-plaintext highlighter-rouge">/_deprecated/README_DEPRECATED.md</code> for details.</p>
+
+<h2 id="application-architecture">Application Architecture</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rule-discovery/
+├── core/
+│   ├── app-manager.js          # Main orchestration
+│   └── game-rules-database.js  # (legacy, may need cleanup)
+│
+├── shapes/                     # Game 1
+│   ├── shapes-rules.js
+│   ├── shapes-game.js
+│   └── shapes-distributions.js
+│
+├── sequences/                  # Game 2
+│   ├── sequences-rules.js
+│   └── sequences-game.js
+│
+├── functions/                  # Game 3
+│   ├── functions-rules.js
+│   └── functions-game.js
+│
+├── threeNumbers/               # Game 4
+│   ├── three-numbers-rules.js
+│   └── three-numbers-game.js
+│
+└── _deprecated/                # Broken/old code
+    └── points_BROKEN_20251019/
+</code></pre></div></div>
+
+<h2 id="features">Features</h2>
+
+<h3 id="progress-tracking">Progress Tracking</h3>
+<ul>
+  <li>LocalStorage persistence</li>
+  <li>Per-round completion status</li>
+  <li>Attempt counting (for shapes game)</li>
+  <li>“First success after N trials” tracking</li>
+</ul>
+
+<h3 id="uiux">UI/UX</h3>
+<ul>
+  <li>Minimalist design (user preference)</li>
+  <li>Help tooltips (? icon)</li>
+  <li>Success screens with rule revelation</li>
+  <li>History panels showing previous attempts</li>
+  <li>Responsive layout</li>
+</ul>
+
+<h3 id="technical">Technical</h3>
+<ul>
+  <li>Pure client-side (no backend)</li>
+  <li>ES6 modules</li>
+  <li>Canvas rendering for shapes</li>
+  <li>Auto-validation of examples</li>
+  <li>Cache-busting with version parameters</li>
+</ul>
+
+<h2 id="integration-with-book">Integration with Book</h2>
+
+<p><strong>Planned:</strong> Chapter 15: Tieteen työkaluja</p>
+
+<p><strong>LaTeX integration:</strong></p>
+<div class="language-latex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">\begin{netti}</span>
+    <span class="k">\saannonkeksimislinkki</span>
+<span class="nt">\end{netti}</span>
+
+<span class="nt">\begin{kirja}</span>
+    Sovellus löytyy osoitteesta maailmantutkija.fi
+<span class="nt">\end{kirja}</span>
+</code></pre></div></div>
+
+<p><strong>Status:</strong> Chapter 15 not yet written. Application is ready and waiting.</p>
+
+<h2 id="testing-status">Testing Status</h2>
+
+<ul>
+  <li>✅ Shapes: Tested and working</li>
+  <li>⚠️ Sequences: Needs comprehensive testing</li>
+  <li>⚠️ Functions: Needs comprehensive testing</li>
+  <li>⚠️ Three Numbers: Needs comprehensive testing</li>
+</ul>
+
+<h2 id="known-issues">Known Issues</h2>
+
+<p>None currently blocking. All active games are functional.</p>
+
+<h2 id="future-work">Future Work</h2>
+
+<ol>
+  <li><strong>Write Chapter 15</strong> - Integrate application into book</li>
+  <li><strong>Comprehensive playtesting</strong> - All games need thorough testing</li>
+  <li><strong>Additional rule variants</strong> - Expand each game with more interesting rules</li>
+  <li><strong>Better hints system</strong> - Help users when stuck</li>
+  <li><strong>Consider simpler Points game</strong> - If geometric patterns are needed, start from scratch with simpler approach</li>
+</ol>
+
+<h2 id="maintenance-notes">Maintenance Notes</h2>
+
+<p><strong>Adding a new game:</strong></p>
+<ol>
+  <li>Create new folder under <code class="language-plaintext highlighter-rouge">rule-discovery/</code></li>
+  <li>Create <code class="language-plaintext highlighter-rouge">[game]-rules.js</code> with rule definitions</li>
+  <li>Create <code class="language-plaintext highlighter-rouge">[game]-game.js</code> with game logic</li>
+  <li>Import in <code class="language-plaintext highlighter-rouge">app-manager.js</code></li>
+  <li>Add menu item in <code class="language-plaintext highlighter-rouge">saannon-keksiminen.html</code></li>
+</ol>
+
+<p><strong>Modifying existing game:</strong></p>
+<ol>
+  <li>Find game folder</li>
+  <li>Edit rules or game logic</li>
+  <li>Test in browser</li>
+  <li>Update version parameter if caching issues occur</li>
+</ol>
+
+<p><strong>Performance:</strong></p>
+<ul>
+  <li>Initialization: &lt;50ms</li>
+  <li>Round generation: &lt;10ms</li>
+  <li>No backend calls (all client-side)</li>
+</ul>
+
+<h2 id="version-history">Version History</h2>
+
+<ul>
+  <li><strong>v2 (2025-10-19):</strong> Removed dysfunctional Points game, cleaned up architecture</li>
+  <li><strong>v1 (2025-10-18):</strong> Initial modular implementation with 5 games</li>
+</ul>
+
+<p>Last updated: 2025-10-19</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

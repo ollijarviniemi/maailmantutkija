@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Factory v2 - Testing Checklist - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <p><strong>Purpose</strong>: Systematic testing of all revised components and features
+<strong>Status</strong>: Ready for testing
+<strong>Test Levels</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">levels/comprehensive-test-level.json</code> - All components integrated</li>
+  <li><code class="language-plaintext highlighter-rouge">levels/edge-cases-test-level.json</code> - Edge cases and parameter limits</li>
+  <li><code class="language-plaintext highlighter-rouge">levels/inference-chain-test-level.json</code> - Complex Bayesian inference chains</li>
+</ul>
+
+<hr />
+
+<h2 id="phase-1-component-specific-tests">Phase 1: Component-Specific Tests</h2>
+
+<h3 id="-observation-component-55-grid">✓ Observation Component (5×5 Grid)</h3>
+
+<p><strong>Test Level</strong>: edge-cases-test-level.json (Component ID 5)</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Basic Grid Layout</strong>
+    <ul>
+      <li>Place 1-25 balls, verify they arrange in 5×5 grid</li>
+      <li>Check spacing is correct (0.16 units between balls)</li>
+      <li>Verify ball scale (0.15) is applied correctly</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Overflow Handling (&gt;25 balls)</strong>
+    <ul>
+      <li>Test with 30+ balls (edge-cases-test-level spawns 50 balls through duplicator)</li>
+      <li>Verify overflow behavior (stacking behind or warning)</li>
+      <li>Check console for any errors</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Visual Rendering</strong>
+    <ul>
+      <li>Balls should be small (ballScale=0.15)</li>
+      <li>No overlapping</li>
+      <li>Grid should be centered in component</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-duplicator-component-multi-output">✓ Duplicator Component (Multi-Output)</h3>
+
+<p><strong>Test Levels</strong>:</p>
+<ul>
+  <li>comprehensive-test-level.json (ID 3: 3-way split)</li>
+  <li>edge-cases-test-level.json (ID 3: max 10 copies, ID 19: 4-way split)</li>
+</ul>
+
+<h4 id="test-1-multi-output-distribution">Test 1: Multi-Output Distribution</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>3-Output Pattern</strong> (comprehensive-test, ID 3)
+    <ul>
+      <li>Pattern: right:3, down:2, up:1 (6 total)</li>
+      <li>Verify exactly 3 balls go right, 2 down, 1 up</li>
+      <li>Check distribution is deterministic (not random)</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>4-Output Pattern</strong> (edge-cases-test, ID 19)
+    <ul>
+      <li>Pattern: right:2, down:2, left:1, up:1 (6 total)</li>
+      <li>Verify all 4 outputs work simultaneously</li>
+      <li>Check each observation gets correct count</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Max Copies</strong> (edge-cases-test, ID 3)
+    <ul>
+      <li>10 copies to single output</li>
+      <li>Verify all 10 copies are created</li>
+      <li>Check performance with many copies</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-2-visual-rendering">Test 2: Visual Rendering</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Input arrow drawn from correct side (opposite to first output)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Gold channels drawn for each unique output side</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Each output labeled with count (e.g., “3” next to right arrow)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Center shows total: “×6” or “×10”</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rendering works correctly in all 4 rotations</li>
+</ul>
+
+<h4 id="test-3-bayesian-tracking">Test 3: Bayesian Tracking</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Basic Tracking</strong> (inference-chain-test, ID 3)
+    <ul>
+      <li>Duplicator has plex glass</li>
+      <li>Verify ballToSack mapping correct for all copies</li>
+      <li>Check console for any tracking warnings</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Multi-Path Tracking</strong>
+    <ul>
+      <li>Copies going to different paths</li>
+      <li>Verify dependencies tracked correctly</li>
+      <li>All copies should have same sackId</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-4-rotation">Test 4: Rotation</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate duplicator with R key</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify all output sides rotate correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check connections update automatically</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Pattern remains deterministic after rotation</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None (Task 4 deferred - might see defensive warnings)
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-shuffler-component-multi-output--retention">✓ Shuffler Component (Multi-Output + Retention)</h3>
+
+<p><strong>Test Levels</strong>:</p>
+<ul>
+  <li>comprehensive-test-level.json (ID 7: dual output + retention)</li>
+  <li>edge-cases-test-level.json (ID 8: max retention, ID 26: minimal config)</li>
+  <li>inference-chain-test-level.json (ID 5: in complex chain)</li>
+</ul>
+
+<h4 id="test-1-single-output-no-retention">Test 1: Single Output (No Retention)</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Minimal Config</strong> (edge-cases-test, ID 26)
+    <ul>
+      <li>1 input, minBufferSize=1, output all to right</li>
+      <li>Verify balls pass through immediately</li>
+      <li>Check single-ball buffering works</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-2-dual-output-no-retention">Test 2: Dual Output (No Retention)</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Create test with pattern: <code class="language-plaintext highlighter-rouge">[{side: 'right', count: 1}, {side: 'down', count: 1}]</code>
+    <ul>
+      <li>minBufferSize=2</li>
+      <li>Verify deterministic split (not random)</li>
+      <li>First ball after shuffle → right, second → down</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-3-single-output-with-retention">Test 3: Single Output with Retention</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Max Retention</strong> (edge-cases-test, ID 8)
+    <ul>
+      <li>minBufferSize=10, pattern: output 5 right, retain 5</li>
+      <li><strong>Cycle 1</strong>: Wait for 10 balls → shuffle → output 5 → retain 5</li>
+      <li><strong>Cycle 2</strong>: 5 retained + 5 new = 10 → shuffle → output 5 → retain 5</li>
+      <li>Verify retained balls persist across cycles</li>
+      <li>Check console logs show cycle numbers</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-4-dual-output-with-retention">Test 4: Dual Output with Retention</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Complex Pattern</strong> (comprehensive-test, ID 7)
+    <ul>
+      <li>minBufferSize=5, pattern: right:2, down:1, retain:2</li>
+      <li><strong>Cycle 1</strong>: 5 balls → shuffle → 2 right, 1 down, 2 retained</li>
+      <li><strong>Cycle 2</strong>: 2 retained + 3 new = 5 → repeat</li>
+      <li>Verify retention + multi-output works together</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-5-visual-rendering">Test 5: Visual Rendering</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Gold channels for each output side</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dashed gray rectangle when retention enabled</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Buffer count display: “2/5” (current/minBufferSize)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rendering correct in all rotations</li>
+</ul>
+
+<h4 id="test-6-bayesian-inference-with-retention">Test 6: Bayesian Inference with Retention</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Cross-Cycle Dependencies</strong> (inference-chain-test, ID 5)
+    <ul>
+      <li>Shuffler has retention, receives balls from 2 sacks</li>
+      <li>Balls from different cycles should be grouped together</li>
+      <li>Check inference treats retained + new balls as single group</li>
+      <li>Verify KL-divergence calculated correctly</li>
+      <li>Console: Look for “shuffle” notifications with all balls</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-7-rotation">Test 7: Rotation</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate shuffler with R key</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify outputPattern sides rotate (retained entries unchanged)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check connections update for all output sides</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify retained entries don’t get rotated</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: Line 293 warning about &gt;3 balls (not a bug, just warning)
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-filter-component-configurable-outputs">✓ Filter Component (Configurable Outputs)</h3>
+
+<p><strong>Test Levels</strong>:</p>
+<ul>
+  <li>comprehensive-test-level.json (ID 11)</li>
+  <li>edge-cases-test-level.json (ID 14: all match scenario)</li>
+</ul>
+
+<h4 id="test-1-custom-color-filtering">Test 1: Custom Color Filtering</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Red Filter</strong> (comprehensive-test, ID 11)
+    <ul>
+      <li>targetColor=’red’</li>
+      <li>Verify only red balls go to match output</li>
+      <li>Non-red balls go to non-match output</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Green Filter</strong> (edge-cases-test, ID 14)
+    <ul>
+      <li>All balls are green, targetColor=’green’</li>
+      <li>Verify all balls go to match output (left)</li>
+      <li>Non-match output should be empty</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-2-output-side-configuration">Test 2: Output Side Configuration</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Standard</strong> (matchOutputSide=’left’, nonMatchOutputSide=’right’)
+    <ul>
+      <li>Verify match balls go left</li>
+      <li>Non-match balls go right</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Swapped</strong> (matchOutputSide=’right’, nonMatchOutputSide=’left’)
+    <ul>
+      <li>Create test with swapped sides</li>
+      <li>Verify routing reverses correctly</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-3-capacity-and-buffering">Test 3: Capacity and Buffering</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />capacity=3: Wait for 3 balls, then output</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />capacity=10: Test with larger buffer (edge-cases-test, ID 14)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify balls buffer before outputting</li>
+</ul>
+
+<h4 id="test-4-visual-rendering">Test 4: Visual Rendering</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Target color indicator (small circle) shows correct color</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Buffer status: “2/3” display</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rendering correct in all 4 directions</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Plex glass overlay if enabled</li>
+</ul>
+
+<h4 id="test-5-rotation">Test 5: Rotation</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate filter with R key</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify direction parameter updates</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check connections update correctly</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-merger-component">✓ Merger Component</h3>
+
+<p><strong>Test Levels</strong>:</p>
+<ul>
+  <li>comprehensive-test-level.json (ID 14)</li>
+  <li>inference-chain-test-level.json (ID 23: merges 2 sources)</li>
+</ul>
+
+<h4 id="test-1-two-source-merge">Test 1: Two-Source Merge</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Basic Merge</strong> (comprehensive-test, ID 14)
+    <ul>
+      <li>Receives from shuffler (down) and filter (left)</li>
+      <li>Balls from both sources should merge into single stream</li>
+      <li>Verify no balls lost</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Four-Source Merge</strong> (inference-chain-test, ID 23)
+    <ul>
+      <li>Receives from 2 conveyors (from 2 different sacks)</li>
+      <li>All balls should merge correctly</li>
+      <li>Check ordering is reasonable (FIFO-ish)</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="test-2-bayesian-tracking">Test 2: Bayesian Tracking</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Balls from different sources maintain separate sackIds</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify dependencies don’t incorrectly merge</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check inference handles mixed-source balls correctly</li>
+</ul>
+
+<h4 id="test-3-rotation">Test 3: Rotation</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate merger with R key</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify connections update</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check all input sides still work</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-conveyor-turn-component">✓ Conveyor-Turn Component</h3>
+
+<p><strong>Test Levels</strong>: Both comprehensive-test and edge-cases-test have multiple turns</p>
+
+<h4 id="test-1-all-8-turn-types">Test 1: All 8 Turn Types</h4>
+<p>Test each turn type in isolation:</p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />right-to-down</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />right-to-up</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />left-to-down</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />left-to-up</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />down-to-right</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />down-to-left</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />up-to-right</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />up-to-left</li>
+</ul>
+
+<h4 id="test-2-direction-validation-task-3">Test 2: Direction Validation (Task 3)</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Balls entering from correct side should pass through</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check console for warnings if ball enters from wrong side</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify trajectory curves correctly</li>
+</ul>
+
+<h4 id="test-3-rotation-1">Test 3: Rotation</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate turn with R key</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify cycles through all 8 types</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check connections update</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h2 id="phase-2-integration-tests">Phase 2: Integration Tests</h2>
+
+<h3 id="-complete-chain-test">✓ Complete Chain Test</h3>
+
+<p><strong>Test Level</strong>: comprehensive-test-level.json</p>
+
+<h4 id="full-flow-testing">Full Flow Testing</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Path 1</strong>: Sack → Duplicator → Observation (top path, 3 copies)
+    <ul>
+      <li>Verify 3 balls reach top observation</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Path 2</strong>: Sack → Duplicator → Shuffler → Filter → Observations
+    <ul>
+      <li>2 balls to shuffler from duplicator</li>
+      <li>Shuffler receives from 2 inputs (duplicator + turn)</li>
+      <li>Shuffler outputs 2 right + 1 down, retains 2</li>
+      <li>Filter separates by color</li>
+      <li>Verify ball counts at both filter outputs</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Path 3</strong>: Duplicator → Merger ← Blue Sack → Final Observation
+    <ul>
+      <li>1 ball from duplicator’s down output</li>
+      <li>Balls from blue sack</li>
+      <li>Merger combines both sources</li>
+      <li>Verify mixed balls at final observation</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Path 4</strong>: Duplicator up → Black Pit
+    <ul>
+      <li>1 ball disappears into pit</li>
+      <li>No errors in console</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="cross-component-interactions">Cross-Component Interactions</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Duplicator feeds multiple paths simultaneously</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Shuffler receives from multiple sources</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Filter receives shuffled balls</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Merger combines balls from different paths</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No balls stuck or lost</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No trajectory errors</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-edge-cases-test">✓ Edge Cases Test</h3>
+
+<p><strong>Test Level</strong>: edge-cases-test-level.json (50 balls spawned)</p>
+
+<h4 id="overflow-scenarios">Overflow Scenarios</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Observation overflow (30+ balls to 25-capacity grid)
+    <ul>
+      <li>Verify graceful handling</li>
+      <li>Check for console warnings/errors</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Duplicator max copies (10 copies)
+    <ul>
+      <li>All copies created successfully</li>
+      <li>No performance issues</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Shuffler max retention (retain 5, output 5)
+    <ul>
+      <li>Multiple cycles work correctly</li>
+      <li>Retained balls don’t accumulate incorrectly</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Filter max capacity (capacity=10)
+    <ul>
+      <li>Large buffer works correctly</li>
+      <li>Outputs all balls eventually</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="minimal-configurations">Minimal Configurations</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Shuffler with 1 input, minBufferSize=1
+    <ul>
+      <li>Acts like pass-through when minimal</li>
+      <li>No errors</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="empty-scenarios">Empty Scenarios</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Filter where all balls match target color
+    <ul>
+      <li>Non-match observation remains empty</li>
+      <li>No errors for empty output</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Expected Issues</strong>: Observation overflow behavior may vary
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-bayesian-inference-test">✓ Bayesian Inference Test</h3>
+
+<p><strong>Test Level</strong>: inference-chain-test-level.json</p>
+
+<h4 id="hypothesis-space">Hypothesis Space</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />4 sacks with 2 alternatives each = 16 total hypotheses</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Betting interface shows all 16 hypotheses</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Initial probabilities: 1/16 each (≈6.25%)</li>
+</ul>
+
+<h4 id="duplication-tracking">Duplication Tracking</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Duplicator</strong> (ID 3, has plex glass)
+    <ul>
+      <li>No observations inside duplicator</li>
+      <li>Copies maintain sackId association</li>
+      <li>All 4 copies traced to original sack</li>
+      <li>Check console for tracking logs</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="shuffler-retention-dependencies">Shuffler Retention Dependencies</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Shuffler</strong> (ID 5, retains 2 of 4 balls)
+    <ul>
+      <li>Balls shuffled together create dependencies</li>
+      <li>Retained balls shuffle with new arrivals next cycle</li>
+      <li><strong>Cross-cycle dependencies</strong>: Retained ball from cycle N shuffles with new ball in cycle N+1</li>
+      <li>Verify both balls treated as same group for inference</li>
+      <li>Check console: “shuffle” events show all balls being shuffled</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="filter-color-routing">Filter Color Routing</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Filter</strong> (ID 11, has plex glass, targets red)
+    <ul>
+      <li>No observations inside filter</li>
+      <li>Red balls → right observation (ID 12)</li>
+      <li>Non-red balls → left observation (ID 13)</li>
+      <li>Verify dependencies tracked through filtering</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="multi-source-merger">Multi-Source Merger</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Merger</strong> (ID 23, combines 2 sacks)
+    <ul>
+      <li>Balls from sacks 26 and 29 merge</li>
+      <li>Both sources maintain separate sack identities</li>
+      <li>No incorrect dependency grouping</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="arm-sampling">Arm Sampling</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Arm</strong> (ID 19, sampleRate=0.5)
+    <ul>
+      <li>Approximately 50% of balls sampled</li>
+      <li>Observations in ID 30 trigger inference updates</li>
+      <li>Check betting interface updates</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="inference-accuracy">Inference Accuracy</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Make bet on hypothesis space</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Run simulation completely</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Observe balls entering observation points</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify posterior probabilities update correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Colors observed should eliminate incompatible hypotheses</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Final KL-divergence score calculated</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check score reflects bet accuracy</li>
+</ul>
+
+<h4 id="console-verification">Console Verification</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No “Missing sackId” warnings (Task 4 might show some)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Shuffle events logged with ball counts</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Inference updates logged when balls observed</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dependency groups shown in console</li>
+</ul>
+
+<p><strong>Expected Issues</strong>:</p>
+<ul>
+  <li>Line 293 warning about &gt;3 balls in shuffler (not a bug)</li>
+  <li>Task 4: Possible defensive warnings about missing sackId (investigation needed)</li>
+</ul>
+
+<p><strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h2 id="phase-3-editor-tests">Phase 3: Editor Tests</h2>
+
+<h3 id="-parameter-configuration-ui">✓ Parameter Configuration UI</h3>
+
+<h4 id="duplicator-properties-panel">Duplicator Properties Panel</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Number of copies input (2-10 range)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Output pattern editor button opens JSON prompt</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Pattern display shows formatted distribution</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Validation catches invalid patterns:
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Invalid sides (not right/down/left/up)</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Negative counts</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Non-integer counts</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Auto-update connections after pattern change</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes saved correctly</li>
+</ul>
+
+<h4 id="shuffler-properties-panel">Shuffler Properties Panel</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />minBufferSize input (1-10 range)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />outputSide dropdown (backward compatibility)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Output pattern editor button opens JSON prompt</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Pattern display shows output + retention</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Validation catches invalid patterns:
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Invalid sides</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Invalid retain entries</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Total count mismatch with minBufferSize (offers to update)</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Auto-update connections after pattern change</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes saved correctly</li>
+</ul>
+
+<h4 id="filter-properties-panel">Filter Properties Panel</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />targetColor selector/input</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />matchOutputSide dropdown (left/right)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />nonMatchOutputSide dropdown (left/right)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />capacity input</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />outputDelay input</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Plex glass checkbox</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes applied immediately</li>
+</ul>
+
+<h4 id="general-ui">General UI</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All property panels update when selecting components</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes render immediately on canvas</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Properties persist after save/load</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Undo/redo works with parameter changes</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-rotation-system">✓ Rotation System</h3>
+
+<h4 id="component-rotation-r-key">Component Rotation (R Key)</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Duplicator</strong>: All sides in outputPattern rotate</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Shuffler</strong>: Output sides rotate, retained entries unchanged</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Filter</strong>: Direction rotates correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Merger</strong>: Direction rotates correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Conveyor</strong>: Direction rotates correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Conveyor-turn</strong>: Cycles through all 8 types correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Splitter</strong>: Direction rotates correctly</li>
+</ul>
+
+<h4 id="pending-component-rotation-r-key-before-placement">Pending Component Rotation (R Key Before Placement)</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Preview shows rotated orientation</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All components rotate in preview mode</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Placement uses rotated orientation</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Auto-connections created correctly for rotated component</li>
+</ul>
+
+<h4 id="auto-connection-updates">Auto-Connection Updates</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Connections update immediately after rotation</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Multi-output components (duplicator, shuffler) create all connections</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Old connections removed correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />New connections added correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No orphaned connections</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No duplicate connections</li>
+</ul>
+
+<h4 id="complex-rotation-tests">Complex Rotation Tests</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate component in middle of long chain
+    <ul>
+      <li>Connections before and after update correctly</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate multi-output component with 3+ connections
+    <ul>
+      <li>All connections remap correctly</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotate shuffler with retention
+    <ul>
+      <li>Output connections update, retention unaffected</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Performance with 20+ components
+    <ul>
+      <li>No lag when rotating</li>
+      <li>All connections update correctly</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h3 id="-saveload-system">✓ Save/Load System</h3>
+
+<h4 id="level-saving">Level Saving</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Create level with all new parameters:
+    <ul>
+      <li>Duplicator with multi-output pattern</li>
+      <li>Shuffler with retention pattern</li>
+      <li>Filter with custom colors and sides</li>
+      <li>Observation with custom ballScale</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Save level to localStorage</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify success message</li>
+</ul>
+
+<h4 id="level-loading">Level Loading</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Close editor (or refresh page)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Open level from localStorage</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify all components loaded correctly:
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Duplicator outputPattern preserved</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Shuffler outputPattern and minBufferSize preserved</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Filter custom parameters preserved</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Observation ballScale preserved</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify connections preserved correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Test simulation works with loaded level</li>
+</ul>
+
+<h4 id="backward-compatibility">Backward Compatibility</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Load old levels (if any exist)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Components with old parameter format should still work</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Shuffler: outputSide converts to outputPattern</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Duplicator: direction converts to outputPattern</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No errors in console</li>
+</ul>
+
+<h4 id="json-exportimport">JSON Export/Import</h4>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Export level to JSON</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify JSON structure matches expected format</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Import JSON level</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify level works correctly after import</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None (backward compatibility built in)
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h2 id="phase-4-performance--polish">Phase 4: Performance &amp; Polish</h2>
+
+<h3 id="performance-tests">Performance Tests</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Large Level</strong> (20+ components)
+    <ul>
+      <li>Create complex level with many components</li>
+      <li>No lag during simulation</li>
+      <li>Canvas rendering smooth (60fps)</li>
+      <li>Auto-connection updates fast (&lt;100ms)</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Many Balls</strong> (50+ balls)
+    <ul>
+      <li>Spawn 50+ balls</li>
+      <li>Simulation runs smoothly</li>
+      <li>No memory leaks</li>
+      <li>Trajectory calculations performant</li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Long Chains</strong> (10+ component chain)
+    <ul>
+      <li>Ball passes through 10+ components</li>
+      <li>Trajectories smooth</li>
+      <li>Bayesian tracking works correctly</li>
+      <li>No accumulated errors</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="console-cleanliness">Console Cleanliness</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Run each test level completely</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check browser console for:
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Red errors (none expected except Task 4 investigation)</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Yellow warnings (document any unexpected ones)</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Excessive logging (reduce if too verbose)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="visual-polish">Visual Polish</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All components render correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Multi-output indicators clear and readable</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Retention indicators visible but not distracting</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ball colors distinct</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Canvas grid lines clear</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Component icons recognizable</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Observation grids neat and organized</li>
+</ul>
+
+<h3 id="user-experience">User Experience</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Component placement feels responsive</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Selection feedback clear</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Properties panel easy to use</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Pattern editors provide good feedback</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Error messages helpful</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotation feels intuitive</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Connections visually clear</li>
+</ul>
+
+<p><strong>Expected Issues</strong>: None
+<strong>Actual Issues</strong>: <em>[Document any issues found]</em></p>
+
+<hr />
+
+<h2 id="summary-checklist">Summary Checklist</h2>
+
+<h3 id="critical-tests-must-pass">Critical Tests (Must Pass)</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Duplicator multi-output distribution deterministic</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Shuffler retention works across cycles</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Filter routes by color correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Observation handles 25+ balls</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rotation updates all parameters correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Auto-connections work for multi-output components</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Bayesian inference tracks through complex chains</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Save/load preserves all new parameters</li>
+</ul>
+
+<h3 id="important-tests-should-pass">Important Tests (Should Pass)</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All edge cases handle gracefully</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No console errors during normal operation</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Performance acceptable with large levels</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />UI provides good feedback</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All property panels functional</li>
+</ul>
+
+<h3 id="nice-to-have-tests-optional">Nice-to-Have Tests (Optional)</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Extreme edge cases (100+ balls, 50+ components)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Backward compatibility with old levels</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Visual polish and aesthetics</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Advanced Bayesian inference scenarios</li>
+</ul>
+
+<hr />
+
+<h2 id="issues-log">Issues Log</h2>
+
+<h3 id="known-issues-from-todo">Known Issues (from TODO)</h3>
+<ol>
+  <li><strong>Task 4</strong>: Duplicator ballToSack tracking may have defensive warnings (needs proper fix)</li>
+  <li><strong>Line 293 Warning</strong>: Shuffler warns about &gt;3 balls (not a bug, just informational)</li>
+</ol>
+
+<h3 id="new-issues-found">New Issues Found</h3>
+<p><em>[Document any new issues discovered during testing]</em></p>
+
+<p><strong>Format</strong>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Issue #: [Brief title]
+Severity: [Critical/High/Medium/Low]
+Component: [Which component(s)]
+Reproduction: [Steps to reproduce]
+Expected: [What should happen]
+Actual: [What actually happens]
+Console Output: [Any error messages]
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="testing-notes">Testing Notes</h2>
+
+<ul>
+  <li>Test on multiple browsers (Chrome, Firefox, Safari)</li>
+  <li>Clear localStorage before testing backward compatibility</li>
+  <li>Use browser DevTools for performance profiling</li>
+  <li>Take screenshots of visual bugs</li>
+  <li>Record console logs for errors</li>
+  <li>Note any unexpected behavior even if “working”</li>
+</ul>
+
+<hr />
+
+<p><strong>Last Updated</strong>: 2025-11-16
+<strong>Status</strong>: Ready for comprehensive testing</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

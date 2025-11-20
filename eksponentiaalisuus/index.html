@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.6 Eksponentiaalisuus - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 1: Luvut ja laskeminen</p>
+                
+                <h1>1.6 Eksponentiaalisuus</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+A4-paperiarkki.
+
+Paljon hammastikkuja. (Vaihtoehtoisesti esimerkiksi pelikortit toimivat myös.)
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p><strong>Aktiviteetti 1: paperin taittelu</strong></p>
+
+<p>Taita A4-paperi kahtia. Huomauta, että siinä on nyt kaksi kerrosta. Anna lapsen taittaa paperi uudestaan kahtia. Kysy lapselta, montako kerrosta siinä nyt on.</p>
+
+<p>Kysy lapselta, montako kerrosta siinä tulee olemaan seuraavan taiton jälkeen. Anna hänen taittaa ja laskea. Toistakaa kunnes paperia ei saa enää taitettua.</p>
+
+<p>Kerrosten määrä on yllättävän hankala laskea, koska kaikki reunat eivät ole näkyvissä ulospäin. Jos teille muodostuu erimielisyys siitä, montako kerrosta paperissa on, voitte selvittää asian tarkasti: tehkää reikä kerrosten läpi, avatkaa paperi ja laskekaa, montako reikää paperiin on syntynyt.</p>
+
+<p>(Reiän tekeminen ei ole aivan helppoa, jos paperissa on monta kymmentä kerrosta! Reiän voi tehdä painamalla saksien päätä paperia kohden ja pyörittämällä sitä muodostuvassa reiässä, jolloin terä poraa paperia hiljalleen. Tämä voi vaatia hieman voimaa, tarkkaavaisuutta ja pitkäjänteisyyttä, joten operaatio on hyvä jättää vanhemman hoidettavaksi.)</p>
+
+<p>Kysy myös, montako kerrosta paperissa olisi, jos sen saisi taitettua yhteensä kymmenen kertaa. Entä kaksikymmentä kertaa?</p>
+
+<p><strong>Aktiviteetti 2: hammastikkurakennelma</strong></p>
+
+<p>Laita pöydälle yksi hammastikku. Laita sen jälkeen kaksi tikkua lisää pöydälle niin, että niiden toinen pää koskettaa vanhan tikun päätä. Vanha tikku “haarautuu” kahdeksi uudeksi tikuksi. Jatka tätä: haarauta uudet tikut.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<img src="/assets/images/tree.png" alt="tree" style="max-width: 60%; height: auto; display: block; margin: 1em auto;" />
+
+</div>
+
+<p>Kysy lapselta, kuinka monta tikkua seuraavissa kerroksissa tulee olemaan.</p>
+
+<p>Kysy myös, kuinka monta tikkua rakennelmassa on yhteensä ja kuinka tämä määrä kasvaa, kun kerroksia tulee lisää.</p>
+
+<p>Voit myös kokeilla muunnelmaa, jossa vanha tikku haarautuu aina kolmeksi uudeksi tikuksi.</p>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Joissakin tilanteissa lukumäärät kasvavat nopeasti suuriksi: “joka kerta tuplaantuu”, ei “joka kerta lisätään yksi”. Tätä kutsutaan eksponentiaalisuudeksi.</p>
+
+<p>Helpoin esimerkki eksponentiaalisesta jonosta on jono</p>
+
+\[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, \ldots,\]
+
+<p>jossa seuraava luku on kaksinkertainen edelliseen nähden. Tämä lukujono tulee vastaan paperin taittelussa ja hammastikkurakennelmassa.</p>
+
+<p>Eksponentiaaliset jonot kasvavat nopeasti. Kymmenen taiton jälkeen A4-paperissa olisi 1024 kerrosta ja kahdenkymmenen jälkeen hieman yli miljoona ($1\ 048\ 576$)!</p>
+
+<p>Voit näyttää, miten eksponentteja eli potenssilaskua merkitään: $2^5$ on sama kuin $2 ⋅ 2 ⋅ 2 ⋅ 2 ⋅ 2$, eli kakkosia kerrotaan keskenään viisi kappaletta.</p>
+
+<p>Hammastikkurakennelmassa tikkujen kokonaismäärä on, tikkujen haarautuessa kahteen, yksi vähemmän kuin seuraavan kerroksen määrä. Esimerkiksi</p>
+
+\[1 + 2 + 4 + 8 = 15 = 16 - 1.\]
+
+<p>Tämän säännönmukaisuuden voi huomata, jos pitää kirjaa yksittäisten kerrosten määräistä ja kokonaismääristä. Sen pätevyyden voi järkeillä monella tavalla.</p>
+
+<p>(Yksi tapa: lisää yksi ylimääräinen hammastikku ensimmäisen kerroksen tikun viereen. Ensimmäisessä kerroksessa on nyt yhtä paljon tikkuja kuin toisessa. Yhdistä ne. Yhdistelmäkerroksessa on yhtä paljon tikkuja kuin seuraavassa. Yhdistä ne edelleen ja toista. Lopulta huomataan, että viimeisessä kerroksessa on yhtä paljon tikkuja kuin sitä edeltävissä oli yhteensä, lukuun ottamatta alussa lisättyä ylimääräistä hammastikkua.)</p>
+
+<p>Jos tikut jakautuvat kolmeen, kerroksissa olevien tikkujen määrät aina kolminkertaistuvat:</p>
+
+\[1, 3, 9, 27, 81, 243, 729, 2187, 6561, \ldots\]
+
+<p>Rakennelman tikkujen yhteismäärä on aina yksi vähemmän kuin seuraavan kerroksen määrä, jaettuna kahdella. Esimerkiksi</p>
+
+\[1 + 3 + 9 + 27 = 40 = \frac{81 - 1}{2}.\]
+
+<p>Tätä on paljon hankalampi huomata tai perustella.</p>
+
+<p>(Mutta sen voi perustella esimerkiksi näin: ota viimeinen kerros erilleen muista. Tuplaa muiden kerrosten tikkujen määrät. Lisää ensimmäiseen kerrokseen yksi ylimääräinen tikku. Nyt ensimmäisessä kerroksessa on $3$ tikkua. Kun sen yhdistää seuraavan kerroksen kanssa, on tikkuja $9$. Kun nämä kerrokset yhdistää seuraavan kanssa, on tikkuja $27$ ja niin edelleen.)</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/isojen-lukujen-laskutoimitukset/">← 1.5 Isojen lukujen laskutoimitukset</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/luvut-ja-laskeminen/">Luku 1: Luvut ja laskeminen</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/suurten-lukujen-arviointia/">1.7 Suurten lukujen arviointia →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

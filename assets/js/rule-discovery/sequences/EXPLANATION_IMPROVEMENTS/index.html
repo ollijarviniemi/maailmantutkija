@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequence Rules - Child-Friendly Explanations - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="changes-made-2025-10-19">Changes Made (2025-10-19)</h2>
+
+<p>Improved all rule explanations to be accessible for 7-year-olds by focusing on <strong>operations</strong> rather than <strong>mathematical terminology</strong>.</p>
+
+<h3 id="before--after-comparisons">Before → After Comparisons</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Round</th>
+      <th>Before (Technical)</th>
+      <th>After (Child-Friendly)</th>
+      <th>Rationale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Lisää 1</td>
+      <td><strong>Lisää aina yksi</strong></td>
+      <td>Added “aina” for clarity</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Lisää 3</td>
+      <td><strong>Lisää aina kolme</strong></td>
+      <td>Added “aina” for clarity</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Kaikki samoja</td>
+      <td>Kaikki samoja ✓</td>
+      <td>Already clear</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Neliöluvut</td>
+      <td><strong>Kerro luku itsellään (1×1, 2×2, 3×3…)</strong></td>
+      <td>Operation-based, not terminology</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kolmioluvut n(n+1)/2</td>
+      <td><strong>Lisää 1, sitten 2, sitten 3, sitten 4…</strong></td>
+      <td>Describes the pattern, not formula</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Fibonacci</td>
+      <td><strong>Lisää kaksi edellistä yhteen</strong></td>
+      <td>Operation-based description</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Kaksinkertaistuu</td>
+      <td><strong>Kaksinkertaista aina</strong></td>
+      <td>Added “aina” for clarity</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Vuorottele +3, -1</td>
+      <td><strong>Vuorottele: lisää 3, vähennä 1</strong></td>
+      <td>More explicit about operations</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Vuorotellen lisää ja kerro</td>
+      <td><strong>Vuorottele: lisää 2, kaksinkertaista</strong></td>
+      <td>Clearer verb choice</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Alkuluvut</td>
+      <td><strong>Luvut, jotka jakaantuvat vain yhdellä ja itsellään — alkuluvut</strong></td>
+      <td>Definition + name-drop</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="key-improvements">Key Improvements</h2>
+
+<h3 id="1-operation-based-descriptions">1. Operation-Based Descriptions</h3>
+<p><strong>Before:</strong> “Neliöluvut (1, 4, 9, 16…)”</p>
+<ul>
+  <li>Assumes child knows what “neliöluku” means</li>
+  <li>Mathematical terminology</li>
+</ul>
+
+<p><strong>After:</strong> “Kerro luku itsellään (1×1, 2×2, 3×3, 4×4…)”</p>
+<ul>
+  <li>Describes the operation performed</li>
+  <li>Concrete and actionable</li>
+  <li>Can figure it out from the sequence</li>
+</ul>
+
+<h3 id="2-pattern-descriptions-over-formulas">2. Pattern Descriptions Over Formulas</h3>
+<p><strong>Before:</strong> “Kolmioluvut n(n+1)/2 (1, 3, 6, 10…)”</p>
+<ul>
+  <li>Formula is meaningless to 7-year-old</li>
+  <li>“Kolmioluku” is obscure terminology</li>
+</ul>
+
+<p><strong>After:</strong> “Lisää 1, sitten 2, sitten 3, sitten 4… (1, 3, 6, 10, 15…)”</p>
+<ul>
+  <li>Describes what happens step-by-step</li>
+  <li>Pattern is clear: differences are 1, 2, 3, 4…</li>
+  <li>Can mentally execute the rule</li>
+</ul>
+
+<h3 id="3-definitions-for-technical-terms">3. Definitions for Technical Terms</h3>
+<p><strong>Before:</strong> “Alkuluvut (2, 3, 5, 7, 11…)”</p>
+<ul>
+  <li>Just uses the term without explanation</li>
+  <li>Assumes prior knowledge</li>
+</ul>
+
+<p><strong>After:</strong> “Luvut, jotka jakaantuvat vain yhdellä ja itsellään — alkuluvut (2, 3, 5, 7, 11…)”</p>
+<ul>
+  <li>Provides definition first</li>
+  <li>Then name-drops the term</li>
+  <li>Child learns what “alkuluku” means</li>
+  <li>Note: Uses “jakaantuvat” (divide evenly) which is simpler than “jakautuvat tasan”</li>
+</ul>
+
+<h3 id="4-fibonacci-explanation">4. Fibonacci Explanation</h3>
+<p><strong>Before:</strong> “Fibonacci (1, 1, 2, 3, 5, 8…)”</p>
+<ul>
+  <li>Name-drops without explanation</li>
+  <li>Doesn’t describe the operation</li>
+</ul>
+
+<p><strong>After:</strong> “Lisää kaksi edellistä yhteen (1, 1, 2, 3, 5, 8…)”</p>
+<ul>
+  <li>Clear operation: take previous two, add them</li>
+  <li>Can figure out the pattern</li>
+  <li>Fibonacci name could be added after em-dash if desired</li>
+</ul>
+
+<h3 id="5-consistency-with-aina">5. Consistency with “Aina”</h3>
+<p>Added “aina” (always) to make it clear the same operation repeats:</p>
+<ul>
+  <li>“Lisää aina yksi”</li>
+  <li>“Lisää aina kolme”</li>
+  <li>“Kaksinkertaista aina”</li>
+</ul>
+
+<p>This prevents confusion with alternating patterns.</p>
+
+<h2 id="philosophy">Philosophy</h2>
+
+<p><strong>Pedagogical Principle:</strong> Children should be able to <strong>execute</strong> the rule from the description, not just recognize a name.</p>
+
+<p><strong>Good:</strong> “Kerro luku itsellään”</p>
+<ul>
+  <li>Actionable instruction</li>
+  <li>Child can compute next term</li>
+</ul>
+
+<p><strong>Bad:</strong> “Neliöluvut”</p>
+<ul>
+  <li>Just a label</li>
+  <li>Requires prior knowledge</li>
+  <li>Not executable without knowing definition</li>
+</ul>
+
+<h2 id="examples-with-sequences">Examples with Sequences</h2>
+
+<ol>
+  <li><strong>“Lisää aina yksi” (1, 2, 3, 4…)</strong>
+    <ul>
+      <li>Child sees: “Oh, I add 1 each time: 1+1=2, 2+1=3, 3+1=4”</li>
+    </ul>
+  </li>
+  <li><strong>“Kerro luku itsellään” (1, 4, 9, 16…)</strong>
+    <ul>
+      <li>Child sees: “1×1=1, 2×2=4, 3×3=9, 4×4=16”</li>
+    </ul>
+  </li>
+  <li><strong>“Lisää 1, sitten 2, sitten 3, sitten 4…” (1, 3, 6, 10, 15…)</strong>
+    <ul>
+      <li>Child sees: “Start at 1, add 1 get 2… wait, that’s 1. Add 2 get 3, add 3 get 6, add 4 get 10”</li>
+      <li>Actually sees the increments: +1, +2, +3, +4, +5…</li>
+    </ul>
+  </li>
+  <li><strong>“Lisää kaksi edellistä yhteen” (1, 1, 2, 3, 5, 8…)</strong>
+    <ul>
+      <li>Child sees: “1+1=2, 1+2=3, 2+3=5, 3+5=8”</li>
+    </ul>
+  </li>
+  <li><strong>“Luvut, jotka jakaantuvat vain yhdellä ja itsellään — alkuluvut”</strong>
+    <ul>
+      <li>Child sees: “2 divides by 1 and 2. 3 divides by 1 and 3. 4 divides by 1, 2, and 4 — not prime!”</li>
+      <li>Learns definition + terminology</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="impact">Impact</h2>
+
+<p><strong>Before:</strong> Players needed prior math knowledge to understand some rules
+<strong>After:</strong> Players can figure out all rules from operational descriptions</p>
+
+<p>This aligns with the book’s philosophy from alkusanat.tex:</p>
+<blockquote>
+  <p>“Lapsien pitäisi antaa miettiä asioita ennen juonipaljastuksia!”</p>
+</blockquote>
+
+<p>Children should be able to discover patterns themselves, not just match against memorized terminology.</p>
+
+<h2 id="testing-checklist">Testing Checklist</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Read each explanation aloud as if to a 7-year-old</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify child could execute the operation from description</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Confirm examples in parentheses match the pattern</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check that technical terms (if used) are explained first</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ensure consistency across similar patterns (e.g., all “aina” patterns)</li>
+</ul>
+
+<hr />
+
+<p><strong>Result:</strong> All sequence rules now have clear, executable, child-friendly explanations that focus on operations rather than terminology.</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

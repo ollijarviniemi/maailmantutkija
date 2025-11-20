@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Distribution Generators Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .pass { color: green; }
+        .fail { color: red; }
+        canvas { border: 1px solid #ccc; margin: 5px; }
+        .grid-container { display: inline-block; margin: 10px; text-align: center; }
+        .grid-label { font-size: 12px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Distribution Generators Test</h1>
+    <div id="results"></div>
+    <h2>Sample Grids</h2>
+    <div id="samples"></div>
+
+    <script type="module">
+        import * as Dist from './assets/js/rule-discovery/grids/grids-distributions.js';
+
+        const results = document.getElementById('results');
+        const samples = document.getElementById('samples');
+
+        function log(message, pass = true) {
+            const div = document.createElement('div');
+            div.className = pass ? 'pass' : 'fail';
+            div.textContent = (pass ? '✓ ' : '✗ ') + message;
+            results.appendChild(div);
+        }
+
+        function renderGrid(grid, label) {
+            const container = document.createElement('div');
+            container.className = 'grid-container';
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 60;
+            canvas.height = 60;
+            const ctx = canvas.getContext('2d');
+            const cellSize = 10;
+
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 6; j++) {
+                    ctx.fillStyle = grid[i][j] ? '#000' : '#fff';
+                    ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                    ctx.strokeStyle = '#999';
+                    ctx.lineWidth = 0.5;
+                    ctx.strokeRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                }
+            }
+
+            const labelDiv = document.createElement('div');
+            labelDiv.className = 'grid-label';
+            labelDiv.textContent = label;
+
+            container.appendChild(canvas);
+            container.appendChild(labelDiv);
+            samples.appendChild(container);
+        }
+
+        try {
+            log('Module loaded successfully');
+            log(`Total exports: ${Object.keys(Dist.GridDistributions).length}`);
+
+            // Test basic generators
+            const tests = [
+                ['withBlackCount', () => Dist.withBlackCount(5)],
+                ['anySymmetry', () => Dist.anySymmetry()],
+                ['connectedLongSquiggle', () => Dist.connectedLongSquiggle()],
+                ['allInOneHalf', () => Dist.allInOneHalf()],
+                ['onePerRowAndColumn', () => Dist.onePerRowAndColumn()],
+                ['fitsIn4x4', () => Dist.fitsIn4x4()],
+                ['has2x2Plus10-15', () => Dist['has2x2Plus10-15']()],
+                ['plusShapePlus10-15', () => Dist['plusShapePlus10-15']()],
+                ['borderUniRand', () => Dist.borderUniRand()],
+                ['many2_4s', () => Dist.many2_4s()],
+                ['isolatedDots', () => Dist.isolatedDots(5)],
+                ['pentominoIn4x4', () => Dist.pentominoIn4x4()],
+                ['denseCheckerboard', () => Dist.denseCheckerboard()],
+                ['denseSpiralPattern', () => Dist.denseSpiralPattern()],
+                ['max3Neighbors', () => Dist.max3Neighbors()],
+                ['tShapesMany', () => Dist.tShapesMany()]
+            ];
+
+            let passCount = 0;
+            for (const [name, fn] of tests) {
+                try {
+                    const grid = fn();
+                    if (grid && grid.length === 6 && grid[0].length === 6) {
+                        log(`${name} works`);
+                        renderGrid(grid, name);
+                        passCount++;
+                    } else {
+                        log(`${name} returns invalid grid`, false);
+                    }
+                } catch (e) {
+                    log(`${name} error: ${e.message}`, false);
+                }
+            }
+
+            log(`\nPassed ${passCount}/${tests.length} tests`, passCount === tests.length);
+
+        } catch (e) {
+            log(`Fatal error: ${e.message}`, false);
+            console.error(e);
+        }
+    </script>
+</body>
+</html>

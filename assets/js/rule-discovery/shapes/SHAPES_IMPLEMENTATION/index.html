@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shapes Game - Distribution Implementation - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="date-2025-10-18">Date: 2025-10-18</h2>
+
+<h2 id="summary">Summary</h2>
+
+<p>Implemented comprehensive distribution system for the Shapes Game with all 27 rules (12 existing + 15 new). Each rule now has pedagogically designed positive and negative example generators with built-in validation.</p>
+
+<h2 id="game-structure">Game Structure</h2>
+
+<p><strong>Input:</strong> Sequence of 4 (color, type) pairs in left-to-right order</p>
+<ul>
+  <li><strong>Colors:</strong> red, blue, green, purple, black, yellow (6 total)</li>
+  <li><strong>Types:</strong> circle, square, triangle, star, heart, plus (6 total)</li>
+  <li><strong>Rules:</strong> 27 total (s1-s27)</li>
+</ul>
+
+<h2 id="what-was-implemented">What Was Implemented</h2>
+
+<h3 id="1-distribution-generators-shapes-distributionsjs">1. Distribution Generators (<code class="language-plaintext highlighter-rouge">shapes-distributions.js</code>)</h3>
+
+<p>Created 19 distribution generator functions:</p>
+
+<h4 id="basic-generators-1-7">Basic Generators (1-7):</h4>
+<ol>
+  <li><strong>uniformRandom()</strong> - 4 random (color, type) pairs</li>
+  <li><strong>allSameColor(color)</strong> - All 4 shapes same color, random types</li>
+  <li><strong>allSameType(type)</strong> - All 4 shapes same type, random colors</li>
+  <li><strong>allDifferentColors()</strong> - 4 different colors</li>
+  <li><strong>allDifferentTypes()</strong> - 4 different types</li>
+  <li><strong>exactlyKColors(k)</strong> - Exactly k distinct colors (1-4)</li>
+  <li><strong>exactlyKTypes(k)</strong> - Exactly k distinct types (1-4)</li>
+</ol>
+
+<h4 id="positional-generators-8-11">Positional Generators (8-11):</h4>
+<ol>
+  <li><strong>firstAndLastSame(attribute)</strong> - First and last match on ‘color’ or ‘type’</li>
+  <li><strong>specificAtPosition(pos, color, type)</strong> - Specific shape at position</li>
+  <li><strong>colorPattern(pattern)</strong> - Specific color sequence (e.g., [red, blue, red, blue])</li>
+  <li><strong>typePattern(pattern)</strong> - Specific type sequence</li>
+</ol>
+
+<h4 id="counting-generators-12-13">Counting Generators (12-13):</h4>
+<ol>
+  <li><strong>atLeastK(attribute, value, k)</strong> - At least k shapes with specific color/type</li>
+  <li><strong>exactlyK(attribute, value, k)</strong> - Exactly k shapes with specific color/type</li>
+</ol>
+
+<h4 id="complexity-generators-14-19">Complexity Generators (14-19):</h4>
+<ol>
+  <li><strong>increasingCorners()</strong> - Corner count strictly increasing</li>
+  <li><strong>nonDecreasingCorners()</strong> - Corner count non-decreasing</li>
+  <li><strong>symmetricColors()</strong> - Palindromic color sequence</li>
+  <li><strong>symmetricTypes()</strong> - Palindromic type sequence</li>
+  <li><strong>noAdjacentSameColor()</strong> - No two adjacent shapes same color</li>
+  <li><strong>noAdjacentSameType()</strong> - No two adjacent shapes same type</li>
+</ol>
+
+<h3 id="2-rule-additions-shapes-rulesjs">2. Rule Additions (<code class="language-plaintext highlighter-rouge">shapes-rules.js</code>)</h3>
+
+<p><strong>Existing Rules (s1-s12):</strong></p>
+<ul>
+  <li>s1: All same color</li>
+  <li>s2: All same type</li>
+  <li>s3: All different colors</li>
+  <li>s4: Contains green</li>
+  <li>s5: First and last same color</li>
+  <li>s6: Exactly two colors</li>
+  <li>s7: All different types</li>
+  <li>s8: Contains triangle</li>
+  <li>s9: At least two circles</li>
+  <li>s10: Exactly two types</li>
+  <li>s11: First is red circle</li>
+  <li>s12: Corner count strictly increasing</li>
+</ul>
+
+<p><strong>New Rules (s13-s27):</strong></p>
+<ul>
+  <li>s13: First and last different colors</li>
+  <li>s14: Color palindrome (positions 0==3, 1==2)</li>
+  <li>s15: Exactly three colors</li>
+  <li>s16: No two adjacent same color</li>
+  <li>s17: Type palindrome</li>
+  <li>s18: Exactly three types</li>
+  <li>s19: At least three circles</li>
+  <li>s20: No two adjacent same type</li>
+  <li>s21: Corner count non-decreasing</li>
+  <li>s22: First and last same corner count</li>
+  <li>s23: All same corner count</li>
+  <li>s24: Same color → same type (logical implication)</li>
+  <li>s25: If red exists, blue exists (logical implication)</li>
+  <li>s26: First and third identical (both color AND type)</li>
+  <li>s27: Exactly two pairs of identical shapes</li>
+</ul>
+
+<h3 id="3-distribution-design-patterns">3. Distribution Design Patterns</h3>
+
+<p><strong>Pattern used:</strong> 20% random + 80% conceptual near-misses</p>
+
+<p><strong>Example Near-Miss Designs:</strong></p>
+
+<p><strong>s1 (All same color):</strong></p>
+<ul>
+  <li>✓ Positive: <code class="language-plaintext highlighter-rouge">allSameColor(randomColor)</code></li>
+  <li>✗ Negative near-misses:
+    <ul>
+      <li>40% exactly 3 colors (near-miss!)</li>
+      <li>40% exactly 2 colors (near-miss!)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>s12 (Corners strictly increasing):</strong></p>
+<ul>
+  <li>✓ Positive: <code class="language-plaintext highlighter-rouge">increasingCorners()</code> → [circle, triangle, square, star]</li>
+  <li>✗ Negative near-misses:
+    <ul>
+      <li>40% <code class="language-plaintext highlighter-rouge">nonDecreasingCorners()</code> (allows equal - near-miss!)</li>
+      <li>40% <code class="language-plaintext highlighter-rouge">allDifferentTypes()</code> (random corners)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>s14 (Color palindrome):</strong></p>
+<ul>
+  <li>✓ Positive: <code class="language-plaintext highlighter-rouge">symmetricColors()</code> → [red, blue, blue, red]</li>
+  <li>✗ Negative near-misses:
+    <ul>
+      <li>40% <code class="language-plaintext highlighter-rouge">firstAndLastSame('color')</code> (only ends match - near-miss!)</li>
+      <li>40% <code class="language-plaintext highlighter-rouge">symmetricTypes()</code> (wrong attribute - near-miss!)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>s16 (No adjacent same color):</strong></p>
+<ul>
+  <li>✓ Positive: <code class="language-plaintext highlighter-rouge">noAdjacentSameColor()</code></li>
+  <li>✗ Negative near-misses:
+    <ul>
+      <li>40% <code class="language-plaintext highlighter-rouge">allSameColor()</code> (extreme opposite)</li>
+      <li>40% <code class="language-plaintext highlighter-rouge">exactlyKColors(2)</code> (likely has adjacent)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>s24 (Same color → same type):</strong></p>
+<ul>
+  <li>✓ Positive:
+    <ul>
+      <li>50% <code class="language-plaintext highlighter-rouge">allDifferentColors()</code> (vacuously true)</li>
+      <li>50% <code class="language-plaintext highlighter-rouge">uniformRandom()</code> (some satisfy)</li>
+    </ul>
+  </li>
+  <li>✗ Negative:
+    <ul>
+      <li>60% <code class="language-plaintext highlighter-rouge">exactlyKColors(2)</code> (likely violates)</li>
+      <li>40% <code class="language-plaintext highlighter-rouge">allSameColor()</code> with different types</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="4-game-logic-updates-shapes-gamejs">4. Game Logic Updates (<code class="language-plaintext highlighter-rouge">shapes-game.js</code>)</h3>
+
+<p><strong>Added methods:</strong></p>
+
+<ol>
+  <li><strong>generateShapesForRule(shouldSatisfy)</strong>
+    <ul>
+      <li>Uses distribution specs from rule definitions</li>
+      <li>Handles different generator signatures</li>
+      <li>Falls back to random generation if no distribution</li>
+    </ul>
+  </li>
+  <li><strong>generateShapesFallback(shouldSatisfy)</strong>
+    <ul>
+      <li>Fallback random generation with retry logic</li>
+      <li>Ensures generated shapes match desired satisfaction status</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Added validation:</strong></p>
+<ul>
+  <li>Logs console warnings if positive example doesn’t satisfy rule</li>
+  <li>Logs warnings if negative example satisfies rule</li>
+  <li>Helps identify distribution bugs during development</li>
+</ul>
+
+<h2 id="corner-count-system">Corner Count System</h2>
+
+<p>Corner counts used for ordering rules:</p>
+<ul>
+  <li><strong>circle, heart:</strong> 0 corners</li>
+  <li><strong>triangle:</strong> 3 corners</li>
+  <li><strong>square, plus:</strong> 4 corners</li>
+  <li><strong>star:</strong> 5 corners</li>
+</ul>
+
+<p>This enables rules about increasing/decreasing/equal corner counts.</p>
+
+<h2 id="logical-implication-rules">Logical Implication Rules</h2>
+
+<p><strong>s24:</strong> “Same color → same type”</p>
+<ul>
+  <li>Checks: For all pairs (i,j), if color[i] == color[j], then type[i] == type[j]</li>
+  <li>Vacuously true when all colors different</li>
+</ul>
+
+<p><strong>s25:</strong> “If red exists, blue exists”</p>
+<ul>
+  <li>Checks: hasRed → hasBlue (equivalent to !hasRed OR hasBlue)</li>
+  <li>Vacuously true when no red shapes</li>
+</ul>
+
+<h2 id="testing-checklist">Testing Checklist</h2>
+
+<ul class="task-list">
+  <li>[✓] 27 rules with distributions</li>
+  <li>[✓] 19 generators produce valid 4-shape sequences</li>
+  <li>[✓] Validation logs warnings for incorrect examples</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Browser testing at /saannon-keksiminen.html</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Near-misses are pedagogically useful (verify in testing)</li>
+</ul>
+
+<h2 id="files-modifiedcreated">Files Modified/Created</h2>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">/shapes/shapes-distributions.js</code> (CREATED, 450 lines)</li>
+  <li><code class="language-plaintext highlighter-rouge">/shapes/shapes-rules.js</code> (UPDATED, 550 lines)</li>
+  <li><code class="language-plaintext highlighter-rouge">/shapes/shapes-game.js</code> (UPDATED, added validation + distributions)</li>
+  <li><code class="language-plaintext highlighter-rouge">/shapes/SHAPES_IMPLEMENTATION.md</code> (THIS FILE)</li>
+</ol>
+
+<h2 id="design-philosophy">Design Philosophy</h2>
+
+<p><strong>Pedagogical value:</strong> Near-misses help students refine understanding by testing:</p>
+<ul>
+  <li><strong>Boundary cases:</strong> “Almost all same color” vs “all same color”</li>
+  <li><strong>Attribute confusion:</strong> Color palindrome vs type palindrome</li>
+  <li><strong>Count variations:</strong> Exactly 2 vs exactly 3 distinct colors</li>
+  <li><strong>Logical near-misses:</strong> Only ends match vs full palindrome</li>
+</ul>
+
+<p><strong>Validation-first:</strong> Always validate generated examples match expected satisfaction status.</p>
+
+<p><strong>Flexibility:</strong> System gracefully falls back to random generation if distributions aren’t specified.</p>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ol>
+  <li>Test in browser at <code class="language-plaintext highlighter-rouge">http://localhost:4000/saannon-keksiminen.html</code></li>
+  <li>Select “Shapes” game</li>
+  <li>Play through several rules (especially new ones s13-s27)</li>
+  <li>Verify:
+    <ul>
+      <li>Examples generate correctly</li>
+      <li>Validation warnings (if any) in console</li>
+      <li>Near-misses are pedagogically useful</li>
+      <li>Corner-based rules work correctly</li>
+      <li>Logical implication rules (s24, s25) work</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="version">Version</h2>
+
+<p>All files use <code class="language-plaintext highlighter-rouge">?v7</code> query parameter for cache busting.</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

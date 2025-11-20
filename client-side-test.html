@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client-Side Shape Generation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        select, input, button {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+            padding: 10px 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .comparison {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .image-container {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .image-container h3 {
+            margin-top: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        .image-display {
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            padding: 10px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-display canvas,
+        .image-display img {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px solid #eee;
+        }
+
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .info {
+            background-color: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .status {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .performance {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Client-Side Shape Generation Test</h1>
+
+        <div class="info">
+            <strong>Purpose:</strong> This page tests the client-side JavaScript shape generation to ensure it produces
+            visually identical results to the Flask Python backend. Use identical parameters on both sides to verify
+            the migration is successful.
+        </div>
+
+        <div class="test-section">
+            <h2>Shape Generation Comparison</h2>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Shapes Count:</label>
+                    <input type="number" id="numShapes" value="50" min="1" max="500">
+                </div>
+
+                <div class="control-group">
+                    <label>Shape Type:</label>
+                    <select id="shapeType">
+                        <option value="circle">Circle</option>
+                        <option value="square">Square</option>
+                        <option value="triangle">Triangle</option>
+                        <option value="star">Star</option>
+                        <option value="heart">Heart</option>
+                        <option value="plus">Plus</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Color:</label>
+                    <select id="color">
+                        <option value="blue" selected>Blue</option>
+                        <option value="red">Red</option>
+                        <option value="green">Green</option>
+                        <option value="purple">Purple</option>
+                        <option value="black">Black</option>
+                        <option value="yellow">Yellow</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Distribution:</label>
+                    <select id="distribution">
+                        <option value="uniform">Uniform</option>
+                        <option value="gaussian_mixture">Gaussian Mixture</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Gaussians (if mixture):</label>
+                    <input type="number" id="numGaussians" value="3" min="1" max="5">
+                </div>
+
+                <div class="control-group">
+                    <label>Actions:</label>
+                    <div>
+                        <button onclick="generateClientSide()">Generate Client-Side</button>
+                        <button onclick="generateServerSide()">Generate Server-Side</button>
+                        <button onclick="generateBoth()">Generate Both</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="status"></div>
+
+            <div class="comparison">
+                <div class="image-container">
+                    <h3>Client-Side JavaScript</h3>
+                    <div class="image-display" id="clientResult">
+                        Click "Generate Client-Side" to test JavaScript generation
+                    </div>
+                    <div class="performance" id="clientPerf"></div>
+                </div>
+
+                <div class="image-container">
+                    <h3>Server-Side Python (Flask)</h3>
+                    <div class="image-display" id="serverResult">
+                        Click "Generate Server-Side" to test Flask backend
+                    </div>
+                    <div class="performance" id="serverPerf"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Automated Tests</h2>
+            <button onclick="runAutomatedTests()">Run Batch Tests</button>
+            <div id="testResults"></div>
+        </div>
+    </div>
+
+    <script src="assets/js/shape-generator-client.js"></script>
+    <script>
+        let generator = null;
+
+        // Initialize the shape generator
+        document.addEventListener('DOMContentLoaded', function() {
+            generator = new ClientShapeGenerator(800, 600);
+            console.log('Client-side shape generator initialized');
+        });
+
+        // Get current parameters from form
+        function getParameters() {
+            return {
+                numShapes: parseInt(document.getElementById('numShapes').value),
+                shapeType: document.getElementById('shapeType').value,
+                color: document.getElementById('color').value,
+                distribution: document.getElementById('distribution').value,
+                numGaussians: parseInt(document.getElementById('numGaussians').value)
+            };
+        }
+
+        // Generate using client-side JavaScript
+        async function generateClientSide() {
+            if (!generator) {
+                showError('clientResult', 'Shape generator not initialized');
+                return;
+            }
+
+            const params = getParameters();
+            const startTime = performance.now();
+
+            document.getElementById('clientResult').innerHTML = '<div class="loading">Generating...</div>';
+            document.getElementById('clientPerf').innerHTML = '';
+
+            try {
+                const result = await generator.generateImage(params);
+                const endTime = performance.now();
+
+                if (result.success) {
+                    document.getElementById('clientResult').innerHTML =
+                        `<img src="${result.image}" alt="Client-side generated shapes">`;
+
+                    document.getElementById('clientPerf').innerHTML =
+                        `Generated ${result.numShapes} ${result.shapeType}s in ${(endTime - startTime).toFixed(2)}ms`;
+                } else {
+                    showError('clientResult', result.error || 'Generation failed');
+                }
+
+            } catch (error) {
+                console.error('Client-side generation error:', error);
+                showError('clientResult', error.message);
+            }
+        }
+
+        // Generate using Flask backend
+        async function generateServerSide() {
+            const params = getParameters();
+            const startTime = performance.now();
+
+            document.getElementById('serverResult').innerHTML = '<div class="loading">Calling Flask backend...</div>';
+            document.getElementById('serverPerf').innerHTML = '';
+
+            try {
+                // Determine backend URL based on current location
+                const backendUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                    ? 'http://localhost:5000'
+                    : `http://${window.location.hostname}:5000`;
+
+                const response = await fetch(`${backendUrl}/api/generate-image-with-count`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        num_shapes: params.numShapes,
+                        shape_type: params.shapeType,
+                        color: params.color,
+                        distribution: params.distribution,
+                        num_gaussians: params.numGaussians
+                    })
+                });
+
+                const endTime = performance.now();
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('serverResult').innerHTML =
+                        `<img src="data:image/png;base64,${result.image}" alt="Server-side generated shapes">`;
+
+                    document.getElementById('serverPerf').innerHTML =
+                        `Generated ${result.num_shapes} ${result.shape_type}s in ${(endTime - startTime).toFixed(2)}ms (includes network)`;
+                } else {
+                    showError('serverResult', result.error || 'Server generation failed');
+                }
+
+            } catch (error) {
+                console.error('Server-side generation error:', error);
+                showError('serverResult', `Backend error: ${error.message}. Is Flask server running on port 5000?`);
+            }
+        }
+
+        // Generate both for comparison
+        async function generateBoth() {
+            updateStatus('Generating both client and server images for comparison...');
+
+            // Use fixed random seed equivalent for both (same parameters)
+            const promises = [generateClientSide(), generateServerSide()];
+            await Promise.all(promises);
+
+            updateStatus('Generation complete! Compare the images above.');
+        }
+
+        // Show error message
+        function showError(containerId, message) {
+            document.getElementById(containerId).innerHTML =
+                `<div class="error">Error: ${message}</div>`;
+        }
+
+        // Update status message
+        function updateStatus(message) {
+            document.getElementById('status').innerHTML =
+                `<div class="status">${message}</div>`;
+        }
+
+        // Run automated tests with various parameters
+        async function runAutomatedTests() {
+            const testResults = document.getElementById('testResults');
+            testResults.innerHTML = '<div class="loading">Running automated tests...</div>';
+
+            const testCases = [
+                { numShapes: 20, shapeType: 'circle', color: 'blue', distribution: 'uniform' },
+                { numShapes: 50, shapeType: 'square', color: 'red', distribution: 'gaussian_mixture', numGaussians: 3 },
+                { numShapes: 100, shapeType: 'star', color: 'green', distribution: 'uniform' },
+                { numShapes: 30, shapeType: 'heart', color: 'purple', distribution: 'gaussian_mixture', numGaussians: 2 },
+                { numShapes: 75, shapeType: 'triangle', color: 'black', distribution: 'uniform' }
+            ];
+
+            const results = [];
+
+            for (let i = 0; i < testCases.length; i++) {
+                const testCase = testCases[i];
+
+                // Update form with test parameters
+                document.getElementById('numShapes').value = testCase.numShapes;
+                document.getElementById('shapeType').value = testCase.shapeType;
+                document.getElementById('color').value = testCase.color;
+                document.getElementById('distribution').value = testCase.distribution;
+                if (testCase.numGaussians) {
+                    document.getElementById('numGaussians').value = testCase.numGaussians;
+                }
+
+                testResults.innerHTML = `<div class="loading">Running test ${i + 1}/${testCases.length}: ${JSON.stringify(testCase)}</div>`;
+
+                try {
+                    const startTime = performance.now();
+                    const result = await generator.generateImage(testCase);
+                    const endTime = performance.now();
+
+                    results.push({
+                        params: testCase,
+                        success: result.success,
+                        actualShapes: result.numShapes,
+                        timeMs: endTime - startTime,
+                        error: result.error
+                    });
+
+                } catch (error) {
+                    results.push({
+                        params: testCase,
+                        success: false,
+                        error: error.message
+                    });
+                }
+
+                // Small delay between tests
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
+            // Display results
+            let html = '<h3>Test Results</h3><table style="width: 100%; border-collapse: collapse;">';
+            html += '<tr style="background: #f5f5f5; font-weight: bold;"><th>Test</th><th>Success</th><th>Shapes</th><th>Time (ms)</th><th>Notes</th></tr>';
+
+            results.forEach((result, i) => {
+                const bgColor = result.success ? '#e7f6e7' : '#ffe7e7';
+                html += `<tr style="background: ${bgColor};">`;
+                html += `<td style="padding: 8px; border: 1px solid #ddd;">${JSON.stringify(result.params)}</td>`;
+                html += `<td style="padding: 8px; border: 1px solid #ddd;">${result.success ? '✓' : '✗'}</td>`;
+                html += `<td style="padding: 8px; border: 1px solid #ddd;">${result.actualShapes || 'N/A'}</td>`;
+                html += `<td style="padding: 8px; border: 1px solid #ddd;">${result.timeMs ? result.timeMs.toFixed(2) : 'N/A'}</td>`;
+                html += `<td style="padding: 8px; border: 1px solid #ddd;">${result.error || 'OK'}</td>`;
+                html += '</tr>';
+            });
+
+            html += '</table>';
+
+            const successCount = results.filter(r => r.success).length;
+            html += `<div class="status" style="margin-top: 10px;"><strong>Summary:</strong> ${successCount}/${results.length} tests passed</div>`;
+
+            testResults.innerHTML = html;
+        }
+
+        // Set up some keyboard shortcuts for testing
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case 'c':
+                        e.preventDefault();
+                        generateClientSide();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        generateServerSide();
+                        break;
+                    case 'b':
+                        e.preventDefault();
+                        generateBoth();
+                        break;
+                }
+            }
+        });
+
+        // Show keyboard shortcuts info
+        console.log('Keyboard shortcuts: Ctrl+C (client), Ctrl+S (server), Ctrl+B (both)');
+    </script>
+</body>
+</html>

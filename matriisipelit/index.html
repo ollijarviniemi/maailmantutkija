@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11.1 Matriisipelit - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 11: Pelejä</p>
+                
+                <h1>11.1 Matriisipelit</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+Kaksi keltaista ja kaksi vihreää nyrkkiin mahtuvaa esinettä, esimerkiksi palikoita tai paperilappuja.
+
+Kynä ja paperia. Mahdollisesti myös sininen ja punainen värikynä.
+
+Paljon pelimerkkejä, palikoita tai muita vastaavia pisteenlaskun havainnollistamiseksi.
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p>Kerro lapselle, että pelaatte monta peliä. Lapsen tavoitteena on saada mahdollisimman paljon yhteispisteitä kaikista peleistä. Tätä voi konkretisoida esimerkiksi antamalla pelien jälkeen lapselle jokaista 5 pistettä kohden yhden mustikan.</p>
+
+<p>Myös vanhempi pelaa peleissä. Hänkin pyrkii saamaan mahdollisimman paljon yhteispisteitä.</p>
+
+<p>Pitäkää paperilla kirjaa pisteistä. Havainnollista myös pelin palkkioita taulukoilla alla olevien kuvien tapaan.</p>
+
+<p>Eri pelien välillä saa puhua, mutta kierrosten aikana ja niiden välissä ei saa puhua (ellei toisin sanota). Kysymyksiä saa kuitenkin esittää, jos säännöt ovat epäselvät.</p>
+
+<p><strong>Peli 1: sääntöjen ymmärtäminen</strong></p>
+
+<p>Ensimmäinen peli on sääntöjen harjoittelua varten ja siksi yksinkertainen. Molemmat pelaajat ottavat käsiinsä yhden vihreän ja yhden keltaisen palikan. He valitsevat salaisesti palikoista yhden ja paljastavat ne samanaikaisesti. Jos molemmat palikat ovat vihreitä, molemmat pelaajista saavat kymmenen pistettä. Muussa tapauksessa kumpikaan ei saa pisteitä.</p>
+
+<p>Tätä on havainnollistettu seuraavassa taulukossa. Rivi vastaa lapsen toimintoa ja sarake vanhemman. Ruudussa lukee sinisellä lapsen palkkio ja punaisella vanhemman.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{10}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p>Molempien pelaajien kannattaa valita vihreä palikka: sillä tavalla molemmat saavat eniten pisteitä.</p>
+
+<p>Havainnollista pisteitä antamalla lapselle (ja itsellesi) kymmenen pelimerkkiä tai palikkaa kasasta. Suurempia pistemääriä voi myös havainnollistaa tehokkaammin niin, että tietyn värinen pelimerkki tai palikka vastaa kymmentä tai kahtakymmentä pistettä.</p>
+
+<p><strong>Peli 2: eri värit</strong></p>
+
+<p>Pelaajat saavat kymmenen pistettä, jos he valitsevat eriväriset palikat ja muuten nolla pistettä. Tässä on tärkeää, että pelaajat eivät puhu tai muuten kommunikoi keskenään.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{10}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{10}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p>Pelatkaa siihen asti, että onnistutte kahdesti putkeen.</p>
+
+<p><strong>Peli 3: jahtaava ja jahdattu</strong></p>
+
+<p>Tässä pelissä lapsella ja vanhemmalla on eri tavoitteet: Lapsi saa viisi pistettä, jos hän valitsee eri värin kuin vanhempi. Vanhempi saa viisi pistettä, jos hän valitsee saman värin kuin lapsi. Muissa tapauksissa pelaajat saavat nolla pistettä. Pelatkaa muutama kierros.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{5}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{5},\color{red}{0}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{5},\color{red}{0}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{5}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p><strong>Peli 4: rajoitettu potti</strong></p>
+
+<p>Vihreän valitsemisesta saa $10$ pistettä, paitsi jos molemmat valitsevat sen, jolloin siitä saa vain yhden pisteen. Pelatkaa vain yksi kierros.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{1},\color{red}{1}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{0}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{10}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p><strong>Peli 5: sanaton kompromissi</strong></p>
+
+<p>Jos molemmat valitsevat vihreän, lapsi saa 10 pistettä ja vanhempi 5. Jos molemmat valitsevat keltaisen, vanhempi saa 10 pistettä ja lapsi 5. Muussa tapauksessa kumpikaan ei saa mitään. Pelatkaa vain yksi kierros.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{5}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{5},\color{red}{10}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p><strong>Peli 6: yhteisnostopeli – tarvitaan molemmat</strong></p>
+
+<p>Jos sekä lapsi että vanhempi valitsevat vihreän, molemmat saavat 10 pistettä. Muussa tapauksessa pelaaja saa 2 pistettä, jos hän on valinnut keltaisen ja nolla, jos on valinnut vihreän. Pelatkaa vain yksi kierros.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{10}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{2}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{2},\color{red}{0}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{2},\color{red}{2}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p>Pelatkaa sitten toinen kierros, joka on muuten sama, mutta pistemäärät ovat 20 ja 18.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{20},\color{red}{20}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{18}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{18},\color{red}{0}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{18},\color{red}{18}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p><strong>Peli 7: yhteisnostopeli – tarvitaan vapaaehtoinen</strong></p>
+
+<p>Jos vähintään toinen valitsee vihreän, molemmat saavat 10 pistettä. Vihreän valitsemisesta kuitenkin menettää itse 2 pistettä. Pelatkaa vain yksi kierros.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{8},\color{red}{8}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{8},\color{red}{10}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{8}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p>Pelatkaa sitten toinen kierros. Molemmat saavat 20 pistettä, jos vähintään toinen valitsee vihreän. Vihreän valitsemisesta kuitenkin menettää itse 10 pistettä, jos on valinnut yksin vihreän, tai 3 pistettä, jos molemmat valitsevat vihreän.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{17},\color{red}{17}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{10},\color{red}{20}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{20},\color{red}{10}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{0}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p><strong>Peli 8: vangin dilemma</strong></p>
+
+<p>Kirjoita seuraava taulukko paperille ja sano, että pelaatte viisi kierrosta ja että tässä pelissä saa puhua kierrosten aikana. Anna lapsen katsoa taulukkoa rauhassa ennen kuin jaat omia ajatuksiasi. Tässä pelissä poikkeuksellisesti saa keskustella ennen kierroksia.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th colspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vanhempi</th></tr>
+
+  <tr><td style="border: none; padding: 8px 12px;"></td><td style="border: none; padding: 8px 12px;"></td><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">vihreä</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f5f5f5; font-weight: bold; text-align: center;">keltainen</th></tr>
+
+  <tr><th rowspan="2" style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; vertical-align: middle;">lapsi</th><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">vihreä</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{3},\color{red}{3}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{0},\color{red}{5}$</td></tr>
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; background-color: #f9f9f9; font-weight: bold; text-align: center;">keltainen</th><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{5},\color{red}{0}$</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">$\color{blue}{1},\color{red}{1}$</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<p>Pelissä näkee monenlaisia strategioita ja paras strategia riippuu siitä, mitä toinen pelaa. Peli saattaa myös olla tunteita herättävä.</p>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Monissa esitetyistä peleistä ei ole selvää, miten niissä kannattaa pelata, ja niissä riittää syvyyttä ja analysoitavaa.</p>
+
+<p>Yhteisnostopelien nimi viittaa tilanteeseen, jossa yhteisen asian ratkaisemiseksi – esimerkiksi painavan asian nostamiseen – tarvitaan monta ihmistä. Jokainen haluaisi, että asia ratkaistaan, mutta ihmiset eivät haluaisi itse henkilökohtaisesti tulla ratkomaan sitä, varsinkin jos riittävästi muita ei tule auttamaan ja ponnistus epäonnistuu.</p>
+
+<p>Jos asian ratkaisemisesta hyödytään paljon ja auttamisen hinta on pieni, ongelma varmaankin saadaan ratkaistua. Yllä yhteisnostopelien ensimmäiset kierrokset olivat tällaisia: onnistumisesta saa 10 pistettä, ja hinta osallistumiselle on vain 2 pistettä. Jos taas hyödyt ovat pienempiä suhteessa hintaan, kuten jälkimmäisillä kierroksilla, on houkutus jättäytyä pois suurempi. 20 pisteen potti ei ole niin houkutteleva, jos sen vuoksi pitää riskeerata 18 pistettä. Vastaavasti jos potin saamiseksi täytyisi itse maksaa 10 pistettä, voi päätyä jättäytymään taka-alalle ja toivoa toisen kantavan vastuun.</p>
+
+<p>Vangin dilemmassa yhdestä näkökulmasta on aina kannattavaa pelata keltainen: pelasi toinen sitten vihreää tai keltaista, saa itse enemmän pisteitä pelaamalla keltaisen kuin vihreän. Tämä tekee keltaisen pelaamisesta houkuttelevaa. Toisaalta taas molemmat pelaajat haluaisivat mieluummin, että molemmat pelaavat vihreää kuin molemmat keltaista. Tämä on pelin keskeinen jännite: kannustimet osoittavat molemmille epämieluisan lopputuloksen suuntaan.</p>
+
+<p>Olisi naiivia toimia strategialla “pelaan keltaista, vaikka mikä olisi!”: tällöin toisella ei ole oikein muita vaihtoehtoja kuin myös pelata keltaista, jolloin päädytään molempien mielestä harmilliseen tilanteeseen. Jonkinlaisesta neuvottelusta ja suullisten sopimusten teosta voi siis olla hyötyä.</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/peleja/">← Luku 11: Pelejä</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/peleja/">Luku 11: Pelejä</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/neuvottelut-ja-kompromissit/">11.2 Neuvottelut ja kompromissit →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Numbers Game - Distribution Implementation - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="date-2025-10-18">Date: 2025-10-18</h2>
+
+<h2 id="summary">Summary</h2>
+
+<p>Implemented comprehensive distribution system for the Three Numbers Game with all 25 rules. Each rule now has pedagogically designed positive and negative example generators with built-in validation.</p>
+
+<h2 id="what-was-implemented">What Was Implemented</h2>
+
+<h3 id="1-distribution-generators-three-numbers-distributionsjs">1. Distribution Generators (<code class="language-plaintext highlighter-rouge">three-numbers-distributions.js</code>)</h3>
+
+<p>Created 10 distribution generator functions:</p>
+
+<ol>
+  <li><strong>uniformRandom(maxElement)</strong> - Random triples</li>
+  <li><strong>uniformRandomSum(maxSum)</strong> - Random triples with bounded sum</li>
+  <li><strong>randomSequence(options)</strong> - Configurable sequences (strictly/non-strictly, increasing/decreasing, arithmetic/random diffs)</li>
+  <li><strong>constantSequence(maxElement)</strong> - All three equal</li>
+  <li><strong>linearMultiples(maxElement)</strong> - Form [a, 2a, 3a] (shuffled)</li>
+  <li><strong>exponentialMultiples(maxElement)</strong> - Form [a, 2a, 4a] (shuffled)</li>
+  <li><strong>extremumAtPosition(options)</strong> - Largest/smallest at specific position</li>
+  <li><strong>equalAtPositions(options)</strong> - Two positions equal</li>
+  <li><strong>largestIsSum(options)</strong> - Largest = smallest + middle</li>
+  <li><strong>withEvenCount(options)</strong> - Exactly K even integers</li>
+</ol>
+
+<p>All generators ensure positive integers only (≥1).</p>
+
+<h3 id="2-rule-distributions-three-numbers-rulesjs">2. Rule Distributions (<code class="language-plaintext highlighter-rouge">three-numbers-rules.js</code>)</h3>
+
+<p>Added distribution specifications for all 25 rules:</p>
+
+<p><strong>Pattern used:</strong> 20% random + 80% conceptual near-misses</p>
+
+<p><strong>Near-miss design principles:</strong></p>
+<ul>
+  <li><strong>Boundary violations</strong>: For sum/range rules, generate values near boundaries</li>
+  <li><strong>Relaxed constraints</strong>: For strict rules, use non-strict versions (e.g., strictly increasing → non-strict)</li>
+  <li><strong>Alternative patterns</strong>: For specific patterns, use similar but different patterns</li>
+  <li><strong>Parity/divisibility</strong>: For even/GCD rules, use odd numbers or consecutive numbers</li>
+  <li><strong>Position swaps</strong>: For position-based rules, use different positions</li>
+</ul>
+
+<p><strong>Examples of near-miss distributions:</strong></p>
+
+<p><strong>Rule 1 (Strictly increasing):</strong></p>
+<ul>
+  <li>Positive: <code class="language-plaintext highlighter-rouge">randomSequence({ strictly: true, direction: 'increasing' })</code></li>
+  <li>Negative (near-misses):
+    <ul>
+      <li>40% non-strict increasing (allows equal consecutive values)</li>
+      <li>20% strictly decreasing</li>
+      <li>20% constant sequence</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Rule 4 (Arithmetic and increasing):</strong></p>
+<ul>
+  <li>Positive: <code class="language-plaintext highlighter-rouge">randomSequence({ strictly: true, direction: 'increasing', arithmetic: 2 })</code></li>
+  <li>Negative (near-misses):
+    <ul>
+      <li>40% increasing but not arithmetic (random diffs)</li>
+      <li>20% [a, 2a, 3a] (not equal differences)</li>
+      <li>20% constant (equal diffs but not increasing)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Rule 15 (All even):</strong></p>
+<ul>
+  <li>Positive: <code class="language-plaintext highlighter-rouge">withEvenCount({ numEven: 3 })</code></li>
+  <li>Negative (near-misses):
+    <ul>
+      <li>40% exactly 2 even (near-miss)</li>
+      <li>40% all odd</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Rule 25 (GCD &gt; 1):</strong></p>
+<ul>
+  <li>Positive:
+    <ul>
+      <li>50% all even (GCD ≥ 2)</li>
+      <li>50% [a, 2a, 3a] (GCD = a)</li>
+    </ul>
+  </li>
+  <li>Negative (near-misses):
+    <ul>
+      <li>40% all odd (often coprime)</li>
+      <li>40% consecutive integers (GCD = 1)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="3-game-logic-updates-three-numbers-gamejs">3. Game Logic Updates (<code class="language-plaintext highlighter-rouge">three-numbers-game.js</code>)</h3>
+
+<p><strong>Added imports:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">ThreeNumberDistributions</span><span class="p">,</span> <span class="nx">sampleFromDistribution</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./three-numbers-distributions.js?v7</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>New methods:</strong></p>
+
+<ol>
+  <li><strong>generateTripleForRule(shouldSatisfy)</strong>
+    <ul>
+      <li>Uses distribution specs from rule definitions</li>
+      <li>Handles different generator signatures appropriately</li>
+      <li>Falls back to random generation if no distribution specified</li>
+    </ul>
+  </li>
+  <li><strong>generateTripleFallback(shouldSatisfy)</strong>
+    <ul>
+      <li>Fallback random generation with retry logic</li>
+      <li>Ensures generated triples match desired satisfaction status</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Updated method:</strong></p>
+
+<ol>
+  <li><strong>generateUnitTests()</strong>
+    <ul>
+      <li>Now uses <code class="language-plaintext highlighter-rouge">generateTripleForRule()</code> instead of pure random</li>
+      <li><strong>CRITICAL: Validates all generated examples</strong>
+        <ul>
+          <li>Positive examples MUST satisfy the rule</li>
+          <li>Negative examples MUST NOT satisfy the rule</li>
+          <li>Logs warnings if validation fails</li>
+        </ul>
+      </li>
+      <li>Generates 5 positive + 5 negative unit tests</li>
+      <li>Shuffles them together for presentation</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="validation-system">Validation System</h2>
+
+<p><strong>Key safety feature:</strong> All generated examples are validated against the rule:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// For positive examples</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">rule</span><span class="p">.</span><span class="nx">check</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s2">`Generated positive example that doesn't satisfy rule: [</span><span class="p">${</span><span class="nx">a</span><span class="p">}</span><span class="s2">, </span><span class="p">${</span><span class="nx">b</span><span class="p">}</span><span class="s2">, </span><span class="p">${</span><span class="nx">c</span><span class="p">}</span><span class="s2">]`</span><span class="p">);</span>
+    <span class="k">continue</span><span class="p">;</span> <span class="c1">// Reject and retry</span>
+<span class="p">}</span>
+
+<span class="c1">// For negative examples</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">rule</span><span class="p">.</span><span class="nx">check</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s2">`Generated negative example that satisfies rule: [</span><span class="p">${</span><span class="nx">a</span><span class="p">}</span><span class="s2">, </span><span class="p">${</span><span class="nx">b</span><span class="p">}</span><span class="s2">, </span><span class="p">${</span><span class="nx">c</span><span class="p">}</span><span class="s2">]`</span><span class="p">);</span>
+    <span class="k">continue</span><span class="p">;</span> <span class="c1">// Reject and retry</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This ensures that distribution bugs don’t result in incorrect examples being shown to students.</p>
+
+<h2 id="fixed-issues">Fixed Issues</h2>
+
+<h3 id="issue-1-contradictory-distribution-specs">Issue 1: Contradictory Distribution Specs</h3>
+
+<p><strong>Problem:</strong> Some distributions had contradictory parameters:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">{ strictly: false, direction: 'increasing', arithmetic: 2 }</code></li>
+  <li>This is contradictory because <code class="language-plaintext highlighter-rouge">arithmetic: 2</code> forces increments of 2, making it strictly increasing</li>
+</ul>
+
+<p><strong>Fixed:</strong> Rule 4 now correctly specifies:</p>
+<ul>
+  <li>Positive: <code class="language-plaintext highlighter-rouge">arithmetic: 2</code> (actually generates arithmetic sequences)</li>
+  <li>Negative: <code class="language-plaintext highlighter-rouge">arithmetic: null</code> for random differences (not arithmetic)</li>
+</ul>
+
+<h3 id="issue-2-missing-positive-generator-specs">Issue 2: Missing Positive Generator Specs</h3>
+
+<p><strong>Problem:</strong> Rule 4 had <code class="language-plaintext highlighter-rouge">arithmetic: null</code> for positive examples
+<strong>Fixed:</strong> Now uses <code class="language-plaintext highlighter-rouge">arithmetic: 2</code> to generate actual arithmetic sequences</p>
+
+<h2 id="all-25-rules-coverage">All 25 Rules Coverage</h2>
+
+<p>✅ Rule 1: Strictly increasing
+✅ Rule 2: All equal
+✅ Rule 3: Strictly decreasing
+✅ Rule 4: Arithmetic and increasing
+✅ Rule 5: Doubling (b=2a, c=4a)
+✅ Rule 6: Largest at end
+✅ Rule 7: Largest in middle
+✅ Rule 8: Exactly two equal
+✅ Rule 9: First and last equal
+✅ Rule 10: All different
+✅ Rule 11: Sum &lt; 15
+✅ Rule 12: Sum &gt; 20
+✅ Rule 13: Consecutive (diff=1)
+✅ Rule 14: Range ≤ 5
+✅ Rule 15: All even
+✅ Rule 16: At least one even
+✅ Rule 17: All &lt; 10
+✅ Rule 18: a + b = c
+✅ Rule 19: Three consecutive (any order)
+✅ Rule 20: Median = 5
+✅ Rule 21: Triangle inequality
+✅ Rule 22: Each is multiple of previous
+✅ Rule 23: Largest &gt; 2 × second-largest
+✅ Rule 24: All in [5, 15]
+✅ Rule 25: GCD &gt; 1</p>
+
+<h2 id="testing-status">Testing Status</h2>
+
+<ul>
+  <li>✅ Code implementation complete</li>
+  <li>✅ Distribution specs designed for all 25 rules</li>
+  <li>✅ Validation system implemented</li>
+  <li>⏳ Browser testing pending</li>
+</ul>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ol>
+  <li>Test in browser at <code class="language-plaintext highlighter-rouge">http://localhost:4000/saannon-keksiminen.html</code></li>
+  <li>Select “Three Numbers” game</li>
+  <li>Play through several rules to verify:
+    <ul>
+      <li>Unit tests generate appropriate examples</li>
+      <li>Positive examples all satisfy rules</li>
+      <li>Negative examples all violate rules</li>
+      <li>Near-miss examples are pedagogically useful</li>
+    </ul>
+  </li>
+  <li>Check browser console for any validation warnings</li>
+</ol>
+
+<h2 id="files-modified">Files Modified</h2>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">/website_project/assets/js/rule-discovery/threeNumbers/three-numbers-distributions.js</code> (CREATED, 340 lines)</li>
+  <li><code class="language-plaintext highlighter-rouge">/website_project/assets/js/rule-discovery/threeNumbers/three-numbers-rules.js</code> (UPDATED with distributions)</li>
+  <li><code class="language-plaintext highlighter-rouge">/website_project/assets/js/rule-discovery/threeNumbers/three-numbers-game.js</code> (UPDATED with validation)</li>
+  <li><code class="language-plaintext highlighter-rouge">/website_project/assets/js/rule-discovery/threeNumbers/THREE_NUMBERS_DISTRIBUTIONS.md</code> (CREATED, documentation)</li>
+  <li><code class="language-plaintext highlighter-rouge">/website_project/assets/js/rule-discovery/threeNumbers/THREE_NUMBERS_IMPLEMENTATION.md</code> (THIS FILE)</li>
+</ol>
+
+<h2 id="design-philosophy">Design Philosophy</h2>
+
+<p><strong>Pedagogical value:</strong> Near-misses help students refine their understanding by testing boundary cases and conceptually similar alternatives.</p>
+
+<p><strong>Validation-first:</strong> Always validate generated examples match expected satisfaction status to prevent teaching errors.</p>
+
+<p><strong>Flexibility:</strong> System gracefully falls back to random generation if distributions aren’t specified or generators fail.</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

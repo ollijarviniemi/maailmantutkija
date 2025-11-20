@@ -1,0 +1,948 @@
+/* Typography - Using a serif font that Matthew Butterick would approve of */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 22px;
+    line-height: 1.4;
+    color: #000;
+    background-color: #fff;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 40px 40px 0 40px;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1;
+    position: relative;
+}
+
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+}
+
+header h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #333;
+}
+
+/* Intro and closing sections */
+.intro-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.closing-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.closing-item {
+    display: flex;
+}
+
+.closing-item.distinctive {
+    justify-content: flex-start;
+}
+
+.closing-item.subtle {
+    justify-content: flex-end;
+}
+
+.intro-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.intro-button:hover {
+    background-color: #f0f0f0;
+    border-color: #e8e8e8;
+    transform: translateY(-1px);
+}
+
+/* Distinctive styling for Alkusanat and Loppusanat */
+.intro-button.distinctive {
+    background-color: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    font-size: 1.1em;
+    padding: 16px 32px;
+    font-weight: 700;
+}
+
+.intro-button.distinctive:hover {
+    background-color: #ebebeb;
+    border-color: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+/* Subtle styling for Lähteet */
+.intro-button.subtle {
+    background-color: #fcfcfc;
+    border: 1px solid #f8f8f8;
+    color: #666;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+.intro-button.subtle:hover {
+    background-color: #f8f8f8;
+    border-color: #f0f0f0;
+    color: #333;
+    transform: translateY(-1px);
+}
+
+/* Special styling for Alkusanat - larger font */
+.intro-section a.intro-button.subtle {
+    font-size: 1.1em !important;
+    padding: 9px 18px !important;
+    font-weight: 500 !important;
+    color: #000 !important;
+}
+
+/* Navigation and Table of Contents */
+.table-of-contents {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.table-of-contents h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+/* Two-Column Grid Layout */
+.chapter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    position: relative;
+}
+
+.chapter-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chapter-item,
+.appendix-item {
+    position: relative;
+    display: block;
+}
+
+.chapter-title {
+    display: block;
+    padding: 12px 16px;
+    background-color: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 400;
+    color: #000;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.chapter-title:hover {
+    background-color: #f0f0f0;
+    border-color: #e8e8e8;
+    transform: translateX(2px);
+}
+
+/* Section Popup - Positioned within text area boundaries */
+.section-popup {
+    position: absolute;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    min-width: 280px;
+    max-width: 280px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Invisible bridge to prevent popup from disappearing when moving cursor */
+.section-popup::before {
+    content: '';
+    position: absolute;
+    background: transparent;
+    z-index: -1;
+}
+
+/* Bridge for right popups */
+.popup-right::before {
+    left: -20px;
+    top: -10px;
+    width: 20px;
+    height: calc(100% + 20px);
+}
+
+/* Bridge for left popups */
+.popup-left::before {
+    right: -20px;
+    top: -10px;
+    width: 20px;
+    height: calc(100% + 20px);
+}
+
+/* Bridge for center popups */
+.popup-center::before {
+    left: 50%;
+    top: -10px;
+    width: 20px;
+    height: 10px;
+    transform: translateX(-50%);
+}
+
+/* Right popup for left column items */
+.popup-right {
+    left: 100%;
+    top: 100%;
+    margin-left: 20px;
+    margin-top: 10px;
+    transform: translateX(-10px);
+}
+
+/* Left popup for right column items */
+.popup-left {
+    right: 100%;
+    top: 100%;
+    margin-right: 20px;
+    margin-top: 10px;
+    transform: translateX(10px);
+}
+
+/* Center popup for appendices */
+.popup-center {
+    left: 50%;
+    top: 100%;
+    margin-top: 10px;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+/* Show popups on hover */
+.chapter-item:hover .section-popup,
+.appendix-item:hover .section-popup {
+    opacity: 1;
+    visibility: visible;
+}
+
+.left-item:hover .popup-right {
+    transform: translateX(0);
+}
+
+.right-item:hover .popup-left {
+    transform: translateX(0);
+}
+
+.appendix-item:hover .popup-center {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Dynamic popup positioning classes */
+.popup-upward {
+    top: auto !important;
+    bottom: 0% !important;
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.popup-downward {
+    top: 0% !important;
+    bottom: auto !important;
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+}
+
+.popup-upward.popup-center {
+    bottom: 0 !important;
+    top: auto !important;
+    margin-bottom: 10px !important;
+    margin-top: 0 !important;
+    transform: translateX(-50%) translateY(0) !important;
+}
+
+.popup-downward.popup-center {
+    top: 100% !important;
+    bottom: auto !important;
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+    transform: translateX(-50%) translateY(0) !important;
+}
+
+.section-popup ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.section-popup li {
+    margin-bottom: 8px;
+}
+
+.section-popup li:last-child {
+    margin-bottom: 0;
+}
+
+.section-popup a {
+    display: block;
+    padding: 8px 12px;
+    color: #0066cc;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    font-size: 0.95em;
+}
+
+.section-popup a:hover {
+    background-color: #f0f8ff;
+    text-decoration: underline;
+}
+
+/* Appendix Section */
+.appendix-section {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.appendix-section .chapter-item {
+    position: relative;
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .chapter-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    /* Hide section pop-ups completely on mobile */
+    .section-popup {
+        display: none !important;
+    }
+
+    /* Remove hover effects on mobile */
+    .chapter-item:hover .section-popup,
+    .appendix-item:hover .section-popup {
+        display: none !important;
+    }
+
+    .popup-right,
+    .popup-left,
+    .popup-center {
+        display: none !important;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+        font-size: 16px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .section-popup {
+        min-width: 250px;
+        max-width: 300px;
+    }
+}
+
+/* Links with hover effects for other pages */
+a:not(.section-popup a):not(.chapter-title) {
+    color: #000;
+    text-decoration: none;
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+a:not(.section-popup a):not(.chapter-title):hover {
+    background-color: #e0e0e0;
+}
+
+/* Page structure for individual pages */
+.page-header {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+}
+
+.page-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.page-content {
+    margin-bottom: 40px;
+}
+
+/* Section styling */
+.section {
+    margin-bottom: 40px;
+}
+
+.section h2 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.section h3 {
+    font-size: 1.2em;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Special content blocks */
+.ohjeet {
+    background-color: #f8f8f8;
+    border-left: 4px solid #333;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.ohjeet::before {
+    content: "Ohjeet";
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.aktiviteetti {
+    background-color: #f0f8ff;
+    border: 1px solid #b0d4f1;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.keskustelu {
+    background-color: #fffef0;
+    border: 1px solid #e6e0b8;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.dialog-line {
+    margin-bottom: 8px;
+}
+
+.vanhempi {
+    font-weight: 600;
+}
+
+.lapsi {
+    font-style: italic;
+}
+
+/* Interactive elements */
+.statement {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.statement:hover {
+    background-color: #f0f0f0;
+}
+
+.statement.revealed {
+    background-color: #e8f5e8;
+    border-color: #4caf50;
+}
+
+.statement.revealed.false {
+    background-color: #ffeaea;
+    border-color: #f44336;
+}
+
+.answer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    font-weight: 600;
+    display: none;
+}
+
+.answer.true {
+    color: #2e7d32;
+}
+
+.answer.false {
+    color: #c62828;
+}
+
+/* Footer navigation */
+.page-footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.page-footer a {
+    color: #666;
+    padding: 4px 8px;
+}
+
+.page-footer a:hover {
+    color: #000;
+    background-color: #f0f0f0;
+}
+
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.chapter-sections {
+    text-align: left;
+}
+
+.chapter-sections h4 {
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.chapter-sections ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Section Navigation */
+.section-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 0;
+    border-top: 1px solid #e0e0e0;
+    min-height: 60px;
+}
+
+.nav-prev, .nav-chapter, .nav-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-prev {
+    justify-content: flex-start;
+}
+
+.nav-next {
+    justify-content: flex-end;
+}
+
+.section-navigation a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: inherit;
+    font-size: 0.9em;
+    width: 100%;
+    height: 100%;
+    padding: 15px 20px;
+    min-height: 60px;
+    box-sizing: border-box;
+}
+
+.section-navigation a:hover {
+    color: #000;
+    background-color: #f8f8f8;
+}
+
+@media (max-width: 600px) {
+    .section-navigation {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+    
+    .nav-prev, .nav-next, .nav-chapter {
+        justify-content: center;
+    }
+    
+    .section-navigation a {
+        justify-content: center;
+        min-height: 50px;
+        padding: 15px;
+    }
+}
+
+/* Chapter page styling */
+.chapter-content {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.chapter-header {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 0px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+}
+
+.chapter-header h1 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.chapter-sections h2 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    margin-top: 15px;
+    font-weight: 400;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.chapter-sections h2 a {
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.chapter-sections h2 a:hover {
+    background-color: #f0f0f0;
+    border-color: #e8e8e8;
+    transform: translateX(2px);
+}
+
+.chapter-sections h2 a:hover {
+    color: #000;
+}
+
+.chapter-sections p {
+    margin-bottom: 1rem;
+}
+
+/* Section page styling */
+.section-content {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    padding-bottom: 2px;
+    border-bottom: 2px solid #000;
+}
+
+.section-header h1 {
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.chapter-info {
+    font-style: italic;
+    color: #666;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.section-body {
+    line-height: 1.4;
+    margin-top: 0px;
+}
+
+.section-body h2 {
+    font-size: 1.4em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.section-body h3 {
+    font-size: 1.2em;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.section-body p {
+    margin-bottom: 1rem;
+}
+
+.section-body ul, .section-body ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.section-body li {
+    margin-bottom: 0.5rem;
+}
+
+/* Ensure proper header styling for all layouts */
+header h1 a {
+    color: #000;
+    text-decoration: none;
+}
+
+header h1 a:hover {
+    color: #000;
+}
+
+/* Educational content styling */
+.tyokalut {
+    background-color: #e3f2fd;
+    border: 2px solid #1976d2;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+}
+
+.tyokalut strong {
+    font-weight: bold;
+}
+
+.tyokalut p {
+    margin: 0.5rem 0;
+}
+
+/* Code block styling for better readability with left alignment */
+pre {
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    overflow-x: auto;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+    line-height: 1.6;
+    min-height: 50px;
+    tab-size: 8;
+}
+
+/* Python code blocks with darker background */
+.python-code pre {
+    background-color: #f0f0f0;
+    border: 1px solid #d0d0d0;
+}
+
+pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre;
+    display: block;
+    text-align: left;
+}
+
+/* Inline code styling */
+code {
+    background-color: #f0f0f0;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.85em;
+    color: #333;
+}
+
+/* Ensure code blocks in lists and other contexts are properly spaced */
+.section-body pre {
+    margin: 16px 0;
+}
+
+.section-body li pre {
+    margin: 12px 0;
+}
+
+.blue-text {
+    color: #1976d2;
+    font-weight: bold;
+}
+
+.red-text {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.game-container {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.game-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.game-button:hover {
+    background-color: #45a049;
+}
+
+/* Statement hover functionality for Väitteitä page */
+.statement-item {
+    position: relative;
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1.5;
+}
+
+.statement-item:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+    transform: translateX(2px);
+}
+
+.statement-tooltip {
+    position: absolute;
+    top: 50%;
+    right: -120px;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 0.9em;
+    white-space: nowrap;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.statement-tooltip.true {
+    color: #2e7d32;
+    border-color: #4caf50;
+    background-color: #e8f5e8;
+}
+
+.statement-tooltip.false {
+    color: #c62828;
+    border-color: #f44336;
+    background-color: #ffeaea;
+}
+
+/* Responsive adjustments for statement tooltips */
+@media (max-width: 900px) {
+    /* Hide original tooltips on mobile - mobile-compatibility.js will handle click behavior */
+    .statement-tooltip {
+        display: none !important;
+    }
+
+    .statement-item:hover .statement-tooltip {
+        display: none !important;
+    }
+
+    /* Styles for mobile click-revealed answers (handled by mobile-compatibility.js) */
+    .mobile-answer {
+        margin: 12px 0;
+        padding: 12px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85em;
+        line-height: 1.4;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+}
+
+@media (max-width: 600px) {
+    .statement-item {
+        padding: 10px 12px;
+        margin: 6px 0;
+    }
+
+    .mobile-answer {
+        padding: 8px 12px;
+        font-size: 0.8em;
+    }
+}

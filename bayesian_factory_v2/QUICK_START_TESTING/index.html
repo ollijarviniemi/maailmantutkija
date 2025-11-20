@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Start Testing Guide - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <p><strong>Ready to test?</strong> Here’s how to get started immediately.</p>
+
+<hr />
+
+<h2 id="1-load-a-test-level-30-seconds">1. Load a Test Level (30 seconds!)</h2>
+
+<h3 id="option-a-use-the-test-level-loader-easiest-">Option A: Use the Test Level Loader (EASIEST! ⭐)</h3>
+<p><strong>This is the fastest and easiest way:</strong></p>
+
+<ol>
+  <li>Open <code class="language-plaintext highlighter-rouge">load-test-levels.html</code> in your browser</li>
+  <li>Click “Load &amp; Open Editor” button for the test you want</li>
+  <li>Done! The editor will open with the level loaded</li>
+</ol>
+
+<p><strong>Alternative:</strong> Click individual “Load” buttons, then open <code class="language-plaintext highlighter-rouge">editor.html</code> and use “Load Level” button.</p>
+
+<h3 id="option-b-manual-import-via-console">Option B: Manual Import via Console</h3>
+<ol>
+  <li>Open <code class="language-plaintext highlighter-rouge">editor.html</code></li>
+  <li>Open browser DevTools (F12)</li>
+  <li>Copy contents of <code class="language-plaintext highlighter-rouge">levels/comprehensive-test-level.json</code></li>
+  <li>In console, paste:
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">level</span> <span class="o">=</span> <span class="p">[</span><span class="nx">PASTE</span> <span class="nx">JSON</span> <span class="nx">HERE</span><span class="p">];</span>
+<span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">bayesianFactoryLevels</span><span class="dl">'</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">([</span><span class="nx">level</span><span class="p">]));</span>
+<span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">();</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Level should appear in level list</li>
+</ol>
+
+<h3 id="option-c-recreate-in-editor-educational-but-slow">Option C: Recreate in Editor (Educational but slow)</h3>
+<p>Follow the layout described in IMPLEMENTATION_SUMMARY.md and place components manually.</p>
+
+<hr />
+
+<h2 id="2-run-the-test-1-minute">2. Run the Test (1 minute)</h2>
+
+<ol>
+  <li>Click “Test Level” or “Play” button in editor</li>
+  <li>Watch balls spawn and move through components</li>
+  <li>Observe the behavior</li>
+</ol>
+
+<p><strong>What to watch for:</strong></p>
+<ul>
+  <li>Do balls split correctly at Duplicator? (Should see 3 paths)</li>
+  <li>Does Shuffler output to multiple sides? (2 right, 1 down)</li>
+  <li>Does Filter separate red from non-red balls?</li>
+  <li>Do Observations fill up in 5×5 grid pattern?</li>
+  <li>Are there any stuck balls or trajectory errors?</li>
+</ul>
+
+<hr />
+
+<h2 id="3-check-console-1-minute">3. Check Console (1 minute)</h2>
+
+<p>Open browser DevTools (F12) → Console tab</p>
+
+<p><strong>Look for:</strong></p>
+<ul>
+  <li>❌ Red errors (critical issues)</li>
+  <li>⚠️ Yellow warnings (may be expected, check against known issues)</li>
+  <li>📝 Logs about shuffling, buffering, outputting (informational)</li>
+</ul>
+
+<p><strong>Expected logs:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Duplicator 3 outputting ball ... to right
+Shuffler 7 buffered ball ... (3/5)
+Shuffler 7 buffer full, starting output
+Filter 11 outputting ball ... to left
+</code></pre></div></div>
+
+<p><strong>Unexpected (bad):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Uncaught TypeError: ...
+Missing sackId for ball ...
+Ball stuck at component ...
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="4-quick-visual-checks-2-minutes">4. Quick Visual Checks (2 minutes)</h2>
+
+<h3 id="duplicator-component-id-3">Duplicator (Component ID 3)</h3>
+<ul>
+  <li>✓ Input arrow from top</li>
+  <li>✓ Gold arrows on 3 sides (right, down, up)</li>
+  <li>✓ Numbers “3”, “2”, “1” labeling each output</li>
+  <li>✓ Center shows “×6”</li>
+  <li>✓ Balls actually split 3:2:1 to those sides</li>
+</ul>
+
+<h3 id="shuffler-component-id-7">Shuffler (Component ID 7)</h3>
+<ul>
+  <li>✓ Gold arrows on 2 sides (right, down)</li>
+  <li>✓ Dashed gray rectangle (indicates retention)</li>
+  <li>✓ Buffer count “3/5” updates as balls arrive</li>
+  <li>✓ Balls output after 5th ball arrives</li>
+  <li>✓ After first cycle, retains 2 balls for next cycle</li>
+</ul>
+
+<h3 id="filter-component-id-11">Filter (Component ID 11)</h3>
+<ul>
+  <li>✓ Small red circle (target color indicator)</li>
+  <li>✓ Buffer count “2/3” updates</li>
+  <li>✓ Red balls go to one observation</li>
+  <li>✓ Non-red balls go to other observation</li>
+</ul>
+
+<h3 id="observations-ids-5-12-19">Observations (IDs 5, 12, 19)</h3>
+<ul>
+  <li>✓ Balls arrange in 5×5 grid (5 across, 5 down)</li>
+  <li>✓ Small balls (ballScale=0.15)</li>
+  <li>✓ Grid looks organized, not overlapping</li>
+  <li>✓ Can handle 25+ balls gracefully</li>
+</ul>
+
+<hr />
+
+<h2 id="5-test-rotation-2-minutes">5. Test Rotation (2 minutes)</h2>
+
+<ol>
+  <li>In editor, select a component</li>
+  <li>Press <code class="language-plaintext highlighter-rouge">R</code> key</li>
+  <li>Component should rotate 90° clockwise</li>
+  <li>Check that connections update automatically</li>
+</ol>
+
+<p><strong>Components to test:</strong></p>
+<ul>
+  <li>Duplicator: All 3 outputs should rotate</li>
+  <li>Shuffler: Output sides rotate, retention unchanged</li>
+  <li>Filter: Direction rotates</li>
+  <li>Conveyor-turn: Cycles through 8 types</li>
+</ul>
+
+<p><strong>What to verify:</strong></p>
+<ul>
+  <li>Visual rendering rotates correctly</li>
+  <li>Connections to/from component update</li>
+  <li>No orphaned connections left behind</li>
+  <li>Rotated component still functions when played</li>
+</ul>
+
+<hr />
+
+<h2 id="6-test-editor-ui-3-minutes">6. Test Editor UI (3 minutes)</h2>
+
+<h3 id="duplicator-properties">Duplicator Properties</h3>
+<ol>
+  <li>Select duplicator component</li>
+  <li>Look for properties panel (usually on right side)</li>
+  <li>Should see:
+    <ul>
+      <li>“Number of Copies” input</li>
+      <li>“Edit Output Pattern” button</li>
+      <li>Pattern display showing “3 copies → right”, etc.</li>
+    </ul>
+  </li>
+  <li>Click “Edit Output Pattern”</li>
+  <li>Try changing pattern JSON</li>
+  <li>Verify validation catches bad input</li>
+</ol>
+
+<h3 id="shuffler-properties">Shuffler Properties</h3>
+<ol>
+  <li>Select shuffler component</li>
+  <li>Should see:
+    <ul>
+      <li>“Min Buffer Size” input</li>
+      <li>“Edit Output Pattern” button</li>
+      <li>Pattern display showing outputs and retention</li>
+    </ul>
+  </li>
+  <li>Click “Edit Output Pattern”</li>
+  <li>Try adding retention: <code class="language-plaintext highlighter-rouge">[{side: 'right', count: 2}, {retain: true, count: 3}]</code></li>
+  <li>Should offer to update minBufferSize to 5</li>
+</ol>
+
+<hr />
+
+<h2 id="7-report-issues-as-you-find-them">7. Report Issues (As you find them)</h2>
+
+<p>Open <code class="language-plaintext highlighter-rouge">TESTING_CHECKLIST.md</code> and document issues in the Issues Log section at the bottom:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Issue #1: Duplicator renders incorrectly after rotation
+Severity: Medium
+Component: Duplicator
+Reproduction:
+1. Place duplicator
+2. Rotate with R key
+3. Visual rendering shows arrows in wrong positions
+Expected: Arrows should rotate with component
+Actual: Arrows stay in original positions
+Console Output: None
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="common-issues--solutions">Common Issues &amp; Solutions</h2>
+
+<h3 id="cant-see-test-level-in-level-list">“Can’t see test level in level list”</h3>
+<ul>
+  <li><strong>Solution</strong>: Use <code class="language-plaintext highlighter-rouge">load-test-levels.html</code> (easiest way!)</li>
+  <li>Or check localStorage in DevTools → Application → Local Storage → look for ‘bayesianFactoryLevels’</li>
+  <li>Verify JSON was saved correctly</li>
+  <li>Try the loader page buttons</li>
+</ul>
+
+<h3 id="balls-arent-spawning">“Balls aren’t spawning”</h3>
+<ul>
+  <li><strong>Solution</strong>: Check simulation config in level JSON:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ballsToSpawn: 30</code> (should be &gt;0)</li>
+      <li><code class="language-plaintext highlighter-rouge">ballProductionInterval: 2000</code> (milliseconds between spawns)</li>
+    </ul>
+  </li>
+  <li>Verify sack components exist in level</li>
+</ul>
+
+<h3 id="components-look-weirdoverlapping">“Components look weird/overlapping”</h3>
+<ul>
+  <li><strong>Solution</strong>: Check grid positions in level JSON</li>
+  <li>Each component should have unique <code class="language-plaintext highlighter-rouge">{x, y}</code> position</li>
+  <li>No two components should occupy same grid cell</li>
+</ul>
+
+<h3 id="nothing-happens-when-i-click-test-level">“Nothing happens when I click Test Level”</h3>
+<ul>
+  <li><strong>Solution</strong>: Check browser console for errors</li>
+  <li>Verify level structure is valid JSON</li>
+  <li>Try simpler test level first</li>
+</ul>
+
+<h3 id="inferencebetting-interface-not-showing">“Inference/Betting interface not showing”</h3>
+<ul>
+  <li><strong>Solution</strong>: Verify level has <code class="language-plaintext highlighter-rouge">hypothesisSpace</code> with <code class="language-plaintext highlighter-rouge">components</code> defined</li>
+  <li>Check that sacks have alternatives in hypothesis space</li>
+  <li>Arm component should have sampling configured</li>
+</ul>
+
+<hr />
+
+<h2 id="quick-test-checklist-15-minutes-total">Quick Test Checklist (15 minutes total)</h2>
+
+<p>Use this for rapid initial validation:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Load</strong>: comprehensive-test-level.json loads successfully (2 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Run</strong>: Simulation runs without crashes (2 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Console</strong>: No red errors, warnings are expected (1 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Duplicator</strong>: Splits balls 3:2:1 to right:down:up (2 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Shuffler</strong>: Outputs 2 right + 1 down, retains 2 balls (2 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Filter</strong>: Separates red from non-red correctly (2 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Observation</strong>: Displays balls in 5×5 grid (1 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Rotation</strong>: R key rotates components, connections update (2 min)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Editor UI</strong>: Pattern editors open and validate input (1 min)</li>
+</ul>
+
+<p><strong>If all 9 checks pass:</strong> ✅ Basic functionality working, proceed to full testing</p>
+
+<p><strong>If any checks fail:</strong> 🔴 Document issue and investigate before full testing</p>
+
+<hr />
+
+<h2 id="next-steps-after-quick-test">Next Steps After Quick Test</h2>
+
+<h3 id="if-everything-works">If Everything Works:</h3>
+<ol>
+  <li>Proceed to full testing with TESTING_CHECKLIST.md</li>
+  <li>Test all 3 test levels systematically</li>
+  <li>Test edge cases and complex scenarios</li>
+  <li>Provide comprehensive feedback</li>
+</ol>
+
+<h3 id="if-issues-found">If Issues Found:</h3>
+<ol>
+  <li>Document issues in TESTING_CHECKLIST.md Issues Log</li>
+  <li>Note severity (Critical/High/Medium/Low)</li>
+  <li>Continue testing other features if possible</li>
+  <li>Report blockers immediately</li>
+</ol>
+
+<h3 id="when-testing-complete">When Testing Complete:</h3>
+<ol>
+  <li>Review all checkboxes in TESTING_CHECKLIST.md</li>
+  <li>Compile list of issues found</li>
+  <li>Provide feedback on:
+    <ul>
+      <li>Performance (smooth? laggy?)</li>
+      <li>Visual polish (clear? confusing?)</li>
+      <li>UX (intuitive? frustrating?)</li>
+      <li>Missing features or bugs</li>
+    </ul>
+  </li>
+  <li>Developer will address issues and iterate</li>
+</ol>
+
+<hr />
+
+<h2 id="contact--feedback">Contact / Feedback</h2>
+
+<ul>
+  <li>Document issues in: <code class="language-plaintext highlighter-rouge">TESTING_CHECKLIST.md</code> (Issues Log section)</li>
+  <li>Review implementation: <code class="language-plaintext highlighter-rouge">IMPLEMENTATION_SUMMARY.md</code></li>
+  <li>Track progress: <code class="language-plaintext highlighter-rouge">COMPONENT_REVISIONS_TODO.md</code></li>
+</ul>
+
+<p><strong>Ready?</strong> Load <code class="language-plaintext highlighter-rouge">comprehensive-test-level.json</code> and start testing! 🚀</p>
+
+<hr />
+
+<p><strong>Estimated Time</strong>:</p>
+<ul>
+  <li>Quick test: 15 minutes</li>
+  <li>Full systematic test: 2-3 hours</li>
+  <li>Comprehensive test (all scenarios): 4-6 hours</li>
+</ul>
+
+<p><strong>Priority</strong>: Start with quick test to validate basic functionality, then proceed to full testing if no blockers found.</p>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Module Loading Test</title>
+</head>
+<body>
+    <h1>Testing Module Imports</h1>
+    <div id="status">Testing...</div>
+    <script type="module">
+        try {
+            const { GAME_RULES } = await import('/assets/js/rule-discovery/core/game-rules-database.js');
+            document.getElementById('status').textContent = 
+                'SUCCESS! Loaded ' + Object.keys(GAME_RULES).length + ' game types with ' +
+                Object.values(GAME_RULES).reduce((sum, rules) => sum + rules.length, 0) + ' total rules';
+            document.getElementById('status').style.color = 'green';
+        } catch (error) {
+            document.getElementById('status').textContent = 'ERROR: ' + error.message;
+            document.getElementById('status').style.color = 'red';
+            console.error(error);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "id": "test-dsl-simple",
+    "title": "DSL Test: Two Sacks",
+    "description": "Simple test of hypothesis DSL"
+  },
+  "grid": {
+    "width": 8,
+    "height": 4
+  },
+  "components": [
+    {
+      "id": "sackA",
+      "type": "sack",
+      "position": {"x": 0, "y": 1},
+      "params": {
+        "label": "A"
+      }
+    },
+    {
+      "id": "sackB",
+      "type": "sack",
+      "position": {"x": 0, "y": 2},
+      "params": {
+        "label": "B"
+      }
+    },
+    {
+      "id": "armA",
+      "type": "arm",
+      "position": {"x": 1, "y": 1},
+      "params": {
+        "assignedSackId": "sackA",
+        "outputConveyorId": "convA"
+      }
+    },
+    {
+      "id": "armB",
+      "type": "arm",
+      "position": {"x": 1, "y": 2},
+      "params": {
+        "assignedSackId": "sackB",
+        "outputConveyorId": "convB"
+      }
+    },
+    {
+      "id": "convA",
+      "type": "conveyor",
+      "position": {"x": 2, "y": 1},
+      "params": {"direction": "right", "speed": 1.0, "plex": false}
+    },
+    {
+      "id": "convA2",
+      "type": "conveyor",
+      "position": {"x": 3, "y": 1},
+      "params": {"direction": "right", "speed": 1.0, "plex": false}
+    },
+    {
+      "id": "convB",
+      "type": "conveyor",
+      "position": {"x": 2, "y": 2},
+      "params": {"direction": "right", "speed": 1.0, "plex": false}
+    },
+    {
+      "id": "convB2",
+      "type": "conveyor",
+      "position": {"x": 3, "y": 2},
+      "params": {"direction": "right", "speed": 1.0, "plex": false}
+    },
+    {
+      "id": "obsA",
+      "type": "observation",
+      "position": {"x": 4, "y": 1},
+      "params": {}
+    },
+    {
+      "id": "obsB",
+      "type": "observation",
+      "position": {"x": 4, "y": 2},
+      "params": {}
+    }
+  ],
+  "connections": [
+    {"from": "sackA", "to": "armA"},
+    {"from": "armA", "to": "convA"},
+    {"from": "convA", "to": "convA2"},
+    {"from": "convA2", "to": "obsA"},
+    {"from": "sackB", "to": "armB"},
+    {"from": "armB", "to": "convB"},
+    {"from": "convB", "to": "convB2"},
+    {"from": "convB2", "to": "obsB"}
+  ],
+  "hypothesisScript": "const list = new List();\nlist.define([\n  {red: 7, blue: 3},\n  {red: 3, blue: 7}\n]);\nlist.permute();\nexports.sackA = list.select(0);\nexports.sackB = list.select(1);",
+  "simulation": {
+    "ballProductionInterval": 2000,
+    "ballSpeed": 1.0,
+    "maxBalls": 20,
+    "seed": 42
+  }
+}

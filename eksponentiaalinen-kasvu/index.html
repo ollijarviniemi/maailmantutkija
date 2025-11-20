@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10.2 Eksponentiaalinen kasvu - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 10: Ihmiskunnan historia</p>
+                
+                <h1>10.2 Eksponentiaalinen kasvu</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+Kynä ja paperia.
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p>Huomauta lapselle, että maailmanhistorian tapahtumat vaikuttavat kiihtyvän siirryttäessä kohti nykyaikaa. Esimerkiksi maailman väkiluku ei ole kasvanut tasaisesti, vaan kiihtyvästi: miljardista ihmisestä kahteen miljardiin kasvaminen vei noin sata vuotta, kun taas seitsemästä kahdeksaan siirtymä vei noin kymmenen. Kysy lapselta, osaako hän selittää asiaa.</p>
+
+<p>Selitä ja havainnollista tilannetta seuraavalla simulaatiolla. Aloittakaa tilanteesta, jossa maailmassa on aluksi 4 ihmistä. Ihmiset pariutuvat 30 vuoden iässä ja saavat silloin kolme lasta paria kohti. Ihmiset kuolevat 90-vuotiaina. Alussa olevat 4 ihmistä ovat juuri 30 vuoden ikäisiä. Ihmisiä havainnollistetaan paperille piirretyillä hymynaamoilla. Niiden viereen voi kirjoittaa ihmisen iän ja pariutumista voi merkitä viivoilla hymynaamojen välillä. Kirjoita paperille aina selkeästi nykyinen väkiluku.</p>
+
+<p>Seuraava kuvasarja havainnollistaa simulaation etenemistä.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<img src="/assets/images/Maailmanhistoria/population_0.png" alt="Maailmanhistoria/population_0" style="max-width: 60%; height: auto; display: block; margin: 1em auto;" />
+
+<img src="/assets/images/Maailmanhistoria/population_30.png" alt="Maailmanhistoria/population_30" style="max-width: 60%; height: auto; display: block; margin: 1em auto;" />
+
+<img src="/assets/images/Maailmanhistoria/population_60.png" alt="Maailmanhistoria/population_60" style="max-width: 60%; height: auto; display: block; margin: 1em auto;" />
+
+<img src="/assets/images/Maailmanhistoria/population_90.png" alt="Maailmanhistoria/population_90" style="max-width: 60%; height: auto; display: block; margin: 1em auto;" />
+
+<img src="/assets/images/Maailmanhistoria/population_120.png" alt="Maailmanhistoria/population_120" style="max-width: 60%; height: auto; display: block; margin: 1em auto;" />
+
+</div>
+
+<p>Väkiluku kasvaa hyvin nopeasti: $4, 10, 19, 27, 39, 57$. Lukujono jatkuu seuraavasti: $84, 123, 180, 267, 399, 597, 894$. Väkiluvun kasvu on <em>eksponentiaalista</em>: se noin $1{,}5$-kertaistuu $30$ vuoden välein ja siten yli tuplaantuu $60$ vuoden välein. Täten vaikkapa $1500$ vuoden jälkeen väkiluku on esimerkkitilanteessa kasvanut jo noin kuuteen miljardiin.</p>
+
+<p>Kun idea eksponentiaalisesta kasvusta on selkeytynyt, keskustelkaa sitten tavoista, joilla tämä havainnollistus yksinkertaistaa todellisuutta ja miten maailma on oikeasti erilainen. Esimerkkejä:</p>
+
+<ul>
+  <li>Ruoan riittävyys: Kun on enemmän ihmisiä, tarvitaan enemmän ruokaa. Toisaalta useampi ihminen saa viljeltyä enemmän ruokaa. Jos esimerkiksi yksi ihminen saa viljeltyä kahden ihmisen tarvitsevan ruoan, pääsee eksponentiaalinen kasvu taas käyntiin (yksi ihminen $\rightarrow$ kahdelle ruokaa $\rightarrow$ kaksi ihmistä $\rightarrow$ neljälle ruokaa $\rightarrow$ neljä ihmistä $\rightarrow$ kahdeksalle ruokaa ja niin edelleen). Jos taas yksi ihminen saa vain nippa nappa itsellensä ruokaa, kasvua ei ole tai se on paljon hitaampaa.</li>
+  <li>Kasvu kiihtyy, kun tietämys ja teknologia kehittyvät ja tehostavat maanviljelyä ja muuta toimintaa.</li>
+  <li>Väkiluvun kasvaessa tulee vastaan uusia haasteita, kuten luonnonvarojen hankinnan vaikeutuminen tai tartuntatautien leviäminen, jotka täytyy ylittää.</li>
+  <li>Oikeasti ihmisillä on keskimäärin alle kolme lasta ja väkiluku kasvaa hitaammin kuin mitä simulaatio antaa ymmärtää. Väkiluvun uskotaan jopa kääntyvän laskuun myöhemmin tällä vuosisadalla.</li>
+</ul>
+
+<p>Voit lopuksi näyttää lapselle kuvaajan maailman väkiluvusta viime vuosisatojen aikana.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<img src="/assets/images/Maailmanhistoria/population.png" alt="Maailmanhistoria/population" style="max-width: 60%; height: auto; display: block; margin: 1em auto;" />
+
+</div>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Ihmiskunnan kehitys on malliesimerkki positiivisista palautesilmukoista ja niiden aiheuttamasta eksponentiaalisesta kasvusta: Isompi määrä ihmisiä voi saada entistä enemmän lapsia ja tehdä vielä enemmän ruokaa. Teknologian kehityttyä on helpompaa saada tehtyä lisää teknologiaa. Vaurastuessa ihmiset voivat sijoittaa pidemmälle aikavälille (esim. kalliimpiin ja parempiin työkaluihin ja -laitteisiin), mikä puolestaan lisää vaurautta.</p>
+
+<p>Kasvun ja kehityksen myötä tulee vastaan haasteita, jotka hidastavat kehitystä: Maanviljelyssä tarvitaan enemmän peltopinta-alaa, jolloin välimatkat muuttuvat pidemmiksi. Tiiviissä asutuksessa taudit leviävät paremmin. Isompien ihmisjoukkojen on vaikeampi keskustella ja ratkoa yhteisiä asioita.</p>
+
+<p>Näistä haasteista huolimatta pitkällä aikavälillä kehitys on kiistämätön. Tämä selittää, miten nykyaikainen sivilisaatio on valtavasti vauraampi, teknologisesti kehittyneempi ja hyvinvoivampi kuin mitä ihmiset ovat olleet historian saatossa.</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/historian-tapahtumien-jarjestys/">← 10.1 Historian tapahtumien järjestys</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/ihmiskunnan-historia/">Luku 10: Ihmiskunnan historia</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/trendeja/">10.3 Trendejä →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

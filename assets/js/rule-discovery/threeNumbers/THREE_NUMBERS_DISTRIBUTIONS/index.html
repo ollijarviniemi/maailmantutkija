@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Numbers Game - Distribution System - Maailmantutkija</title>
+    <meta name="description" content="Kasvatuskirja uteliaalle mielelle">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            // Center justify equations in code and script tags
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+    
+    <!-- Custom CSS for educational content -->
+    <style>
+        .tyokalut {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            white-space: pre-wrap; /* Preserve line breaks but collapse multiple spaces */
+        }
+        
+        .tyokalut strong {
+            font-weight: bold;
+        }
+        
+        .tyokalut p {
+            margin: 0.5rem 0;
+        }
+        
+        .blue-text {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .game-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        
+        .navigation {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .navigation a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="/">🏠 Etusivu</a>
+            <a href="/games/">🎮 Pelit</a>
+            <a href="/about/">ℹ️ Tietoa</a>
+        </nav>
+        
+        <div class="header-content">
+            <h1><a href="/">Maailmantutkija</a></h1>
+            <p class="subtitle">Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="overview">Overview</h2>
+
+<p>Distribution generators for creating triples of positive integers (≥1) with various mathematical properties. All generators ensure only positive integers are produced.</p>
+
+<h2 id="available-generators">Available Generators</h2>
+
+<h3 id="1-uniformrandommaxelement--20">1. <code class="language-plaintext highlighter-rouge">uniformRandom(maxElement = 20)</code></h3>
+<p>Generates three completely random positive integers.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">uniformRandom</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>  <span class="c1">// e.g., [7, 14, 3]</span>
+</code></pre></div></div>
+
+<h3 id="2-uniformrandomsummaxsum--30">2. <code class="language-plaintext highlighter-rouge">uniformRandomSum(maxSum = 30)</code></h3>
+<p>Generates three random positive integers where their sum ≤ maxSum.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">uniformRandomSum</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>  <span class="c1">// e.g., [5, 8, 12] (sum = 25)</span>
+</code></pre></div></div>
+
+<h3 id="3-randomsequenceoptions">3. <code class="language-plaintext highlighter-rouge">randomSequence(options)</code></h3>
+<p>Generates sequences with configurable properties.</p>
+
+<p><strong>Options:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">strictly</code> (boolean): Use strict inequality (default: false)</li>
+  <li><code class="language-plaintext highlighter-rouge">direction</code> (string): ‘increasing’ or ‘decreasing’ (default: ‘increasing’)</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><code class="language-plaintext highlighter-rouge">arithmetic</code> (number</td>
+          <td>null): If number, arithmetic sequence with this difference; if null, random differences</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">maxElement</code> (number): Maximum element value (default: 20)</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Strictly increasing with random differences</span>
+<span class="nx">randomSequence</span><span class="p">({</span> <span class="na">strictly</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">direction</span><span class="p">:</span> <span class="dl">'</span><span class="s1">increasing</span><span class="dl">'</span> <span class="p">})</span>
+<span class="c1">// → [3, 7, 15]</span>
+
+<span class="c1">// Non-strict increasing arithmetic sequence with difference 3</span>
+<span class="nx">randomSequence</span><span class="p">({</span> <span class="na">strictly</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">arithmetic</span><span class="p">:</span> <span class="mi">3</span> <span class="p">})</span>
+<span class="c1">// → [4, 7, 10]</span>
+
+<span class="c1">// Strictly decreasing</span>
+<span class="nx">randomSequence</span><span class="p">({</span> <span class="na">strictly</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">direction</span><span class="p">:</span> <span class="dl">'</span><span class="s1">decreasing</span><span class="dl">'</span> <span class="p">})</span>
+<span class="c1">// → [18, 12, 5]</span>
+
+<span class="c1">// Non-strict increasing arithmetic (allows equal consecutive elements)</span>
+<span class="nx">randomSequence</span><span class="p">({</span> <span class="na">strictly</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">arithmetic</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span>
+<span class="c1">// → [7, 7, 7]</span>
+</code></pre></div></div>
+
+<h3 id="4-constantsequencemaxelement--20">4. <code class="language-plaintext highlighter-rouge">constantSequence(maxElement = 20)</code></h3>
+<p>Generates three equal values.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">constantSequence</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>  <span class="c1">// e.g., [8, 8, 8]</span>
+</code></pre></div></div>
+
+<h3 id="5-linearmultiplesmaxelement--30">5. <code class="language-plaintext highlighter-rouge">linearMultiples(maxElement = 30)</code></h3>
+<p>Generates sequence of form (a, 2a, 3a) in random order.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">linearMultiples</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>  <span class="c1">// e.g., [4, 8, 12] or [12, 4, 8] (shuffled)</span>
+</code></pre></div></div>
+
+<h3 id="6-exponentialmultiplesmaxelement--40">6. <code class="language-plaintext highlighter-rouge">exponentialMultiples(maxElement = 40)</code></h3>
+<p>Generates sequence of form (a, 2a, 4a) in random order.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">exponentialMultiples</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>  <span class="c1">// e.g., [3, 6, 12] or [12, 3, 6] (shuffled)</span>
+</code></pre></div></div>
+
+<h3 id="7-extremumatpositionoptions">7. <code class="language-plaintext highlighter-rouge">extremumAtPosition(options)</code></h3>
+<p>Places smallest or largest value at specific position.</p>
+
+<p><strong>Options:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">extremum</code> (string): ‘smallest’ or ‘largest’</li>
+  <li><code class="language-plaintext highlighter-rouge">position</code> (number): 0, 1, or 2</li>
+  <li><code class="language-plaintext highlighter-rouge">maxElement</code> (number): Maximum element value (default: 20)</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Largest at position 0 (first)</span>
+<span class="nx">extremumAtPosition</span><span class="p">({</span> <span class="na">extremum</span><span class="p">:</span> <span class="dl">'</span><span class="s1">largest</span><span class="dl">'</span><span class="p">,</span> <span class="na">position</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span>
+<span class="c1">// → [18, 7, 3]</span>
+
+<span class="c1">// Smallest at position 2 (last)</span>
+<span class="nx">extremumAtPosition</span><span class="p">({</span> <span class="na">extremum</span><span class="p">:</span> <span class="dl">'</span><span class="s1">smallest</span><span class="dl">'</span><span class="p">,</span> <span class="na">position</span><span class="p">:</span> <span class="mi">2</span> <span class="p">})</span>
+<span class="c1">// → [15, 9, 2]</span>
+</code></pre></div></div>
+
+<h3 id="8-equalatpositionsoptions">8. <code class="language-plaintext highlighter-rouge">equalAtPositions(options)</code></h3>
+<p>Makes two specific positions equal.</p>
+
+<p><strong>Options:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">position1</code> (number): First position (0, 1, or 2)</li>
+  <li><code class="language-plaintext highlighter-rouge">position2</code> (number): Second position (0, 1, or 2)</li>
+  <li><code class="language-plaintext highlighter-rouge">maxElement</code> (number): Maximum element value (default: 20)</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// First and last equal</span>
+<span class="nx">equalAtPositions</span><span class="p">({</span> <span class="na">position1</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">position2</span><span class="p">:</span> <span class="mi">2</span> <span class="p">})</span>
+<span class="c1">// → [7, 14, 7]</span>
+
+<span class="c1">// First and middle equal</span>
+<span class="nx">equalAtPositions</span><span class="p">({</span> <span class="na">position1</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">position2</span><span class="p">:</span> <span class="mi">1</span> <span class="p">})</span>
+<span class="c1">// → [11, 11, 5]</span>
+</code></pre></div></div>
+
+<h3 id="9-largestissumoptions">9. <code class="language-plaintext highlighter-rouge">largestIsSum(options)</code></h3>
+<p>Creates triple where largest = smallest + middle.</p>
+
+<p><strong>Options:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">position</code> (number): Position of largest element (0, 1, or 2)</li>
+  <li><code class="language-plaintext highlighter-rouge">maxElement</code> (number): Maximum value for largest (default: 30)</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Largest at end: [3, 5, 8] where 8 = 3 + 5</span>
+<span class="nx">largestIsSum</span><span class="p">({</span> <span class="na">position</span><span class="p">:</span> <span class="mi">2</span> <span class="p">})</span>
+<span class="c1">// → [3, 5, 8]</span>
+
+<span class="c1">// Largest at beginning: [10, 3, 7] where 10 = 3 + 7</span>
+<span class="nx">largestIsSum</span><span class="p">({</span> <span class="na">position</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span>
+<span class="c1">// → [10, 3, 7]</span>
+</code></pre></div></div>
+
+<h3 id="10-withevencountoptions">10. <code class="language-plaintext highlighter-rouge">withEvenCount(options)</code></h3>
+<p>Generates triple with specified number of even integers.</p>
+
+<p><strong>Options:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">numEven</code> (number): Number of even integers (0, 1, 2, or 3)</li>
+  <li><code class="language-plaintext highlighter-rouge">maxElement</code> (number): Maximum element value (default: 20)</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Exactly 2 even numbers</span>
+<span class="nx">withEvenCount</span><span class="p">({</span> <span class="na">numEven</span><span class="p">:</span> <span class="mi">2</span> <span class="p">})</span>
+<span class="c1">// → [8, 14, 7] or [3, 12, 18]</span>
+
+<span class="c1">// All even</span>
+<span class="nx">withEvenCount</span><span class="p">({</span> <span class="na">numEven</span><span class="p">:</span> <span class="mi">3</span> <span class="p">})</span>
+<span class="c1">// → [6, 10, 14]</span>
+
+<span class="c1">// All odd</span>
+<span class="nx">withEvenCount</span><span class="p">({</span> <span class="na">numEven</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span>
+<span class="c1">// → [3, 7, 11]</span>
+</code></pre></div></div>
+
+<h2 id="helper-samplefromdistributiondistributions">Helper: <code class="language-plaintext highlighter-rouge">sampleFromDistribution(distributions)</code></h2>
+
+<p>Samples from weighted distribution of generators.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">distributions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="na">generator</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">uniformRandom</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="na">generator</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">constantSequence</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">generator</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">linearMultiples</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="nx">sampleFromDistribution</span><span class="p">(</span><span class="nx">distributions</span><span class="p">);</span>
+<span class="c1">// Returns result from one generator based on weights</span>
+</code></pre></div></div>
+
+<h2 id="current-rules-25-total">Current Rules (25 total)</h2>
+
+<h3 id="rules-1-22-existing">Rules 1-22 (Existing)</h3>
+<ol>
+  <li>Aidosti kasvava (a &lt; b &lt; c)</li>
+  <li>Kaikki samaa kokoa</li>
+  <li>Aidosti vähenevä (a &gt; b &gt; c)</li>
+  <li>Aritmeettinen ja kasvava</li>
+  <li>Tuplaantuu aina kahdella (b = 2a, c = 4a)</li>
+  <li>Suurin kasa on lopussa</li>
+  <li>Suurin kasa on keskellä</li>
+  <li>Tarkalleen kaksi on samaa kokoa</li>
+  <li>Ensimmäinen ja viimeinen samaa kokoa</li>
+  <li>Kaikki eri suuret</li>
+  <li>Summa on alle 15</li>
+  <li>Summa on yli 20</li>
+  <li>Aina +1 (esim. 3, 4, 5)</li>
+  <li>Erotus suurimman ja pienimmän välillä on enintään 5</li>
+  <li>Kaikki ovat parillisia</li>
+  <li>Löytyy parillinen luku</li>
+  <li>Kaikki ovat alle 10</li>
+  <li>Ensimmäinen + toinen = kolmas</li>
+  <li>Kolme peräkkäistä kokonaislukua jossakin järjestyksessä</li>
+  <li>Mediaani on 5</li>
+  <li>Muodostavat kolmion (kolmioepäyhtälö)</li>
+  <li>Jokainen luku on edellisen monikerta</li>
+</ol>
+
+<h3 id="rules-23-25-new">Rules 23-25 (New)</h3>
+<ol>
+  <li><strong>Suurin luku on yli kaksinkertainen toiseksi suurimpaan</strong>
+    <ul>
+      <li>Check: sorted[2] &gt; 2 * sorted[1]</li>
+      <li>Example: [2, 3, 7] where 7 &gt; 2*3</li>
+    </ul>
+  </li>
+  <li><strong>Kaikki ovat väliltä 5 ja 15</strong>
+    <ul>
+      <li>Check: 5 ≤ a,b,c ≤ 15</li>
+      <li>Example: [7, 10, 12]</li>
+    </ul>
+  </li>
+  <li><strong>Lukujen suurin yhteinen tekijä on suurempi kuin 1</strong>
+    <ul>
+      <li>Check: gcd(a,b,c) &gt; 1</li>
+      <li>Example: [6, 9, 12] where gcd = 3</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="design-principles">Design Principles</h2>
+
+<ol>
+  <li><strong>All positive integers</strong>: Every generated number is ≥ 1</li>
+  <li><strong>Configurable ranges</strong>: Most generators accept <code class="language-plaintext highlighter-rouge">maxElement</code> parameter</li>
+  <li><strong>Clear semantics</strong>: Generator names describe what they produce</li>
+  <li><strong>Composable</strong>: Can combine generators in weighted distributions</li>
+  <li><strong>Educational</strong>: Generators map to mathematical concepts (arithmetic sequences, multiples, GCD, etc.)</li>
+</ol>
+
+<h2 id="usage-in-game">Usage in Game</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">ThreeNumberDistributions</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./three-numbers-distributions.js</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// For a rule "strictly increasing"</span>
+<span class="kd">const</span> <span class="nx">positive</span> <span class="o">=</span> <span class="nx">ThreeNumberDistributions</span><span class="p">.</span><span class="nx">randomSequence</span><span class="p">({</span>
+    <span class="na">strictly</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">direction</span><span class="p">:</span> <span class="dl">'</span><span class="s1">increasing</span><span class="dl">'</span>
+<span class="p">});</span>
+
+<span class="c1">// For negative examples, mix different types</span>
+<span class="kd">const</span> <span class="nx">distributions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="na">generator</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">ThreeNumberDistributions</span><span class="p">.</span><span class="nx">uniformRandom</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="na">generator</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">ThreeNumberDistributions</span><span class="p">.</span><span class="nx">constantSequence</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">generator</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">ThreeNumberDistributions</span><span class="p">.</span><span class="nx">randomSequence</span><span class="p">({</span>
+        <span class="na">strictly</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="na">direction</span><span class="p">:</span> <span class="dl">'</span><span class="s1">decreasing</span><span class="dl">'</span>
+    <span class="p">})},</span>
+    <span class="p">{</span> <span class="na">weight</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">generator</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">ThreeNumberDistributions</span><span class="p">.</span><span class="nx">randomSequence</span><span class="p">({</span>
+        <span class="na">strictly</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="na">direction</span><span class="p">:</span> <span class="dl">'</span><span class="s1">increasing</span><span class="dl">'</span>
+    <span class="p">})}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span> <span class="nx">negative</span> <span class="o">=</span> <span class="nx">ThreeNumberDistributions</span><span class="p">.</span><span class="nx">sampleFromDistribution</span><span class="p">(</span><span class="nx">distributions</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="future-extensions">Future Extensions</h2>
+
+<p>Possible additional generators:</p>
+<ul>
+  <li>Powers of 2 or 3</li>
+  <li>Fibonacci-like sequences</li>
+  <li>Prime number triples</li>
+  <li>Triples with specific remainders (mod n)</li>
+  <li>Geometric progressions (beyond just doubling)</li>
+  <li>Triples forming Pythagorean theorem relationships</li>
+</ul>
+
+<h2 id="testing-checklist">Testing Checklist</h2>
+
+<p>When adding distributions to rules:</p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify all generated numbers are ≥ 1</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check maxElement parameter is respected</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Test edge cases (maxElement = 3, very large values)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ensure positive examples satisfy rule</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ensure negative examples don’t satisfy rule</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify distribution weights sum reasonably</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Test pedagogical value (are near-misses useful?)</li>
+</ul>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Olli Järviniemi. Maailmantutkija</p>
+            <p>Kasvatuskirja uteliaalle mielelle</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive features -->
+    <script>
+        // API base URL from Jekyll config
+        const API_BASE_URL = 'https://maailmantutkija-backend.up.railway.app';
+        
+        // Utility function for API calls
+        async function apiCall(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            
+            try {
+                const response = await fetch(url, { ...defaultOptions, ...options });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+        
+        // Make API utility available globally
+        window.apiCall = apiCall;
+    </script>
+</body>
+</html>

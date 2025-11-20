@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.2 Todennäköisyysjärjestys - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 4: Epävarmuus ja todennäköisyydet</p>
+                
+                <h1>4.2 Todennäköisyysjärjestys</h1>
+            </div>
+            
+            <div class="section-body">
+                <p>Tässä pelissä lapsi pääsee oivaltamaan, että jotkin tapahtumat ovat todennäköisempiä kuin toiset.</p>
+
+<div class="tyokalut"><b>Tarvikkeet</b>
+Punaisia, keltaisia, vihreitä ja sinisiä palikoita, jotka ovat keskenään samanlaisia. (Tarvittaessa eri väriset paperilaput kelpaavat myös.)
+
+Mustikoita.
+
+Tulostin ja sakset.
+
+Kulho.
+</div>
+
+<h3 id="valmistelu">Valmistelu</h3>
+
+<p>Tulosta tästä kuvitetut ehtolaput aktiviteetteja varten ja leikkaa ne.</p>
+
+<div style="text-align: center; margin: 1.5em 0;"><strong><span style="font-size: 1.5em;"><a href="/assets/pdfs/todennakoisyysjarjestys.pdf">Todennäköisyyskortit (PDF)</a></span></strong></div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p><strong>Aktiviteetti 1: värikkäät palikat</strong></p>
+
+<p>Anna lapselle kolme lappua, joissa on värit punainen, keltainen ja vihreä. Laita kulhoon $1$ punainen palikka, $2$ keltaista palikkaa ja $3$ vihreää palikkaa.</p>
+
+<p>Anna lapsen nähdä kulhon sisältö. Laita pöydälle riviin kolme mustikkakasaa, joissa on 1, 2 ja 3 mustikkaa.</p>
+
+<p>Peli etenee seuraavasti.</p>
+
+<ul>
+  <li>Lapsi asettaa ehtolaput haluamaansa järjestykseen niin, että kullekin lapulle on oma mustikkakasansa: siis yksi lappu kolmen mustikan kasan eteen, yksi kahden mustikan kasan eteen ja yksi yhden mustikan kasan eteen.</li>
+  <li>Vanhempi sekoittaa palikoita ja valitsee sokkona yhden palikan.</li>
+  <li>Jos lapun väri vastaa kulhosta nostettua palikkaa, lapsi saa syödä sitä vastaavat mustikat.</li>
+</ul>
+
+<p>Pelissä paras strategia on laittaa laput todennäköisyysjärjestyksessä mustikkakasojen eteen. Koska jokainen palikka nostetaan yhtä todennäköisesti, yleisin väri (vihreä) kannattaa laittaa 3 mustikan kasan eteen ja harvinaisin väri (punainen) 1 mustikan eteen.</p>
+
+<p>Voitte pelata peliä nopeaan tahtiin laittamalla aina välissä palikan takaisin kulhoon, sekoittamalla ja nostamalla uudestaan. Seuraa, muuttaako lapsi järjestystä kierrosten välissä ja päätyykö hän lopulta oikeaan järjestykseen (jos hän ei keksinyt sitä heti alussa).</p>
+
+<p>Voit myös vaihdella kulhossa olevien palikoiden määrää testataksesi, kuinka syvästi lapsi on ymmärtänyt idean. Varmista aina, että lapsi saa tietää etukäteen, montako kunkin väristä palikkaa kulhossa on. Suosi ainakin aluksi sellaisia tilanteita, joissa erot todennäköisyyksissä ovat suuria: esimerkiksi $1, 5$ ja $9$ palikkaa on parempi asetelma kuin $4, 5$ ja $6$ palikkaa, koska tällöin ero parhaan ja huonompien strategioiden välillä on suurempi ja lapsen on siten helpompi päästä parhaaseen strategiaan. Tässä on muutama ehdotus palikoiden määrille:</p>
+
+<ol>
+  <li>$1$, $5$ ja $9$ palikkaa</li>
+  <li>$2$, $5$ ja $8$ palikkaa</li>
+  <li>$3$, $5$ ja $9$ palikkaa</li>
+  <li>$1$, $3$, $5$ ja $7$ palikkaa</li>
+  <li>$1$, $2$, $3$ ja $4$ palikkaa.</li>
+</ol>
+
+<p>Kokeile myös tilannetta, jossa kulhossa ei ole yhtäkään ehtolapun väristä palikkaa.</p>
+
+<p><strong>Aktiviteetti 2: monivärilaput</strong></p>
+
+<p>Peli on samanlainen kuin aiemmin, mutta tällä kertaa ehtolapuissa voi olla kaksi väriä: esimerkiksi yhdessä lapussa voi olla sekä punainen että sininen väri. Lapsi saa tätä lappua vastaavan mustikkamäärän sekä palikan ollessa punainen että sen ollessa sininen.</p>
+
+<p>Kokeilkaa aluksi yksinkertaista tilannetta, jossa kulhossa on $2$ sinistä, $4$ punaista ja $4$ vihreää palikkaa, ja lapselle jaetut laput ovat sininen, vihreä ja sinipunainen. Huomaa, että nyt kaksi lapuista voi toteutua samaan aikaan, jolloin lapsi voi saada aiempaa enemmän mustikoita kerralla.</p>
+
+<p>Paras strategia on laittaa laput järjestyksessä sen mukaan, moniko palikka toteuttaa lapun ehdon. Sinipunainen lappu voi toteutua $2 + 4 = 6$ eri tavalla. Sininen ja vihreä lappu voivat tietysti toteutua kahdella ja neljällä tavalla. Pelatkaa taas monta kierrosta peräjälkeen erityisesti jos lapsen alkuperäinen järjestys ei ollut paras mahdollinen ja seuraa, muuttuuko järjestys.</p>
+
+<p>Kokeilkaa sitten esimerkiksi seuraavia tilanteita. Tilanteet on valikoitu niin, että todennäköisyyserot olisivat suuria, jotta paras strategia nousee helposti esiin.</p>
+
+<ol>
+  <li>Palikat: $3$ keltaista, $4$ sinistä, $5$ punaista. Laput: keltainen, punainen, sinikeltainen.</li>
+  <li>Palikat: $1$ punainen, $2$ keltaista ja $6$ sinistä. Laput: punainen, punakeltainen, sininen.</li>
+  <li>Palikat: $1$ vihreä, $3$ sinistä ja $5$ keltaista. Laput: sinivihreä, sinikeltainen, keltavihreä.</li>
+  <li>Palikat: $1$ vihreä, $2$ keltaista, $4$ punaista, $10$ sinistä. Laput: vihreä, keltapunainen, sininen.</li>
+  <li>Palikat: $2$ sinistä, $3$ punaista, $4$ vihreää, $8$ keltaista. Laput: punainen, sinivihreä, keltainen.</li>
+  <li>Palikat: $4$ keltaista, $5$ vihreää, $8$ punaista, $9$ sinistä. Laput: vihreä, sininen, keltapunainen.</li>
+  <li>Palikat: $2$ sinistä, $5$ punaista, $6$ vihreää, $9$ keltaista. Laput: sinivihreä, punavihreä, punakeltainen.</li>
+  <li>Palikat: $1$ keltainen, $4$ sinistä, $8$ vihreää, $9$ punaista. Laput: keltasininen, punainen, sinivihreä.</li>
+</ol>
+
+<p>Jos mustikoiden kulutus uhkaa kasvaa liiallisuuksiin, voitte jälleen siirtyä tukkimiehen kirjanpidolla tehtävään pistelaskuun, jolloin viidestä pisteestä saa yhden mustikan.</p>
+
+<p><strong>Aktiviteetti 3: kolme palikkaa</strong></p>
+
+<p>Tehtävää voi vaikeuttaa kasvattamalla kulhossa olevien palikoiden määriä, värien määrää, nostettujen palikoiden määrää ja ehtolappujen monimutkaisuutta. Enää ei ole realistista tai tarkoituksenmukaista odottaa, että lapsi pystyisi aina valitsemaan matemaattisesti parhaan strategian.</p>
+
+<p>Sen sijaan tarkoituksena on, että lapsi käyttää intuitiotansa: Mitkä ehdoista vaikuttavat todennäköisiltä, mitkä ei? Toistakaa myös sama kierros useamman kerran. Tällöin lapsi pääsee näkemään, miltä “tyypillinen” sarja nostettuja palikoita näyttää ja voi halutakin muuttaa lappujensa järjestystä.</p>
+
+<p>Kokeilkaa siis tilannetta, jossa kulhossa on neljän värisiä palikoita (punainen, keltainen, vihreä ja sininen) ja sieltä nostetaan kolme palikkaa yksitellen. Alla on erilaisia ehtolappuja.</p>
+
+<p>Peli voi olla hauskempi, jos lapselle antaa kolmen lapun sijasta esimerkiksi viisi lappua kerralla. Tällöin vastausvaihtoehtoja on useampia ja uudelleenjärjestelyä tapahtuu useammin. Jossakin kohtaa lapselle voi jopa antaa kaikki ehtolaput kerralla ja pyytää häntä laittamaan ne järjestykseen.</p>
+
+<p>Kokeilkaa muun muassa seuraavaan taulukkoon merkittyjä tilanteita. Alla olevaan listaan on merkitty ehtojen todennäköisyydet näissä kolmessa tilanteessa prosentteina (mutta niistä ei kuitenkaan tarvitse puhua lapselle). Erityisesti niistä pystyy lukemaan, mikä on paras järjestys lapuille kussakin tilanteessa.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">P</th><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">S</th><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">V</th><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">K</th></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">9</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">6</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">3</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">3</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">2</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">3</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">4</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">5</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">10</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">10</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">10</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">10</td></tr>
+
+</table>
+
+</div>
+
+<ol>
+  <li>Vihreitä ei tule yhtäkään ($61\%$, $33\%$, $41\%$)</li>
+  <li>Punaisia tulee tasan yksi ($45\%$, $36\%$, $44\%$)</li>
+  <li>Sinisiä tulee tasan kaksi ($17\%$, $9\%$, $14\%$)</li>
+  <li>Punaisia tulee enemmän kuin keltaisia ($63\%$, $15\%$, $34\%$)</li>
+  <li>Vihreitä tulee saman verran kuin sinisiä ($33\%$, $33\%$, $32\%$)</li>
+  <li>Tulee kaksi samaa väriä putkeen ($46\%$, $40\%$, $41\%$)</li>
+  <li>Kaikki palikat ovat samaa väriä ($8\%$, $4\%$, $5\%$)</li>
+  <li>Jokainen nosto on eri väriä kuin edellinen ($54\%$, $60\%$, $59\%$)</li>
+  <li>Ensimmäinen ja viimeinen palikka ovat samaa väriä ($27\%$, $22\%$, $23\%$)</li>
+  <li>Kaikki palikat ovat eri väriä ($35\%$, $42\%$, $41\%$)</li>
+</ol>
+
+<p><strong>Aktiviteetti 4: viisi palikkaa</strong></p>
+
+<p>Tässä on vielä ehtoja varianttiin, jossa nostetaankin viisi palikkaa kerralla. Suluissa on taas todennäköisyydet samoissa kolmessa tapauksessa.</p>
+
+<ol>
+  <li>Vihreitä ei tule yhtäkään ($42\%$, $13\%$, $22\%$)</li>
+  <li>Punaisia tulee tasan yksi ($22\%$, $50\%$, $42\%$)</li>
+  <li>Sinisiä tulee tasan kaksi ($34\%$, $25\%$, $28\%$)</li>
+  <li>Keltaisia tulee tasan kolme ($0{,}8\%$, $18\%$, $8\%$)</li>
+  <li>Punaisia tulee enemmän kuin keltaisia ($75\%$, $10\%$, $37\%$)</li>
+  <li>Vihreitä tulee saman verran kuin sinisiä ($26\%$, $28\%$, $26\%$)</li>
+  <li>Punaisia tulee enemmän kuin keltaisia ja vihreitä yhteensä ($55\%$, $1\%$, $16\%$)</li>
+  <li>Sinisiä nostetaan eniten (jaetut sijat lasketaan) ($39\%$, $25\%$, $34\%$)</li>
+  <li>Jossakin kohtaa tulee punainen-sininen -pari peräkkäin ($67\%$, $24\%$, $40\%$)</li>
+  <li>Tulee kaksi samaa väriä putkeen ($71\%$, $64\%$, $66\%$)</li>
+  <li>Tulee kolme samaa väriä putkeen ($19\%$, $11\%$, $13\%$)</li>
+  <li>Tulee neljä samaa väriä putkeen ($4\%$, $1\%$, $2\%$)</li>
+  <li>Kaikki palikat ovat samaa väriä ($0{,}7\%$, $0{,}1\%$, $0{,}1\%$)</li>
+  <li>Jotakin väriä tulee vähintään kolme ($48\%$, $32\%$, $35\%$)</li>
+  <li>Jokainen nosto on eri väriä kuin edellinen ($29\%$, $36\%$, $34\%$)</li>
+  <li>Jokaista väriä nostetaan ($20\%$, $30\%$, $28\%$)</li>
+  <li>Ensimmäinen ja viimeinen palikka ovat samaa väriä ($27\%$, $22\%$, $23\%$)</li>
+  <li>Ensimmäiset kolme palikkaa ovat kaikki eri väriä ($35\%$, $43\%$, $41\%$)</li>
+  <li>Tulee vain kahta eri väriä ($22\%$, $11\%$, $14\%$)</li>
+  <li>Viides palikka on väriä, jota ei nostettu aiemmin ($30\%$, $35\%$, $33\%$)</li>
+</ol>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/kulhopeli/">← 4.1 Kulhopeli</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/epavarmuus-ja-todennakoisyydet/">Luku 4: Epävarmuus ja todennäköisyydet</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/paatospeli/">4.3 Päätöspeli →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
