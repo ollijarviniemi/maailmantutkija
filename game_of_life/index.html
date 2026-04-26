@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Life - JS vs WebGPU Benchmark</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Game of Life Benchmark</h1>
+
+        <div id="controls">
+            <div class="control-group">
+                <label>Grid Size:</label>
+                <select id="gridSize">
+                    <option value="100">100x100 (10K)</option>
+                    <option value="256">256x256 (65K)</option>
+                    <option value="512" selected>512x512 (262K)</option>
+                    <option value="1024">1024x1024 (1M)</option>
+                    <option value="2048">2048x2048 (4M)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Implementation:</label>
+                <select id="implementation">
+                    <option value="js">JavaScript</option>
+                    <option value="webgpu">WebGPU (original)</option>
+                    <option value="webgpu-opt">WebGPU (optimized)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Render:</label>
+                <input type="checkbox" id="renderEnabled" checked>
+            </div>
+
+            <button id="init">Initialize</button>
+            <button id="playPause">Play</button>
+            <button id="step">Step</button>
+            <button id="benchmark">Benchmark (1000 steps)</button>
+        </div>
+
+        <div id="stats">
+            <div class="stat">
+                <span class="label">Timestep:</span>
+                <span id="timestep">0</span>
+            </div>
+            <div class="stat">
+                <span class="label">Simulation:</span>
+                <span id="simRate">-</span> steps/sec
+            </div>
+            <div class="stat">
+                <span class="label">Render:</span>
+                <span id="renderRate">-</span> FPS
+            </div>
+            <div class="stat">
+                <span class="label">Live Cells:</span>
+                <span id="liveCells">-</span>
+            </div>
+        </div>
+
+        <div id="canvasContainer">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div id="benchmarkResults">
+            <h3>Benchmark Results</h3>
+            <pre id="results"></pre>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

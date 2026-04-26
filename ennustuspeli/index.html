@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ennustuspeli - Maailmantutkija</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <!-- Core libraries -->
+    <script src="js/core/distributions.js"></script>
+    <script src="js/core/simulation.js"></script>
+    <script src="js/core/persistence.js"></script>
+    <script src="js/core/dsl.js"></script>
+    <script src="js/core/dsl-evaluator.js"></script>
+    <script src="js/core/distribution-scorer.js"></script>
+
+    <!-- Registries (must come before animations and game) -->
+    <script src="js/core/animation-registry.js"></script>
+    <script src="js/core/question-handlers.js"></script>
+    <script src="js/core/scoring.js"></script>
+    <script src="js/core/answer-resolver.js"></script>
+    <script src="js/core/store-occupancy-mc.js"></script>
+
+    <!-- Animations - Base -->
+    <script src="js/animations/base.js"></script>
+
+    <!-- Animations - Reusable Components -->
+    <script src="js/animations/components/histogram.js"></script>
+    <script src="js/animations/components/scatter.js"></script>
+    <script src="js/animations/components/store.js"></script>
+    <script src="js/animations/components/queue-viz.js"></script>
+    <script src="js/animations/components/bracket.js"></script>
+    <script src="js/animations/components/poll-viz.js"></script>
+    <script src="js/animations/components/matchup.js"></script>
+
+    <!-- Animations - Level specific -->
+    <script src="js/animations/scale.js"></script>
+    <script src="js/animations/bulbs.js"></script>
+    <script src="js/animations/bus-stop.js"></script>
+    <script src="js/animations/conveyor.js"></script>
+    <script src="js/animations/assembly-line.js"></script>
+    <script src="js/animations/cafe.js"></script>
+    <script src="js/animations/static-info.js"></script>
+
+    <!-- Animations - Generic (from earlier) -->
+    <script src="js/animations/points.js"></script>
+    <script src="js/animations/histogram.js"></script>
+    <script src="js/animations/queue.js"></script>
+
+    <!-- Animations - New narrative-specific -->
+    <script src="js/animations/store-occupancy.js"></script>
+    <script src="js/animations/store-anim.js"></script>
+    <script src="js/animations/scatter-anim.js"></script>
+    <script src="js/animations/matchup-anim.js"></script>
+    <script src="js/animations/poll-anim.js"></script>
+    <script src="js/animations/auction-anim.js"></script>
+    <script src="js/animations/bracket-anim.js"></script>
+    <script src="js/animations/sales-anim.js"></script>
+    <script src="js/animations/traffic-anim.js"></script>
+
+    <!-- UI -->
+    <script src="js/ui/components.js"></script>
+    <script src="js/ui/dsl-editor.js"></script>
+
+    <!-- Levels -->
+    <script src="js/levels/schema.js"></script>
+    <script src="js/levels/validator.js"></script>
+    <script src="js/levels/registry.js"></script>
+    <script src="js/levels/narratives.js"></script>
+    <script src="js/levels/level-loader.js"></script>
+
+    <!-- Level Content (all 11 narratives) -->
+    <script src="js/levels/content/01-flour-mill.js"></script>
+    <script src="js/levels/content/02-lightbulbs.js"></script>
+    <script src="js/levels/content/03-factory-qc.js"></script>
+    <script src="js/levels/content/04-store-occupancy.js"></script>
+    <script src="js/levels/content/05-cafe-queue.js"></script>
+    <script src="js/levels/content/06-product-sales.js"></script>
+    <script src="js/levels/content/07-auction.js"></script>
+    <script src="js/levels/content/08-sports-elo.js"></script>
+    <script src="js/levels/content/09-psychology.js"></script>
+    <script src="js/levels/content/10-polls-elections.js"></script>
+    <script src="js/levels/content/11-traffic-bonus.js"></script>
+    <script src="js/levels/content/dsl-levels.js"></script>
+
+    <!-- Game -->
+    <script src="js/game.js"></script>
+
+    <script>
+        /**
+         * Initialize all registries and load levels
+         */
+        function initializeGame() {
+            NarrativeRegistry.init();
+            LevelRegistry.init();
+            LevelLoader.init();
+        }
+
+        /**
+         * Level Selection View - Narrative-based
+         */
+        function showLevelSelection() {
+            const app = document.getElementById('app');
+            app.innerHTML = '';
+            app.className = 'game-container narrative-menu';
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'game-header';
+            header.innerHTML = `
+                <h1 class="game-title">Ennustuspeli</h1>
+                <button class="btn btn-secondary" onclick="showProgress()">Edistyminen</button>
+            `;
+            app.appendChild(header);
+
+            // Narrative grid (11 rows)
+            const narrativeContainer = document.createElement('div');
+            narrativeContainer.className = 'narrative-container';
+            app.appendChild(narrativeContainer);
+
+            const progress = Persistence.getAll();
+            const narratives = NarrativeRegistry.getAll();
+
+            narratives.forEach((narrative, narIdx) => {
+                const isUnlocked = NarrativeRegistry.isUnlocked(narrative.id, progress);
+                const narProgress = NarrativeRegistry.getProgress(narrative.id, progress);
+
+                // Narrative row
+                const row = document.createElement('div');
+                row.className = 'narrative-row';
+                if (!isUnlocked) row.classList.add('locked');
+                if (narrative.isBonus) row.classList.add('bonus');
+
+                // Narrative header (left side)
+                const narHeader = document.createElement('div');
+                narHeader.className = 'narrative-header';
+                narHeader.innerHTML = `
+                    <span class="narrative-icon">${narrative.icon}</span>
+                    <div class="narrative-info">
+                        <div class="narrative-name">${narrative.name}</div>
+                        <div class="narrative-theme">${narrative.theme}</div>
+                    </div>
+                    <div class="narrative-progress">
+                        <div class="progress-stars">${'★'.repeat(narProgress.stars)}${'☆'.repeat(narProgress.maxStars - narProgress.stars)}</div>
+                        <div class="progress-text">${narProgress.completed}/${narProgress.total}</div>
+                    </div>
+                `;
+
+                // Levels (right side - horizontal list)
+                const levelsContainer = document.createElement('div');
+                levelsContainer.className = 'narrative-levels';
+
+                narrative.levels.forEach((levelId, lvlIdx) => {
+                    const level = LevelRegistry.get(levelId);
+                    if (!level) return;
+
+                    const levelProgress = progress[levelId] || {};
+                    // DEBUG: All levels unlocked for testing
+                    const levelUnlocked = true;
+                    // Original: const levelUnlocked = isUnlocked && (lvlIdx === 0 || progress[narrative.levels[lvlIdx - 1]]?.completed);
+
+                    const levelBtn = document.createElement('div');
+                    levelBtn.className = 'level-btn';
+                    if (!levelUnlocked) levelBtn.classList.add('locked');
+                    if (levelProgress.completed) levelBtn.classList.add('completed');
+
+                    const stars = levelProgress.stars || 0;
+                    levelBtn.innerHTML = `
+                        <div class="level-btn-number">${lvlIdx + 1}</div>
+                        <div class="level-btn-stars">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</div>
+                    `;
+
+                    levelBtn.title = level.name;
+
+                    if (levelUnlocked) {
+                        levelBtn.addEventListener('click', () => startLevel(levelId));
+                        levelBtn.style.cursor = 'pointer';
+                    }
+
+                    levelsContainer.appendChild(levelBtn);
+                });
+
+                row.appendChild(narHeader);
+                row.appendChild(levelsContainer);
+                narrativeContainer.appendChild(row);
+            });
+        }
+
+        /**
+         * Show progress/stats modal
+         */
+        function showProgress() {
+            const summary = Persistence.getSummary();
+            const modal = UI.createModal({ title: 'Edistyminen' });
+
+            modal.setContent(`
+                <div class="stats-panel">
+                    <div class="stat-item">
+                        <div class="stat-value">${summary.levelsCompleted}</div>
+                        <div class="stat-label">Tasoja suoritettu</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${summary.totalStars}</div>
+                        <div class="stat-label">Tähteä yhteensä</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${summary.totalAttempts}</div>
+                        <div class="stat-label">Yrityksiä yhteensä</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${summary.functionsUnlocked}</div>
+                        <div class="stat-label">Funktioita avattu</div>
+                    </div>
+                </div>
+            `);
+
+            modal.addButton('Tyhjennä edistyminen', 'btn-secondary', () => {
+                if (confirm('Haluatko varmasti tyhjentää kaiken edistymisen?')) {
+                    Persistence.reset();
+                    modal.hide();
+                    showLevelSelection();
+                }
+            });
+
+            modal.addButton('Sulje', 'btn-primary', () => modal.hide());
+            modal.show();
+        }
+
+        /**
+         * Start a specific level
+         */
+        let currentGame = null;
+
+        function startLevel(levelId) {
+            if (currentGame) {
+                currentGame.destroy();
+            }
+
+            currentGame = new Game(document.getElementById('app'));
+            currentGame.loadLevel(levelId);
+
+            // Add back button
+            const header = document.querySelector('.game-header');
+            const backBtn = document.createElement('button');
+            backBtn.className = 'btn btn-secondary';
+            backBtn.textContent = '← Takaisin';
+            backBtn.style.marginRight = 'auto';
+            backBtn.addEventListener('click', () => {
+                if (currentGame) {
+                    currentGame.destroy();
+                    currentGame = null;
+                }
+                showLevelSelection();
+            });
+            header.insertBefore(backBtn, header.firstChild);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeGame();
+
+            // Handle URL parameters for direct level access
+            const params = new URLSearchParams(window.location.search);
+            const levelParam = params.get('level');
+            if (levelParam && LevelRegistry.get(levelParam)) {
+                startLevel(levelParam);
+            } else {
+                showLevelSelection();
+            }
+        });
+    </script>
+</body>
+</html>

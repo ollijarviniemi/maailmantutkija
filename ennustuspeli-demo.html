@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ennustuspeli - Kahvilajono</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #6B4423 0%, #8B5A2B 100%);
+            color: white;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .level-icon {
+            font-size: 2.5em;
+        }
+
+        .level-title {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .level-subtitle {
+            font-size: 0.95em;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .help-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .help-button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        /* Left panel - Animation & Data */
+        .left-panel {
+            border-right: 1px solid #e0e0e0;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        /* Animation area */
+        .animation-container {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+
+        .animation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .clock-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #333;
+            background: #e8e8e8;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        .animation-status {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .animation-status.running {
+            color: #27ae60;
+        }
+
+        .animation-status.finished {
+            color: #e74c3c;
+        }
+
+        #animationCanvas {
+            width: 100%;
+            height: 200px;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .animation-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+        }
+
+        .stat {
+            color: #666;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .speed-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .speed-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+
+        .speed-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .speed-btn.active {
+            background: #6B4423;
+            color: white;
+            border-color: #6B4423;
+        }
+
+        .day-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .day-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .day-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .day-btn.primary {
+            background: #6B4423;
+            color: white;
+            border-color: #6B4423;
+        }
+
+        .day-btn.primary:hover {
+            background: #8B5A2B;
+        }
+
+        /* Data section */
+        .data-container {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .data-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .data-tab {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+
+        .data-tab:hover {
+            background: #d0d0d0;
+        }
+
+        .data-tab.active {
+            background: #6B4423;
+            color: white;
+        }
+
+        .data-panel {
+            display: none;
+        }
+
+        .data-panel.active {
+            display: block;
+        }
+
+        .data-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        #dataCanvas {
+            width: 100%;
+            height: 120px;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .data-list {
+            max-height: 80px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.8em;
+            color: #666;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        /* Right panel - Model */
+        .right-panel {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .available-functions {
+            background: #f0f0f0;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 0.85em;
+        }
+
+        .available-functions code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin: 2px;
+            display: inline-block;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #codeEditor {
+            flex: 1;
+            min-height: 200px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            resize: none;
+            line-height: 1.5;
+            transition: border-color 0.2s;
+        }
+
+        #codeEditor:focus {
+            outline: none;
+            border-color: #6B4423;
+        }
+
+        #codeEditor.error {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+
+        .output-area {
+            margin-top: 16px;
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 6px;
+            min-height: 60px;
+        }
+
+        .output-label {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .output-value {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .output-value.error {
+            color: #e74c3c;
+            font-size: 0.95em;
+        }
+
+        .output-value.computing {
+            color: #666;
+            font-style: italic;
+        }
+
+        .output-detail {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-primary {
+            background: #6B4423;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #8B5A2B;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Question bar */
+        .question-bar {
+            background: #fff3e0;
+            border-top: 1px solid #e0e0e0;
+            padding: 16px 24px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .question-highlight {
+            font-weight: 600;
+            color: #e74c3c;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.visible .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+            padding: 4px 8px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        /* Result modal specifics */
+        .result-stars {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #f1c40f;
+        }
+
+        .result-title {
+            text-align: center;
+            font-size: 1.4em;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .result-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .result-box {
+            background: #f8f8f8;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .result-box-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .result-box-value {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .result-box-value.user {
+            color: #3498db;
+        }
+
+        .result-box-value.true {
+            color: #27ae60;
+        }
+
+        .true-dgp {
+            background: #f0f8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .true-dgp-title {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+
+        .true-dgp-code {
+            font-family: monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            color: #333;
+        }
+
+        .insight-box {
+            background: #fff8e1;
+            border-left: 4px solid #f1c40f;
+            padding: 12px 16px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        /* Help modal specifics */
+        .help-section {
+            margin-bottom: 24px;
+        }
+
+        .help-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .help-section h3 {
+            font-size: 1em;
+            margin-bottom: 12px;
+            color: #6B4423;
+        }
+
+        .help-function {
+            background: #f8f8f8;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .help-function code {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .help-function p {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Max wait highlight */
+        .max-wait-display {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: #fff3e0;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .max-wait-display.exceeded {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .max-wait-label {
+            color: #666;
+        }
+
+        .max-wait-value {
+            font-weight: 600;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <span class="level-icon">☕</span>
+                <div>
+                    <div class="level-title">Kahvilajono</div>
+                    <div class="level-subtitle">Palveluaika ~ 5 min | Asiakkaita ~ 10/tunti</div>
+                </div>
+            </div>
+            <button class="help-button" onclick="showHelp()">?</button>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <!-- Left panel -->
+            <div class="left-panel">
+                <div class="section-title">Simulaatio</div>
+                <div class="animation-container">
+                    <div class="animation-header">
+                        <div class="clock-display" id="clockDisplay">09:00</div>
+                        <div class="animation-status" id="animationStatus">Odottaa</div>
+                    </div>
+                    <canvas id="animationCanvas"></canvas>
+                    <div class="animation-controls">
+                        <div class="stats-row">
+                            <div class="stat">Jonossa: <span class="stat-value" id="queueLength">0</span></div>
+                            <div class="stat">Palveltu: <span class="stat-value" id="servedCount">0</span></div>
+                            <div class="stat">Saapunut: <span class="stat-value" id="arrivedCount">0</span></div>
+                        </div>
+                        <div class="speed-controls">
+                            <button class="speed-btn active" data-speed="1">1x</button>
+                            <button class="speed-btn" data-speed="3">3x</button>
+                            <button class="speed-btn" data-speed="10">10x</button>
+                        </div>
+                    </div>
+                    <div class="max-wait-display" id="maxWaitDisplay">
+                        <span class="max-wait-label">Pisin odotusaika: </span>
+                        <span class="max-wait-value" id="maxWaitValue">0 min</span>
+                    </div>
+                    <div class="day-controls">
+                        <button class="day-btn primary" id="startDayBtn" onclick="startDay()">▶ Aloita päivä</button>
+                        <button class="day-btn" id="resetBtn" onclick="resetDay()">↺ Nollaa</button>
+                    </div>
+                </div>
+
+                <div class="section-title">Historiallinen data <span id="dayCount">(0 päivää)</span></div>
+                <div class="data-container">
+                    <div class="data-tabs">
+                        <button class="data-tab active" data-tab="arrivals" onclick="switchDataTab('arrivals')">Saapumisvälit</button>
+                        <button class="data-tab" data-tab="service" onclick="switchDataTab('service')">Palveluajat</button>
+                        <button class="data-tab" data-tab="waits" onclick="switchDataTab('waits')">Odotusajat</button>
+                    </div>
+
+                    <div class="data-panel active" id="arrivalsPanel">
+                        <div class="data-stats">
+                            <div class="stat">Keskiarvo: <span class="stat-value" id="arrivalMean">-</span> min</div>
+                            <div class="stat">Keskihajonta: <span class="stat-value" id="arrivalStd">-</span> min</div>
+                            <div class="stat">n = <span class="stat-value" id="arrivalCount">0</span></div>
+                        </div>
+                        <canvas id="arrivalHistogram"></canvas>
+                    </div>
+
+                    <div class="data-panel" id="servicePanel">
+                        <div class="data-stats">
+                            <div class="stat">Keskiarvo: <span class="stat-value" id="serviceMean">-</span> min</div>
+                            <div class="stat">Keskihajonta: <span class="stat-value" id="serviceStd">-</span> min</div>
+                            <div class="stat">n = <span class="stat-value" id="serviceCount">0</span></div>
+                        </div>
+                        <canvas id="serviceHistogram"></canvas>
+                    </div>
+
+                    <div class="data-panel" id="waitsPanel">
+                        <div class="data-stats">
+                            <div class="stat">Keskiarvo: <span class="stat-value" id="waitMean">-</span> min</div>
+                            <div class="stat">Max: <span class="stat-value" id="waitMax">-</span> min</div>
+                            <div class="stat">n = <span class="stat-value" id="waitCount">0</span></div>
+                        </div>
+                        <canvas id="waitHistogram"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right panel -->
+            <div class="right-panel">
+                <div class="section-title">Mallisi</div>
+
+                <div class="available-functions">
+                    <strong>Käytettävissä:</strong>
+                    <code>mean()</code>
+                    <code>std()</code>
+                    <code>exponential()</code>
+                    <code>lognormal()</code>
+                    <code>simulate_day()</code>
+                    <code>P()</code>
+                </div>
+
+                <div class="editor-container">
+                    <textarea id="codeEditor" spellcheck="false">// Data: saapumisvälit, palveluajat
+// Mallinna saapumisvälit ja palveluajat,
+// simuloi päivä ja laske todennäköisyys.
+
+t = mean(saapumisvälit)
+s = mean(palveluajat)
+sigma = std(palveluajat)
+
+saapuminen = exponential(t)
+palvelu = lognormal(s, sigma)
+
+max_odotus = simulate_day(saapuminen, palvelu)
+
+return P(max_odotus > 30)</textarea>
+                </div>
+
+                <div class="output-area">
+                    <div class="output-label">Tulos:</div>
+                    <div class="output-value" id="outputValue">-</div>
+                    <div class="output-detail" id="outputDetail"></div>
+                </div>
+
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="runModel()">Aja malli</button>
+                    <button class="btn btn-primary" id="submitBtn" onclick="submitAnswer()" disabled>Vastaa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question bar -->
+        <div class="question-bar">
+            <div class="question-text">
+                <strong>Kysymys:</strong> Mikä on todennäköisyys, että jonain päivänä joku asiakas joutuu odottamaan
+                <span class="question-highlight">yli 30 minuuttia</span>?
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="modal-overlay" id="resultOverlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Tulos</div>
+                <button class="modal-close" onclick="closeResult()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="result-stars" id="resultStars">★★★☆☆</div>
+                <div class="result-title" id="resultTitle">Hyvä yritys!</div>
+
+                <div class="result-comparison">
+                    <div class="result-box">
+                        <div class="result-box-label">Sinun arviosi</div>
+                        <div class="result-box-value user" id="userResult">-</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-box-label">Todellinen arvo</div>
+                        <div class="result-box-value true" id="trueResult">-</div>
+                    </div>
+                </div>
+
+                <div class="true-dgp">
+                    <div class="true-dgp-title">Todellinen dataa generoiva prosessi:</div>
+                    <div class="true-dgp-code" id="trueDgpCode"></div>
+                </div>
+
+                <div class="insight-box" id="insightBox">
+                    Jonotusteoriassa palveluajan jakauma vaikuttaa merkittävästi odotusaikoihin.
+                    LogNormal-jakauma tuottaa ajoittain pitkiä palveluaikoja, mikä voi aiheuttaa
+                    ruuhkautumista ja pitkiä odotusaikoja.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Ohje</div>
+                <button class="modal-close" onclick="closeHelp()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h3>Tehtävä</h3>
+                    <p>Kahvilassa asiakkaat saapuvat satunnaisesti ja jokaisen palveleminen kestää satunnaisen ajan.
+                    Jos asiakkaita saapuu nopeammin kuin heitä ehditään palvella, syntyy jono.</p>
+                    <p style="margin-top: 8px;">Tehtäväsi on ennustaa: kuinka todennäköistä on, että jonain päivänä
+                    joku asiakas joutuu odottamaan yli 30 minuuttia?</p>
+                </div>
+
+                <div class="help-section">
+                    <h3>Simulaatio</h3>
+                    <p>Käynnistä päivän simulaatio nähdäksesi, miten jono kehittyy. Kahvila on auki 09:00-17:00,
+                    mutta uusia asiakkaita ei tule enää 16:30 jälkeen. Voit nopeuttaa simulaatiota 1x/3x/10x.</p>
+                    <p style="margin-top: 8px;">Simulaation aikana kerätään dataa saapumisväleistä, palveluajoista
+                    ja odotusajoista. Käytä tätä dataa mallisi rakentamiseen.</p>
+                </div>
+
+                <div class="help-section">
+                    <h3>Funktiot</h3>
+
+                    <div class="help-function">
+                        <code>mean(data)</code>
+                        <p>Laskee datan keskiarvon.</p>
+                    </div>
+
+                    <div class="help-function">
+                        <code>std(data)</code>
+                        <p>Laskee datan keskihajonnan.</p>
+                    </div>
+
+                    <div class="help-function">
+                        <code>exponential(mean)</code>
+                        <p>Luo eksponenttijakauman annetulla keskiarvolla. Sopii mallintamaan aikaa tapahtumien välillä.</p>
+                    </div>
+
+                    <div class="help-function">
+                        <code>lognormal(mean, std)</code>
+                        <p>Luo lognormaalijakauman annetulla keskiarvolla ja keskihajonnalla. Sopii mallintamaan positiivisia suureita kuten palveluaikoja.</p>
+                    </div>
+
+                    <div class="help-function">
+                        <code>simulate_day(arrival_dist, service_dist)</code>
+                        <p>Simuloi yhden päivän jonodynamiikan. Palauttaa päivän pisimmän odotusajan.</p>
+                    </div>
+
+                    <div class="help-function">
+                        <code>P(ehto)</code>
+                        <p>Laskee todennäköisyyden, että ehto toteutuu. Esim. <code>P(max_odotus > 30)</code>.</p>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3>Data</h3>
+                    <p>Käytettävissä olevat datalistat:</p>
+                    <ul style="margin-top: 8px; margin-left: 20px;">
+                        <li><code>saapumisvälit</code> - aika edellisen asiakkaan saapumisesta (minuutteina)</li>
+                        <li><code>palveluajat</code> - kunkin asiakkaan palveluun kulunut aika (minuutteina)</li>
+                        <li><code>odotusajat</code> - kunkin asiakkaan jonossa odottama aika (minuutteina)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+
+        const CONFIG = {
+            // True DGP parameters
+            trueMeanInterarrival: 6,      // Mean time between customers (minutes)
+            trueServiceMean: 5,           // Mean service time (minutes)
+            trueServiceStd: 2,            // Std of service time (minutes)
+
+            // Simulation parameters
+            openTime: 9 * 60,             // 09:00 in minutes
+            lastArrivalTime: 16.5 * 60,   // 16:30 in minutes
+            closeTime: 17 * 60,           // 17:00 in minutes
+
+            // Question threshold
+            waitThreshold: 30,            // minutes
+
+            // Monte Carlo
+            numSimulations: 10000,
+
+            // Scoring
+            starThresholds: [0.50, 0.30, 0.15, 0.05]
+        };
+
+        // Derived parameters for lognormal
+        // If mean = m and std = s, then:
+        // sigma^2 = log(1 + (s/m)^2)
+        // mu = log(m) - sigma^2/2
+        function getLognormalParams(mean, std) {
+            const cv = std / mean;
+            const sigma2 = Math.log(1 + cv * cv);
+            const sigma = Math.sqrt(sigma2);
+            const mu = Math.log(mean) - sigma2 / 2;
+            return { mu, sigma };
+        }
+
+        // ============================================
+        // GLOBAL STATE
+        // ============================================
+
+        let animation = null;
+        let histograms = {};
+        let currentSpeed = 1;
+        let dayCompleted = false;
+
+        // Accumulated data across days
+        let allInterarrivals = [];
+        let allServiceTimes = [];
+        let allWaitTimes = [];
+        let daysSimulated = 0;
+
+        // Current day data
+        let currentDayData = {
+            interarrivals: [],
+            serviceTimes: [],
+            waitTimes: [],
+            maxWait: 0
+        };
+
+        let currentPrediction = null;
+        let trueAnswer = null;
+
+        // ============================================
+        // SAMPLING FUNCTIONS
+        // ============================================
+
+        // Box-Muller for normal
+        function sampleNormal(mean, std) {
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            return mean + std * z;
+        }
+
+        // Exponential distribution
+        function sampleExponential(mean) {
+            return -mean * Math.log(Math.random());
+        }
+
+        // LogNormal distribution (parameterized by mean and std)
+        function sampleLognormal(mean, std) {
+            const { mu, sigma } = getLognormalParams(mean, std);
+            const normalSample = sampleNormal(mu, sigma);
+            return Math.exp(normalSample);
+        }
+
+        // ============================================
+        // QUEUE SIMULATION
+        // ============================================
+
+        function simulateQueueDay(meanInterarrival, serviceMean, serviceStd) {
+            const events = []; // {time, type: 'arrival' | 'departure', customerId}
+            const customers = []; // {arrivalTime, serviceStartTime, serviceEndTime, waitTime}
+
+            let currentTime = CONFIG.openTime;
+            let customerId = 0;
+
+            // Generate all arrivals
+            while (currentTime < CONFIG.lastArrivalTime) {
+                const interarrival = sampleExponential(meanInterarrival);
+                currentTime += interarrival;
+                if (currentTime < CONFIG.lastArrivalTime) {
+                    events.push({ time: currentTime, type: 'arrival', customerId: customerId++ });
+                }
+            }
+
+            // Sort events by time
+            events.sort((a, b) => a.time - b.time);
+
+            // Process arrivals and compute wait times
+            let serverFreeAt = CONFIG.openTime;
+            let maxWait = 0;
+
+            for (const event of events) {
+                if (event.type === 'arrival') {
+                    const arrivalTime = event.time;
+                    const serviceTime = sampleLognormal(serviceMean, serviceStd);
+
+                    // When can this customer start being served?
+                    const serviceStartTime = Math.max(arrivalTime, serverFreeAt);
+                    const waitTime = serviceStartTime - arrivalTime;
+                    const serviceEndTime = serviceStartTime + serviceTime;
+
+                    serverFreeAt = serviceEndTime;
+                    maxWait = Math.max(maxWait, waitTime);
+
+                    customers.push({
+                        arrivalTime,
+                        serviceStartTime,
+                        serviceEndTime,
+                        waitTime,
+                        serviceTime
+                    });
+                }
+            }
+
+            return { maxWait, customers };
+        }
+
+        // ============================================
+        // DSL INTERPRETER
+        // ============================================
+
+        class DSLInterpreter {
+            constructor() {
+                this.variables = {};
+                this.distributions = {};
+                this.distCounter = 0;
+                this.lastSimulation = null;
+            }
+
+            execute(code) {
+                this.variables = {
+                    'saapumisvälit': allInterarrivals.length > 0 ? [...allInterarrivals] : [6],
+                    'palveluajat': allServiceTimes.length > 0 ? [...allServiceTimes] : [5],
+                    'odotusajat': allWaitTimes.length > 0 ? [...allWaitTimes] : [0]
+                };
+                this.distributions = {};
+                this.distCounter = 0;
+                this.lastSimulation = null;
+
+                const lines = code.split('\n')
+                    .map(line => line.replace(/\/\/.*$/, '').trim())
+                    .filter(line => line.length > 0);
+
+                let returnValue = null;
+
+                for (const line of lines) {
+                    if (line.startsWith('return ')) {
+                        returnValue = this.evaluateExpression(line.substring(7));
+                    } else if (line.includes('=') && !line.includes('==')) {
+                        const eqIndex = line.indexOf('=');
+                        const varName = line.substring(0, eqIndex).trim();
+                        const expr = line.substring(eqIndex + 1).trim();
+                        if (!this.isValidVarName(varName)) {
+                            throw new Error(`Virheellinen muuttujan nimi: ${varName}`);
+                        }
+                        this.variables[varName] = this.evaluateExpression(expr);
+                    } else {
+                        this.evaluateExpression(line);
+                    }
+                }
+
+                if (returnValue === null) {
+                    throw new Error('Mallista puuttuu return-lause');
+                }
+
+                return returnValue;
+            }
+
+            isValidVarName(name) {
+                return /^[a-zA-ZäöåÄÖÅ_][a-zA-ZäöåÄÖÅ0-9_]*$/.test(name);
+            }
+
+            evaluateExpression(expr) {
+                expr = expr.trim();
+
+                // Handle P(condition)
+                if (expr.startsWith('P(') && expr.endsWith(')')) {
+                    const condition = expr.substring(2, expr.length - 1);
+                    return this.evaluateProbability(condition);
+                }
+
+                // Handle function calls
+                const funcMatch = expr.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\((.+)\)$/);
+                if (funcMatch) {
+                    const [, funcName, args] = funcMatch;
+                    return this.callFunction(funcName, args);
+                }
+
+                // Handle comparisons
+                if (expr.includes('>') || expr.includes('<')) {
+                    return { type: 'condition', expr: expr };
+                }
+
+                // Handle arithmetic
+                if (/[+\-*/]/.test(expr) && !/^-?\d+\.?\d*$/.test(expr)) {
+                    return this.evaluateArithmetic(expr);
+                }
+
+                // Handle numbers
+                if (!isNaN(parseFloat(expr)) && isFinite(expr)) {
+                    return parseFloat(expr);
+                }
+
+                // Handle variables
+                if (this.variables.hasOwnProperty(expr)) {
+                    return this.variables[expr];
+                }
+
+                throw new Error(`Tuntematon lauseke: ${expr}`);
+            }
+
+            callFunction(name, argsStr) {
+                const args = this.parseArguments(argsStr);
+
+                switch (name) {
+                    case 'mean':
+                    case 'keskiarvo': {
+                        const arr = this.resolveArg(args[0]);
+                        return this.mean(arr);
+                    }
+
+                    case 'std':
+                    case 'keskihajonta': {
+                        const arr = this.resolveArg(args[0]);
+                        return this.std(arr);
+                    }
+
+                    case 'sum':
+                    case 'summa': {
+                        const arr = this.resolveArg(args[0]);
+                        return arr.reduce((a, b) => a + b, 0);
+                    }
+
+                    case 'count':
+                    case 'lukumaara': {
+                        const arr = this.resolveArg(args[0]);
+                        return arr.length;
+                    }
+
+                    case 'min': {
+                        const arr = this.resolveArg(args[0]);
+                        return Math.min(...arr);
+                    }
+
+                    case 'max': {
+                        const arr = this.resolveArg(args[0]);
+                        return Math.max(...arr);
+                    }
+
+                    case 'exponential':
+                    case 'eksponentti': {
+                        const mean = this.resolveArg(args[0]);
+                        if (typeof mean !== 'number' || mean <= 0) {
+                            throw new Error('exponential() vaatii positiivisen keskiarvon');
+                        }
+                        const distId = `dist_${this.distCounter++}`;
+                        this.distributions[distId] = { type: 'exponential', mean };
+                        return { type: 'distribution', id: distId };
+                    }
+
+                    case 'lognormal':
+                    case 'lognormaali': {
+                        const mean = this.resolveArg(args[0]);
+                        const std = this.resolveArg(args[1]);
+                        if (typeof mean !== 'number' || mean <= 0) {
+                            throw new Error('lognormal() vaatii positiivisen keskiarvon');
+                        }
+                        if (typeof std !== 'number' || std <= 0) {
+                            throw new Error('lognormal() vaatii positiivisen keskihajonnan');
+                        }
+                        const distId = `dist_${this.distCounter++}`;
+                        this.distributions[distId] = { type: 'lognormal', mean, std };
+                        return { type: 'distribution', id: distId };
+                    }
+
+                    case 'simulate_day':
+                    case 'simuloi_päivä': {
+                        const arrivalDist = this.resolveArg(args[0]);
+                        const serviceDist = this.resolveArg(args[1]);
+
+                        if (!arrivalDist || arrivalDist.type !== 'distribution') {
+                            throw new Error('simulate_day() vaatii saapumisjakauman ensimmäisenä argumenttina');
+                        }
+                        if (!serviceDist || serviceDist.type !== 'distribution') {
+                            throw new Error('simulate_day() vaatii palvelujakauman toisena argumenttina');
+                        }
+
+                        const arrDist = this.distributions[arrivalDist.id];
+                        const srvDist = this.distributions[serviceDist.id];
+
+                        // Return a "simulated day result" distribution
+                        const distId = `dist_${this.distCounter++}`;
+                        this.distributions[distId] = {
+                            type: 'queue_simulation',
+                            arrivalDist: arrDist,
+                            serviceDist: srvDist
+                        };
+                        return { type: 'distribution', id: distId };
+                    }
+
+                    default:
+                        throw new Error(`Tuntematon funktio: ${name}`);
+                }
+            }
+
+            parseArguments(argsStr) {
+                const args = [];
+                let depth = 0;
+                let current = '';
+
+                for (const char of argsStr) {
+                    if (char === '(') depth++;
+                    else if (char === ')') depth--;
+                    else if (char === ',' && depth === 0) {
+                        args.push(current.trim());
+                        current = '';
+                        continue;
+                    }
+                    current += char;
+                }
+                if (current.trim()) args.push(current.trim());
+
+                return args;
+            }
+
+            resolveArg(arg) {
+                if (typeof arg === 'number') return arg;
+                if (Array.isArray(arg)) return arg;
+                if (typeof arg === 'object') return arg;
+                return this.evaluateExpression(arg);
+            }
+
+            evaluateArithmetic(expr) {
+                let evalExpr = expr;
+                for (const [name, value] of Object.entries(this.variables)) {
+                    if (typeof value === 'number') {
+                        evalExpr = evalExpr.replace(new RegExp(`\\b${name}\\b`, 'g'), value);
+                    }
+                }
+
+                try {
+                    if (!/^[\d\s+\-*/().]+$/.test(evalExpr)) {
+                        throw new Error('Virheellinen aritmeettinen lauseke');
+                    }
+                    return eval(evalExpr);
+                } catch (e) {
+                    throw new Error(`Virhe laskutoimituksessa: ${expr}`);
+                }
+            }
+
+            evaluateProbability(condition) {
+                // Parse condition like "x > 30"
+                const match = condition.match(/([a-zA-ZäöåÄÖÅ_][a-zA-ZäöåÄÖÅ0-9_]*)\s*(>|<|>=|<=|==)\s*(.+)/);
+                if (!match) {
+                    throw new Error(`Virheellinen ehto: ${condition}`);
+                }
+
+                const [, varName, operator, valueStr] = match;
+                const threshold = parseFloat(valueStr.trim());
+
+                if (isNaN(threshold)) {
+                    throw new Error(`Virheellinen kynnysarvo: ${valueStr}`);
+                }
+
+                const variable = this.variables[varName];
+                if (!variable || variable.type !== 'distribution') {
+                    throw new Error(`Muuttuja '${varName}' ei ole jakauma`);
+                }
+
+                const dist = this.distributions[variable.id];
+
+                // Monte Carlo simulation
+                let count = 0;
+                const n = CONFIG.numSimulations;
+
+                for (let i = 0; i < n; i++) {
+                    const sample = this.sampleFromDist(dist);
+                    const passes = this.evaluateCondition(sample, operator, threshold);
+                    if (passes) count++;
+                }
+
+                const probability = count / n;
+
+                this.lastSimulation = {
+                    numSimulations: n,
+                    countPassing: count,
+                    probability: probability
+                };
+
+                return probability;
+            }
+
+            sampleFromDist(dist) {
+                switch (dist.type) {
+                    case 'exponential':
+                        return sampleExponential(dist.mean);
+                    case 'lognormal':
+                        return sampleLognormal(dist.mean, dist.std);
+                    case 'queue_simulation': {
+                        // Simulate a full day and return max wait time
+                        const arrMean = dist.arrivalDist.mean;
+                        const srvMean = dist.serviceDist.mean;
+                        const srvStd = dist.serviceDist.std || srvMean * 0.4;
+                        const result = simulateQueueDay(arrMean, srvMean, srvStd);
+                        return result.maxWait;
+                    }
+                    default:
+                        throw new Error(`Tuntematon jakauma: ${dist.type}`);
+                }
+            }
+
+            evaluateCondition(value, operator, threshold) {
+                switch (operator) {
+                    case '>': return value > threshold;
+                    case '<': return value < threshold;
+                    case '>=': return value >= threshold;
+                    case '<=': return value <= threshold;
+                    case '==': return Math.abs(value - threshold) < 0.0001;
+                    default: return false;
+                }
+            }
+
+            mean(arr) {
+                if (!Array.isArray(arr) || arr.length === 0) {
+                    throw new Error('mean() vaatii ei-tyhjän listan');
+                }
+                return arr.reduce((a, b) => a + b, 0) / arr.length;
+            }
+
+            std(arr) {
+                if (!Array.isArray(arr) || arr.length === 0) {
+                    throw new Error('std() vaatii ei-tyhjän listan');
+                }
+                const m = this.mean(arr);
+                const variance = arr.reduce((sum, x) => sum + (x - m) ** 2, 0) / arr.length;
+                return Math.sqrt(variance);
+            }
+        }
+
+        // ============================================
+        // ANIMATION SYSTEM
+        // ============================================
+
+        class CafeAnimation {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.resize();
+
+                this.customers = [];
+                this.queue = [];
+                this.serving = null;
+                this.served = [];
+
+                this.currentTime = CONFIG.openTime; // minutes since midnight
+                this.speed = 1;
+                this.running = false;
+                this.finished = false;
+
+                this.nextArrivalTime = CONFIG.openTime;
+                this.serverFreeAt = CONFIG.openTime;
+                this.maxWait = 0;
+                this.customerIdCounter = 0;
+
+                // Layout
+                this.updateLayout();
+            }
+
+            resize() {
+                const rect = this.canvas.getBoundingClientRect();
+                this.canvas.width = rect.width * window.devicePixelRatio;
+                this.canvas.height = rect.height * window.devicePixelRatio;
+                this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                this.width = rect.width;
+                this.height = rect.height;
+                this.updateLayout();
+            }
+
+            updateLayout() {
+                this.spawnX = this.width * 0.05;
+                this.queueStartX = this.width * 0.20;
+                this.queueEndX = this.width * 0.55;
+                this.stationX = this.width * 0.70;
+                this.exitX = this.width * 0.95;
+                this.groundY = this.height * 0.65;
+                this.customerSize = Math.min(20, this.height * 0.12);
+                this.customerGap = this.customerSize * 1.3;
+            }
+
+            start() {
+                this.running = true;
+                this.finished = false;
+                this.lastRealTime = performance.now();
+                this.scheduleNextArrival();
+                this.animate();
+                this.updateStatus();
+            }
+
+            stop() {
+                this.running = false;
+            }
+
+            reset() {
+                this.customers = [];
+                this.queue = [];
+                this.serving = null;
+                this.served = [];
+                this.currentTime = CONFIG.openTime;
+                this.nextArrivalTime = CONFIG.openTime;
+                this.serverFreeAt = CONFIG.openTime;
+                this.maxWait = 0;
+                this.customerIdCounter = 0;
+                this.running = false;
+                this.finished = false;
+
+                currentDayData = {
+                    interarrivals: [],
+                    serviceTimes: [],
+                    waitTimes: [],
+                    maxWait: 0
+                };
+
+                this.updateDisplay();
+                this.draw();
+            }
+
+            scheduleNextArrival() {
+                if (this.currentTime >= CONFIG.lastArrivalTime) return;
+
+                const interarrival = sampleExponential(CONFIG.trueMeanInterarrival);
+                this.nextArrivalTime = this.currentTime + interarrival;
+                this.lastInterarrival = interarrival;
+            }
+
+            setSpeed(speed) {
+                this.speed = speed;
+            }
+
+            animate() {
+                if (!this.running) return;
+
+                const now = performance.now();
+                const realDt = (now - this.lastRealTime) / 1000; // seconds
+                this.lastRealTime = now;
+
+                // Convert to simulation minutes: 1 real second = 1 simulation minute at 1x speed
+                const simDt = realDt * this.speed;
+
+                this.update(simDt);
+                this.draw();
+
+                if (!this.finished) {
+                    requestAnimationFrame(() => this.animate());
+                }
+            }
+
+            update(dt) {
+                const prevTime = this.currentTime;
+                this.currentTime += dt;
+
+                // Check for new arrivals
+                while (this.nextArrivalTime <= this.currentTime && this.nextArrivalTime < CONFIG.lastArrivalTime) {
+                    this.spawnCustomer(this.nextArrivalTime);
+                    this.scheduleNextArrival();
+                }
+
+                // Update customer positions (visual only)
+                const moveSpeed = this.width * 0.3 * dt; // pixels per sim-minute
+                for (const customer of this.customers) {
+                    if (customer.visualState === 'moving') {
+                        const dx = customer.targetX - customer.x;
+                        const move = Math.min(Math.abs(dx), moveSpeed);
+                        customer.x += Math.sign(dx) * move;
+                        if (Math.abs(customer.x - customer.targetX) < 1) {
+                            customer.x = customer.targetX;
+                        }
+                    }
+                }
+
+                // Process serving
+                if (this.serving && this.currentTime >= this.serving.serviceEndTime) {
+                    this.finishServing();
+                }
+
+                // Start serving next if possible
+                if (!this.serving && this.queue.length > 0) {
+                    this.startServing();
+                }
+
+                // Update queue visual positions
+                this.updateQueuePositions();
+
+                // Remove customers that have left screen
+                this.customers = this.customers.filter(c => c.x < this.exitX + 50);
+
+                // Check if day is finished
+                if (this.currentTime >= CONFIG.lastArrivalTime &&
+                    this.queue.length === 0 &&
+                    !this.serving &&
+                    this.customers.every(c => c.visualState === 'leaving' || c.x >= this.exitX)) {
+                    this.finishDay();
+                }
+
+                this.updateDisplay();
+            }
+
+            spawnCustomer(arrivalTime) {
+                const serviceTime = sampleLognormal(CONFIG.trueServiceMean, CONFIG.trueServiceStd);
+                const serviceStartTime = Math.max(arrivalTime, this.serverFreeAt);
+                const waitTime = serviceStartTime - arrivalTime;
+                const serviceEndTime = serviceStartTime + serviceTime;
+
+                this.serverFreeAt = serviceEndTime;
+                this.maxWait = Math.max(this.maxWait, waitTime);
+                currentDayData.maxWait = this.maxWait;
+
+                // Record data
+                if (this.lastInterarrival !== undefined && this.customerIdCounter > 0) {
+                    currentDayData.interarrivals.push(this.lastInterarrival);
+                }
+                currentDayData.serviceTimes.push(serviceTime);
+                currentDayData.waitTimes.push(waitTime);
+
+                const customer = {
+                    id: this.customerIdCounter++,
+                    x: this.spawnX,
+                    targetX: this.queueEndX,
+                    arrivalTime,
+                    serviceStartTime,
+                    serviceEndTime,
+                    serviceTime,
+                    waitTime,
+                    visualState: 'moving', // moving, queuing, serving, leaving
+                    color: this.getRandomColor()
+                };
+
+                this.customers.push(customer);
+                this.queue.push(customer);
+
+                this.updateDataDisplays();
+            }
+
+            startServing() {
+                const customer = this.queue.shift();
+                customer.visualState = 'serving';
+                customer.targetX = this.stationX;
+                this.serving = customer;
+            }
+
+            finishServing() {
+                this.serving.visualState = 'leaving';
+                this.serving.targetX = this.exitX + 50;
+                this.served.push(this.serving);
+                this.serving = null;
+            }
+
+            updateQueuePositions() {
+                for (let i = 0; i < this.queue.length; i++) {
+                    const customer = this.queue[i];
+                    customer.targetX = this.queueEndX - i * this.customerGap;
+                    if (customer.visualState !== 'serving') {
+                        customer.visualState = 'queuing';
+                    }
+                }
+            }
+
+            finishDay() {
+                this.finished = true;
+                this.running = false;
+
+                // Add day's data to historical
+                allInterarrivals.push(...currentDayData.interarrivals);
+                allServiceTimes.push(...currentDayData.serviceTimes);
+                allWaitTimes.push(...currentDayData.waitTimes);
+                daysSimulated++;
+
+                this.updateStatus();
+                this.updateDataDisplays();
+                updateDayCount();
+            }
+
+            getRandomColor() {
+                const colors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6', '#f39c12', '#1abc9c'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            updateDisplay() {
+                // Clock
+                const hours = Math.floor(this.currentTime / 60);
+                const mins = Math.floor(this.currentTime % 60);
+                document.getElementById('clockDisplay').textContent =
+                    `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+
+                // Stats
+                document.getElementById('queueLength').textContent = this.queue.length;
+                document.getElementById('servedCount').textContent = this.served.length + (this.serving ? 0 : 0);
+                document.getElementById('arrivedCount').textContent = this.customerIdCounter;
+
+                // Max wait
+                const maxWaitEl = document.getElementById('maxWaitDisplay');
+                document.getElementById('maxWaitValue').textContent = `${this.maxWait.toFixed(1)} min`;
+                if (this.maxWait > CONFIG.waitThreshold) {
+                    maxWaitEl.classList.add('exceeded');
+                } else {
+                    maxWaitEl.classList.remove('exceeded');
+                }
+            }
+
+            updateStatus() {
+                const statusEl = document.getElementById('animationStatus');
+                if (this.finished) {
+                    statusEl.textContent = 'Päivä päättynyt';
+                    statusEl.className = 'animation-status finished';
+                } else if (this.running) {
+                    statusEl.textContent = 'Käynnissä...';
+                    statusEl.className = 'animation-status running';
+                } else {
+                    statusEl.textContent = 'Odottaa';
+                    statusEl.className = 'animation-status';
+                }
+            }
+
+            draw() {
+                const ctx = this.ctx;
+                ctx.clearRect(0, 0, this.width, this.height);
+
+                // Background
+                ctx.fillStyle = '#fafafa';
+                ctx.fillRect(0, 0, this.width, this.height);
+
+                // Ground
+                ctx.fillStyle = '#e8e8e8';
+                ctx.fillRect(0, this.groundY + this.customerSize/2 + 5, this.width, this.height);
+
+                // Queue area indicator
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(this.queueStartX, this.groundY - 30, this.queueEndX - this.queueStartX + 30, 70);
+
+                // Service station (coffee machine)
+                this.drawStation();
+
+                // Draw customers
+                for (const customer of this.customers) {
+                    this.drawCustomer(customer);
+                }
+
+                // Draw service progress if someone is being served
+                if (this.serving) {
+                    this.drawServiceProgress();
+                }
+            }
+
+            drawStation() {
+                const ctx = this.ctx;
+                const x = this.stationX;
+                const y = this.groundY;
+
+                // Coffee machine body
+                ctx.fillStyle = '#5D4E37';
+                ctx.fillRect(x - 20, y - 45, 40, 50);
+
+                // Coffee machine top
+                ctx.fillStyle = '#4A3C2A';
+                ctx.fillRect(x - 22, y - 50, 44, 8);
+
+                // Dispenser
+                ctx.fillStyle = '#333';
+                ctx.fillRect(x - 5, y - 20, 10, 15);
+
+                // Coffee emoji indicator
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('☕', x, y - 55);
+            }
+
+            drawCustomer(customer) {
+                const ctx = this.ctx;
+                const x = customer.x;
+                const y = this.groundY;
+                const size = this.customerSize;
+
+                // Body (rounded square)
+                ctx.fillStyle = customer.color;
+                ctx.beginPath();
+                this.roundRect(ctx, x - size/2, y - size, size, size, 4);
+                ctx.fill();
+
+                // Face
+                ctx.fillStyle = '#fff';
+                const eyeOffset = size * 0.15;
+                ctx.beginPath();
+                ctx.arc(x - eyeOffset, y - size/2 - 2, 2, 0, Math.PI * 2);
+                ctx.arc(x + eyeOffset, y - size/2 - 2, 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Pupils
+                ctx.fillStyle = '#333';
+                ctx.beginPath();
+                ctx.arc(x - eyeOffset + 0.5, y - size/2 - 2, 1, 0, Math.PI * 2);
+                ctx.arc(x + eyeOffset + 0.5, y - size/2 - 2, 1, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Coffee cup if leaving
+                if (customer.visualState === 'leaving') {
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(x + size/2 + 2, y - size/2 - 4, 6, 8);
+                    ctx.fillStyle = '#8B4513';
+                    ctx.fillRect(x + size/2 + 3, y - size/2 - 2, 4, 4);
+                }
+
+                // Wait time indicator for queuing customers
+                if (customer.visualState === 'queuing' && customer.waitTime > 5) {
+                    ctx.fillStyle = customer.waitTime > CONFIG.waitThreshold ? '#e74c3c' : '#f39c12';
+                    ctx.font = '10px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`${Math.round(customer.waitTime)}m`, x, y - size - 5);
+                }
+            }
+
+            roundRect(ctx, x, y, width, height, radius) {
+                ctx.moveTo(x + radius, y);
+                ctx.lineTo(x + width - radius, y);
+                ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                ctx.lineTo(x + width, y + height - radius);
+                ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                ctx.lineTo(x + radius, y + height);
+                ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+                ctx.lineTo(x, y + radius);
+                ctx.quadraticCurveTo(x, y, x + radius, y);
+            }
+
+            drawServiceProgress() {
+                if (!this.serving) return;
+
+                const ctx = this.ctx;
+                const elapsed = this.currentTime - this.serving.serviceStartTime;
+                const progress = Math.min(elapsed / this.serving.serviceTime, 1);
+                const x = this.stationX - 20;
+                const y = this.groundY + 15;
+
+                // Progress bar background
+                ctx.fillStyle = '#ddd';
+                ctx.fillRect(x, y, 40, 5);
+
+                // Progress bar fill
+                ctx.fillStyle = '#27ae60';
+                ctx.fillRect(x, y, 40 * progress, 5);
+            }
+
+            updateDataDisplays() {
+                // This will be called to update histograms as data accumulates
+                updateAllDataDisplays();
+            }
+        }
+
+        // ============================================
+        // HISTOGRAM
+        // ============================================
+
+        class Histogram {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.resize();
+            }
+
+            resize() {
+                const rect = this.canvas.getBoundingClientRect();
+                this.canvas.width = rect.width * window.devicePixelRatio;
+                this.canvas.height = rect.height * window.devicePixelRatio;
+                this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                this.width = rect.width;
+                this.height = rect.height;
+            }
+
+            draw(data, options = {}) {
+                const ctx = this.ctx;
+                ctx.clearRect(0, 0, this.width, this.height);
+
+                if (!data || data.length === 0) {
+                    ctx.fillStyle = '#999';
+                    ctx.font = '12px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Ei dataa vielä', this.width / 2, this.height / 2);
+                    return;
+                }
+
+                const padding = { top: 15, right: 15, bottom: 25, left: 35 };
+                const plotWidth = this.width - padding.left - padding.right;
+                const plotHeight = this.height - padding.top - padding.bottom;
+
+                // Calculate bins
+                const dataMin = Math.min(...data);
+                const dataMax = Math.max(...data);
+                const range = dataMax - dataMin || 1;
+                const binWidth = options.binWidth || Math.max(1, range / 15);
+                const min = Math.floor(dataMin / binWidth) * binWidth;
+                const max = Math.ceil(dataMax / binWidth) * binWidth + binWidth;
+                const numBins = Math.ceil((max - min) / binWidth);
+
+                const bins = new Array(numBins).fill(0);
+                for (const value of data) {
+                    const binIndex = Math.min(Math.floor((value - min) / binWidth), numBins - 1);
+                    if (binIndex >= 0) bins[binIndex]++;
+                }
+
+                const maxCount = Math.max(...bins, 1);
+
+                // Draw bars
+                const barWidth = Math.max(2, plotWidth / numBins - 1);
+
+                for (let i = 0; i < numBins; i++) {
+                    const count = bins[i];
+                    const barHeight = (count / maxCount) * plotHeight;
+
+                    const x = padding.left + i * (plotWidth / numBins);
+                    const y = padding.top + plotHeight - barHeight;
+
+                    ctx.fillStyle = options.color || '#3498db';
+                    ctx.fillRect(x, y, barWidth, barHeight);
+                }
+
+                // Draw threshold line if provided
+                if (options.threshold !== undefined) {
+                    const thresholdX = padding.left + ((options.threshold - min) / (max - min)) * plotWidth;
+                    if (thresholdX > padding.left && thresholdX < this.width - padding.right) {
+                        ctx.strokeStyle = '#e74c3c';
+                        ctx.lineWidth = 2;
+                        ctx.setLineDash([4, 4]);
+                        ctx.beginPath();
+                        ctx.moveTo(thresholdX, padding.top);
+                        ctx.lineTo(thresholdX, padding.top + plotHeight);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+
+                        ctx.fillStyle = '#e74c3c';
+                        ctx.font = '10px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(options.threshold, thresholdX, padding.top - 3);
+                    }
+                }
+
+                // Draw axes
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, padding.top);
+                ctx.lineTo(padding.left, padding.top + plotHeight);
+                ctx.lineTo(padding.left + plotWidth, padding.top + plotHeight);
+                ctx.stroke();
+
+                // X-axis labels
+                ctx.fillStyle = '#666';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                const labelStep = Math.ceil((max - min) / 5 / binWidth) * binWidth;
+                for (let v = min; v <= max; v += labelStep) {
+                    const x = padding.left + ((v - min) / (max - min)) * plotWidth;
+                    ctx.fillText(v.toFixed(0), x, this.height - 5);
+                }
+            }
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        function init() {
+            // Initialize animation
+            const animCanvas = document.getElementById('animationCanvas');
+            animation = new CafeAnimation(animCanvas);
+            animation.draw();
+
+            // Initialize histograms
+            histograms.arrivals = new Histogram(document.getElementById('arrivalHistogram'));
+            histograms.service = new Histogram(document.getElementById('serviceHistogram'));
+            histograms.waits = new Histogram(document.getElementById('waitHistogram'));
+
+            // Draw empty histograms
+            histograms.arrivals.draw([]);
+            histograms.service.draw([]);
+            histograms.waits.draw([]);
+
+            // Speed controls
+            document.querySelectorAll('.speed-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const speed = parseInt(btn.dataset.speed);
+                    currentSpeed = speed;
+                    if (animation) animation.setSpeed(speed);
+                });
+            });
+
+            // Resize handler
+            window.addEventListener('resize', () => {
+                animation.resize();
+                animation.draw();
+                Object.values(histograms).forEach(h => h.resize());
+                updateAllDataDisplays();
+            });
+
+            // Calculate true answer
+            calculateTrueAnswer();
+        }
+
+        function startDay() {
+            if (animation.running) return;
+
+            if (animation.finished) {
+                // Start a new day
+                animation.reset();
+            }
+
+            animation.setSpeed(currentSpeed);
+            animation.start();
+
+            document.getElementById('startDayBtn').textContent = '⏸ Tauko';
+            document.getElementById('startDayBtn').onclick = pauseDay;
+        }
+
+        function pauseDay() {
+            animation.stop();
+            document.getElementById('startDayBtn').textContent = '▶ Jatka';
+            document.getElementById('startDayBtn').onclick = startDay;
+        }
+
+        function resetDay() {
+            animation.reset();
+            document.getElementById('startDayBtn').textContent = '▶ Aloita päivä';
+            document.getElementById('startDayBtn').onclick = startDay;
+        }
+
+        function switchDataTab(tabName) {
+            document.querySelectorAll('.data-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.data-panel').forEach(p => p.classList.remove('active'));
+
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}Panel`).classList.add('active');
+        }
+
+        function updateAllDataDisplays() {
+            // Combine current day data with historical data for display
+            const currentArrivals = [...allInterarrivals, ...currentDayData.interarrivals];
+            const currentService = [...allServiceTimes, ...currentDayData.serviceTimes];
+            const currentWaits = [...allWaitTimes, ...currentDayData.waitTimes];
+
+            // Update arrival stats and histogram
+            if (currentArrivals.length > 0) {
+                const mean = currentArrivals.reduce((a, b) => a + b, 0) / currentArrivals.length;
+                const variance = currentArrivals.reduce((sum, x) => sum + (x - mean) ** 2, 0) / currentArrivals.length;
+                document.getElementById('arrivalMean').textContent = mean.toFixed(1);
+                document.getElementById('arrivalStd').textContent = Math.sqrt(variance).toFixed(1);
+                document.getElementById('arrivalCount').textContent = currentArrivals.length;
+                histograms.arrivals.draw(currentArrivals, { binWidth: 2, color: '#3498db' });
+            }
+
+            // Update service stats and histogram
+            if (currentService.length > 0) {
+                const mean = currentService.reduce((a, b) => a + b, 0) / currentService.length;
+                const variance = currentService.reduce((sum, x) => sum + (x - mean) ** 2, 0) / currentService.length;
+                document.getElementById('serviceMean').textContent = mean.toFixed(1);
+                document.getElementById('serviceStd').textContent = Math.sqrt(variance).toFixed(1);
+                document.getElementById('serviceCount').textContent = currentService.length;
+                histograms.service.draw(currentService, { binWidth: 1, color: '#27ae60' });
+            }
+
+            // Update wait stats and histogram
+            if (currentWaits.length > 0) {
+                const mean = currentWaits.reduce((a, b) => a + b, 0) / currentWaits.length;
+                const max = Math.max(...currentWaits);
+                document.getElementById('waitMean').textContent = mean.toFixed(1);
+                document.getElementById('waitMax').textContent = max.toFixed(1);
+                document.getElementById('waitCount').textContent = currentWaits.length;
+                histograms.waits.draw(currentWaits, {
+                    binWidth: 2,
+                    color: '#9b59b6',
+                    threshold: CONFIG.waitThreshold
+                });
+            }
+        }
+
+        function updateDayCount() {
+            document.getElementById('dayCount').textContent = `(${daysSimulated} päivää)`;
+        }
+
+        function calculateTrueAnswer() {
+            // Monte Carlo estimate of P(max wait > threshold)
+            let count = 0;
+            const n = 50000;
+
+            for (let i = 0; i < n; i++) {
+                const result = simulateQueueDay(
+                    CONFIG.trueMeanInterarrival,
+                    CONFIG.trueServiceMean,
+                    CONFIG.trueServiceStd
+                );
+                if (result.maxWait > CONFIG.waitThreshold) count++;
+            }
+
+            trueAnswer = count / n;
+            console.log(`True answer calculated: ${(trueAnswer * 100).toFixed(1)}%`);
+        }
+
+        // ============================================
+        // MODEL RUNNING
+        // ============================================
+
+        function runModel() {
+            const code = document.getElementById('codeEditor').value;
+            const outputValue = document.getElementById('outputValue');
+            const outputDetail = document.getElementById('outputDetail');
+            const editor = document.getElementById('codeEditor');
+
+            // Show computing state
+            outputValue.textContent = 'Lasketaan...';
+            outputValue.classList.add('computing');
+            outputValue.classList.remove('error');
+            editor.classList.remove('error');
+            outputDetail.textContent = '';
+
+            // Use setTimeout to allow UI to update
+            setTimeout(() => {
+                try {
+                    const interpreter = new DSLInterpreter();
+                    const result = interpreter.execute(code);
+
+                    outputValue.classList.remove('computing');
+
+                    if (typeof result !== 'number' || isNaN(result)) {
+                        throw new Error('Mallin tulee palauttaa todennäköisyys (luku 0-1)');
+                    }
+
+                    if (result < 0 || result > 1) {
+                        throw new Error('Todennäköisyyden tulee olla välillä 0-1');
+                    }
+
+                    currentPrediction = result;
+
+                    outputValue.textContent = `P = ${(result * 100).toFixed(1)}%`;
+                    outputValue.classList.remove('error');
+                    editor.classList.remove('error');
+
+                    if (interpreter.lastSimulation) {
+                        const sim = interpreter.lastSimulation;
+                        outputDetail.textContent = `(${sim.numSimulations.toLocaleString()} simulaatiota, ${sim.countPassing.toLocaleString()} ylitti kynnyksen)`;
+                    } else {
+                        outputDetail.textContent = '';
+                    }
+
+                    document.getElementById('submitBtn').disabled = false;
+
+                } catch (e) {
+                    outputValue.textContent = `Virhe: ${e.message}`;
+                    outputValue.classList.add('error');
+                    outputValue.classList.remove('computing');
+                    editor.classList.add('error');
+                    outputDetail.textContent = '';
+                    currentPrediction = null;
+                    document.getElementById('submitBtn').disabled = true;
+                }
+            }, 10);
+        }
+
+        // ============================================
+        // SUBMISSION AND RESULTS
+        // ============================================
+
+        function submitAnswer() {
+            if (currentPrediction === null) {
+                alert('Aja malli ensin!');
+                return;
+            }
+
+            const error = Math.abs(currentPrediction - trueAnswer) / Math.max(trueAnswer, 0.01);
+            const stars = calculateStars(error);
+
+            document.getElementById('resultStars').textContent = getStarString(stars);
+            document.getElementById('resultTitle').textContent = getResultTitle(stars);
+            document.getElementById('userResult').textContent = `${(currentPrediction * 100).toFixed(1)}%`;
+            document.getElementById('trueResult').textContent = `${(trueAnswer * 100).toFixed(1)}%`;
+
+            document.getElementById('trueDgpCode').textContent =
+`Saapumisvälit ~ Exponential(${CONFIG.trueMeanInterarrival} min)
+Palveluajat ~ LogNormal(μ=${CONFIG.trueServiceMean} min, σ=${CONFIG.trueServiceStd} min)
+Kahvila auki: 09:00-17:00, viim. asiakas 16:30
+
+P(max odotus > ${CONFIG.waitThreshold} min) ≈ ${(trueAnswer * 100).toFixed(1)}%`;
+
+            document.getElementById('resultOverlay').classList.add('visible');
+        }
+
+        function calculateStars(error) {
+            const thresholds = CONFIG.starThresholds;
+            if (error >= thresholds[0]) return 1;
+            if (error >= thresholds[1]) return 2;
+            if (error >= thresholds[2]) return 3;
+            if (error >= thresholds[3]) return 4;
+            return 5;
+        }
+
+        function getStarString(stars) {
+            return '★'.repeat(stars) + '☆'.repeat(5 - stars);
+        }
+
+        function getResultTitle(stars) {
+            const titles = [
+                '',
+                'Yritä uudelleen!',
+                'Kohtuullinen arvio',
+                'Hyvä yritys!',
+                'Erinomaista!',
+                'Täydellinen!'
+            ];
+            return titles[stars];
+        }
+
+        function closeResult() {
+            document.getElementById('resultOverlay').classList.remove('visible');
+        }
+
+        // ============================================
+        // HELP MODAL
+        // ============================================
+
+        function showHelp() {
+            document.getElementById('helpModal').classList.add('visible');
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.remove('visible');
+        }
+
+        // Close modals on background click
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'resultOverlay') {
+                closeResult();
+            }
+            if (e.target.id === 'helpModal') {
+                closeHelp();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                runModel();
+            }
+            if (e.key === 'Escape') {
+                closeResult();
+                closeHelp();
+            }
+        });
+
+        // ============================================
+        // START
+        // ============================================
+
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.3 Ominaisuuksien periytyvyys - Maailmantutkija</title>
+    <link rel="stylesheet" href="/styles.css">
+    
+    <!-- MathJax for math rendering -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            displayAlign: "center",
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 1}}
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Maailmantutkijan kasvatuskirja</a></h1>
+    </header>
+
+    <main>
+        <div class="section-content">
+            <div class="section-header">
+                
+                <p class="chapter-info">Luku 9: Evoluutio</p>
+                
+                <h1>9.3 Ominaisuuksien periytyvyys</h1>
+            </div>
+            
+            <div class="section-body">
+                <div class="tyokalut"><b>Tarvikkeet</b>
+Tulostin ja taskulaskin. Vaihtoehtoisesti tietokone ja taulukkolaskinohjelma.
+
+Kynä ja paperia.
+</div>
+
+<h3 id="ohjeet">Ohjeet</h3>
+
+<p>Kysy lapselta, minkä takia jotkut ihmiset ovat pidempiä kuin toiset. Mitkä eri tekijät vaikuttavat siihen, kuinka pitkäksi joku kasvaa?</p>
+
+<p>Kannusta lasta arvailemaan. Joitakin selityksiä (esim. syökö riittävästi ruokaa) olisi vaikea testata kotikonstein. Sen sijaan selityksiä “pojat ovat pidempiä kuin tytöt” ja “pidemmillä vanhemmilla on pidempiä lapsia” voi lähteä tutkimaan. Johdattele lapsi siis näiden ideoiden pariin. Kysy lapselta, miten voisi selvittää, pitävätkö nämä paikkansa.</p>
+
+<p>Asian voi selvittää kyselytutkimuksella. Kyselyn voisi suorittaa itse kysymällä esimerkiksi naapureilta ja ulkona vastaan tulevilta ihmisiltä, kuinka pitkiä he ovat ja kuinka pitkiä heidän vanhempansa tai lapsensa ovat. Toinen, helpompi tapa on tutkia muiden ihmisten jo ennestään tekemiä kyselyitä.</p>
+
+<p>Alta löytyy 100 lapsen ja heidän vanhempiensa pituudet sekä tiedot sukupuolista. (Luvut ovat Galtonin pituusaineistosta 1800-luvun lopulta.) Voit tulostaa tilastot paperille. Vaihtoehtoisesti jos vanhempi osaa käyttää taulukkolaskentaohjelmaa, niin tämä on oiva hetki sellaisen käytön havainnollistamiseksi.</p>
+
+<div style="text-align: center; margin: 1.5em 0;"><strong><span style="font-size: 1.5em;"><a href="/pituudet.html">Pituusaineistoon →</a></span></strong></div>
+
+<p>Jos lapsella on ideoita siitä, mitä aineistolla kannattaa tehdä, anna hänen kokeilla ideoita. Muussa tapauksessa kysy häneltä tarkentavia kysymyksiä:</p>
+
+<ul>
+  <li>Kuinka pitkiä ihmiset ovat keskimäärin?</li>
+  <li>Miten sukupuoli vaikuttaa: kuinka pitkiä miehet ovat, entä naiset?</li>
+  <li>Saavatko pidemmät vanhemmat keskimäärin pidempiä lapsia?</li>
+  <li>Pystyykö lapsen pituutta ennustamaan vanhempien pituuksien perusteella? Jos esimerkiksi isä on 170 senttiä pitkä ja äiti 160 senttiä, mikä olisi hyvä arvaus tyttölapsen pituudelle?</li>
+</ul>
+
+<p>Avusta lasta vastausten miettimisessä ja selvittämisessä. Huomatkaa myös, että vaikka aineistossa on 100 ihmistä, niin ihmisten keskipituutta saa arvioitua jo muutaman ihmisen perusteella. Jos haluaa lisää tarkkuutta, voi ottaa huomioon suuremman määrän ihmisiä.</p>
+
+<h3 id="selitys">Selitys</h3>
+
+<p>Tässä on tarkkoja tilastoja tästä 100 lapsen aineistosta. Siitä huomataan erityisesti, että miehet ovat noin 8 senttimetriä naisia pidempiä.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;"></th><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">määrä</th><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">keskipituus</th></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">kaikki</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">300</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">169.6</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">isät</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">100</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">176.6</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">äidit</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">100</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">163.5</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">poikalapset</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">48</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">176.3</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">tyttölapset</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">52</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">162.0</td></tr>
+
+</table>
+
+</div>
+
+<p>Kysymyksen “saavatko pidemmät vanhemmat pidempiä lapsia?” tutkimiseksi on monia lähestymistapoja. Tässä on eräs yksinkertainen tapa. Aineistossa on $25$ lasta, joiden vanhempien pituuksien summa on yli $345$ senttimetriä. Lisäksi aineistossa on $24$ lasta, joiden vanhempien pituuksien summa on alle $335$ senttimetriä. Nämä vastaavat siis ylintä ja alinta neljännestä vanhempien keskipituudessa.</p>
+
+<p>Ensimmäisessä ryhmässä lasten keskipituus on $173{,}0$ senttimetriä, toisessa $165{,}3$ senttimetriä. Eroa on siis miltei kahdeksan senttimetriä!</p>
+
+<p>Tässä on tarkempi jaottelu sukupuolen mukaan. Samankaltainen ero löytyy sukupuolien sisäisesti: eroa on noin kahdeksan senttimetriä kummassakin. Pidemmät vanhemmat todella saavat pidempiä lapsia.</p>
+
+<div style="text-align: center; margin: 1em auto;">
+
+<table style="margin: 0 auto; border-collapse: collapse; border: 1px solid #ccc;">
+
+  <tr><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;"></th><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">määrä</th><th style="border: 1px solid #ccc; padding: 8px 12px; text-align: center; background-color: #f5f5f5; font-weight: bold;">keskipituus</th></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">pitkien tytöt</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">12</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">164.6</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">lyhyiden tytöt</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">11</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">157.0</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">pitkien pojat</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">13</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">180.9</td></tr>
+
+  <tr><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">lyhyiden pojat</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">13</td><td style="border: 1px solid #ccc; padding: 8px 12px; text-align: center;">172.4</td></tr>
+
+</table>
+
+</div>
+
+<p>Lapsen pituuden ennustamiseen on niin ikään monia lähestymistapoja. Tässä on yksi. Jos lapsi on tyttö, lähdetään ennustuksesta $163$ senttimetriä, joka on suunnilleen aineiston naispuolisten ihmisten keskipituus. Sitten jos isä on tavallista pidempi, kasvatetaan ennustusta, ja jos taas lyhyempi, niin pienennetään ennustusta. Sama tehdään äidin kohdalla.</p>
+
+<p>Intuitiolla on vaikea sanoa, kuinka paljon ennustusta tarkalleen kannattaa kasvattaa tai vähentää. Voisi esimerkiksi kokeilla, että jos isä on $170$ senttimetriä eli $6$ senttimetriä keskivertomiestä lyhyempi, niin vähentää ennustusta $6$ senttimetriä. Vastaavasti jos äiti on $160$ senttimetriä eli $3$ senttimetriä keskivertonaista lyhyempi, niin vähennetään ennustuksesta vielä $3$ senttimetriä. Täten lapsen pituudeksi saataisiin arvio $163 - 9 = 154$ senttimetriä.</p>
+
+<p>Tämä on kuitenkin varsin alhainen arvio. Ennustuksessa voisi painottaa vanhempien pituutta vähemmän: esimerkiksi jos isä on $6$ senttimetriä tavallista lyhyempi, niin vähentääkin ennustuksesta vain puolet siitä eli $3$ senttimetriä.</p>
+
+<p>Eri ennustustapojen hyvyyttä voi verrata tutkimalla, kuinka hyvin ne ennustavat aineiston pituuksia: lasketaan, kuinka kaukana ennustus keskimäärin oli oikeasta arvosta. Kokeilemalla eri vaihtoehtoja taulukkolaskimen avulla voi selvittää, että painotusta kannattaa tehdä vähemmän: yhden senttimetrin eroa kohden kannattaa tehdä vain $0{,}4$ senttimetriä korjaus ennustukseen. Tämä tapa ennustaisi tyttölapsen pituudeksi $159{,}5$ senttimetriä.</p>
+
+<p>Vaihtelua on (tietenkin) edelleen, koska pituuteen vaikuttaa muutkin tekijät kuin vanhempien pituus ja lapsen sukupuoli, eli ennustukseen liittyy todellisuudessa epävarmuutta. Voi myös olla parempia tapoja ennustaa, jotka antaisivat erilaisia, parempia arvioita.</p>
+
+<p>Ennustuksesta kuitenkin huomaa, että jos vanhemmat ovat esimerkiksi $10$ senttimetriä tavallista pidempiä, niin lapsikin tulee varmaan olemaan tavallista pidempi, mutta vähemmän kuin vanhemmat: korjausta tulisi tehtyä vain $8$ senttimetriä. Pituudet siis “painuvat kohti keskiarvoa”: hyvin pitkien vanhempien lapset tuskin ovat aivan niin pitkiä.</p>
+
+<p>Yhteenveto: Vanhempien pituudella on merkittävä rooli lapsen pituudessa. Täsmällistä ennustamista ei voi tehdä, mutta pidemmät vanhemmat saavat keskimäärin pidempiä lapsia. Pelkästään aineiston perusteella on vaikea erotella, onko ominaisuus todella periytyvää vai johtuuko se ympäristön tekijöistä (esimerkiksi samanlaisesta ruokavaliosta). Tästä huolimatta hyvin monissa asioissa, mukaan lukien pituudessa, periytymisellä on rooli. Tämä on tärkeä ilmiö, kun seuraavissa osioissa puhutaan luonnonvalinnasta ja lajien muutoksista.</p>
+
+<p>Voit kysyä lapselta, missä muissa asioissa hän uskoo vanhempien ominaisuuksilla olevan yhteys lapsen ominaisuuksiin ja missä asioissa ei.</p>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+        <div class="section-navigation">
+            <div class="nav-prev">
+                
+                <a href="/mita-kasvit-tarvitsevat/">← 9.2 Mitä kasvit tarvitsevat?</a>
+                
+            </div>
+            
+            <div class="nav-chapter">
+                <a href="/evoluutio/">Luku 9: Evoluutio</a>
+            </div>
+            
+            <div class="nav-next">
+                
+                <a href="/miksei-metsassa-ole-lyhyita-puita/">9.4 Miksei metsässä ole lyhyitä puita? →</a>
+                
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

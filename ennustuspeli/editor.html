@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasoeditori - Ennustuspeli</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .main-area {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .canvas-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .side-panel {
+            width: 280px;
+            background: #fff;
+            border-left: 2px solid #ddd;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .panel-section {
+            margin-bottom: 20px;
+        }
+
+        .panel-section h3 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #666;
+        }
+
+        .info-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .test-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .test-controls .btn {
+            width: 100%;
+        }
+
+        .ball-count-input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ddd;
+            font-size: 14px;
+        }
+
+        .histogram-preview {
+            height: 150px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2px;
+            padding: 10px;
+        }
+
+        .histogram-bar {
+            background: rgba(0, 123, 255, 0.6);
+            min-width: 15px;
+            flex: 1;
+        }
+
+        #board-canvas {
+            background: #fff;
+        }
+
+        .instructions {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .instructions p {
+            margin-bottom: 8px;
+        }
+
+        .instructions strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <header class="header">
+            <h1>Tasoeditori</h1>
+            <div class="header-actions">
+                <button class="btn" onclick="editor.newLevel()">Tyhjennä</button>
+                <button class="btn" onclick="editor.loadLevel()">Lataa</button>
+                <button class="btn primary" onclick="editor.saveLevel()">Tallenna</button>
+                <button class="btn" onclick="window.location.href='index.html'">Takaisin</button>
+            </div>
+        </header>
+
+        <div class="main-area">
+            <div class="canvas-panel">
+                <canvas id="board-canvas"></canvas>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Rivit:</label>
+                        <div class="size-controls">
+                            <button class="btn" onclick="editor.changeRows(-1)">−</button>
+                            <span class="size-display" id="rows-display">4</span>
+                            <button class="btn" onclick="editor.changeRows(1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Solukoko:</label>
+                        <div class="size-controls">
+                            <button class="btn" onclick="editor.changeCellSize(-10)">−</button>
+                            <span class="size-display" id="cellsize-display">60</span>
+                            <button class="btn" onclick="editor.changeCellSize(10)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="panel-section">
+                    <h3>Ohjeet</h3>
+                    <div class="instructions">
+                        <p><strong>Klikkaa</strong> reunaviivaa lisätäksesi tai poistaaksesi seinän.</p>
+                        <p>Pallot putoavat ylhäältä ja pomppivat seinistä.</p>
+                        <p>Tähtää mielenkiintoiseen jakaumaan!</p>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Tiedot</h3>
+                    <div class="info-row">
+                        <span class="info-label">Rivejä:</span>
+                        <span class="info-value" id="info-rows">4</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Seiniä:</span>
+                        <span class="info-value" id="info-walls">0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Lokeroja:</span>
+                        <span class="info-value" id="info-bins">4</span>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Testaa</h3>
+                    <div class="test-controls">
+                        <input type="number" class="ball-count-input" id="ball-count" value="50" min="1" max="500" placeholder="Pallojen määrä">
+                        <button class="btn primary" onclick="editor.runTest()">Pudota pallot</button>
+                        <button class="btn" onclick="editor.stopTest()">Pysäytä</button>
+                        <button class="btn" onclick="editor.resetTest()">Tyhjennä</button>
+                    </div>
+
+                    <div class="histogram-preview" id="histogram-preview">
+                        <!-- Histogram bars will be added here -->
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Tason nimi</h3>
+                    <input type="text" class="ball-count-input" id="level-name" placeholder="Esim. 'Helppo alku'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matter.js for physics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <!-- Core modules -->
+    <script src="core/lattice.js"></script>
+    <script src="core/physics.js"></script>
+    <script src="core/renderer.js"></script>
+
+    <!-- Level registry -->
+    <script src="levels/level-registry.js"></script>
+
+    <script>
+        class LevelEditor {
+            constructor() {
+                this.canvas = document.getElementById('board-canvas');
+                this.ctx = this.canvas.getContext('2d');
+
+                // Default settings
+                this.numRows = 4;
+                this.cellSize = 60;
+
+                // Create lattice and renderer
+                this.lattice = new TriangularLattice(this.numRows, this.cellSize);
+                this.renderer = new GaltonRenderer(this.canvas, this.lattice);
+                this.physics = null;
+
+                // Animation state
+                this.animationId = null;
+                this.testing = false;
+
+                this.init();
+            }
+
+            init() {
+                this.updateCanvasSize();
+                this.setupEventListeners();
+                this.updateInfo();
+                this.render();
+            }
+
+            updateCanvasSize() {
+                const padding = 50;
+                this.canvas.width = this.lattice.width + padding * 2;
+                this.canvas.height = this.lattice.height + padding + 150;  // Extra for histogram
+
+                // Center the lattice
+                this.offsetX = padding + (this.canvas.width - padding * 2 - this.lattice.width) / 2;
+                this.offsetY = padding;
+            }
+
+            setupEventListeners() {
+                this.canvas.addEventListener('mousemove', (e) => this.onMouseMove(e));
+                this.canvas.addEventListener('click', (e) => this.onClick(e));
+                this.canvas.addEventListener('mouseleave', () => {
+                    this.renderer.setHoveredWall(null);
+                    this.render();
+                });
+            }
+
+            getMousePos(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left - this.offsetX,
+                    y: e.clientY - rect.top - this.offsetY
+                };
+            }
+
+            onMouseMove(e) {
+                if (this.testing) return;
+
+                const pos = this.getMousePos(e);
+                const nearest = this.lattice.findNearestWall(pos.x, pos.y, 20);
+                this.renderer.setHoveredWall(nearest);
+                this.render();
+            }
+
+            onClick(e) {
+                if (this.testing) return;
+
+                const pos = this.getMousePos(e);
+                const nearest = this.lattice.findNearestWall(pos.x, pos.y, 20);
+
+                if (nearest) {
+                    this.lattice.toggleWall(nearest.row, nearest.col, nearest.direction);
+                    this.updateInfo();
+                    this.render();
+                }
+            }
+
+            render() {
+                this.ctx.save();
+                this.ctx.translate(this.offsetX, this.offsetY);
+
+                const state = {};
+                if (this.physics) {
+                    state.balls = this.physics.getBallPositions();
+                    state.histogram = this.physics.getHistogram();
+                }
+
+                this.renderer.render(state);
+                this.ctx.restore();
+            }
+
+            updateInfo() {
+                document.getElementById('info-rows').textContent = this.numRows;
+                document.getElementById('info-walls').textContent = this.lattice.walls.size;
+                document.getElementById('info-bins').textContent = this.lattice.getNumBins();
+                document.getElementById('rows-display').textContent = this.numRows;
+                document.getElementById('cellsize-display').textContent = this.cellSize;
+            }
+
+            changeRows(delta) {
+                const newRows = Math.max(2, Math.min(15, this.numRows + delta));
+                if (newRows !== this.numRows) {
+                    this.numRows = newRows;
+                    this.lattice.resize(newRows);
+                    this.lattice.width = newRows * this.cellSize;
+                    this.lattice.height = newRows * this.cellSize * Math.sqrt(3) / 2;
+                    this.updateCanvasSize();
+                    this.updateInfo();
+                    this.stopTest();
+                    this.render();
+                }
+            }
+
+            changeCellSize(delta) {
+                const newSize = Math.max(30, Math.min(100, this.cellSize + delta));
+                if (newSize !== this.cellSize) {
+                    this.cellSize = newSize;
+                    this.lattice.cellSize = newSize;
+                    this.lattice.width = this.numRows * newSize;
+                    this.lattice.height = this.numRows * newSize * Math.sqrt(3) / 2;
+                    this.updateCanvasSize();
+                    this.stopTest();
+                    this.render();
+                }
+            }
+
+            runTest() {
+                this.stopTest();
+
+                const ballCount = parseInt(document.getElementById('ball-count').value) || 50;
+
+                // Create physics simulation
+                this.physics = new GaltonPhysics(this.lattice, {
+                    ballRadius: 6,
+                    pegRadius: 4,
+                    restitution: 0.7
+                });
+                this.physics.init();
+
+                this.physics.onBallComplete = (binIndex, counts) => {
+                    this.updateHistogramPreview(counts);
+                };
+
+                this.physics.onSimulationComplete = () => {
+                    this.testing = false;
+                };
+
+                this.testing = true;
+                this.physics.dropBalls(ballCount, 150);
+
+                // Animation loop
+                const animate = () => {
+                    if (!this.testing) return;
+
+                    this.physics.update(16.67);
+                    this.render();
+                    this.animationId = requestAnimationFrame(animate);
+                };
+                animate();
+            }
+
+            stopTest() {
+                this.testing = false;
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                    this.animationId = null;
+                }
+            }
+
+            resetTest() {
+                this.stopTest();
+                this.physics = null;
+                this.updateHistogramPreview([]);
+                this.render();
+            }
+
+            updateHistogramPreview(counts) {
+                const container = document.getElementById('histogram-preview');
+                container.innerHTML = '';
+
+                if (counts.length === 0) return;
+
+                const maxCount = Math.max(...counts, 1);
+
+                counts.forEach((count, i) => {
+                    const bar = document.createElement('div');
+                    bar.className = 'histogram-bar';
+                    bar.style.height = `${(count / maxCount) * 100}%`;
+                    bar.title = `Lokero ${i}: ${count}`;
+                    container.appendChild(bar);
+                });
+            }
+
+            newLevel() {
+                if (confirm('Haluatko varmasti tyhjentää tason?')) {
+                    this.lattice.walls.clear();
+                    this.resetTest();
+                    this.updateInfo();
+                    this.render();
+                }
+            }
+
+            saveLevel() {
+                const name = document.getElementById('level-name').value || 'Nimetön taso';
+
+                const levelData = {
+                    id: `level_${Date.now()}`,
+                    name: name,
+                    lattice: this.lattice.toJSON(),
+                    created: new Date().toISOString()
+                };
+
+                // Save to registry
+                LevelRegistry.saveLevel(levelData);
+
+                alert(`Taso "${name}" tallennettu!`);
+            }
+
+            loadLevel() {
+                const levels = LevelRegistry.getAllLevels();
+
+                if (levels.length === 0) {
+                    alert('Ei tallennettuja tasoja.');
+                    return;
+                }
+
+                // Simple prompt-based selection for now
+                const names = levels.map((l, i) => `${i + 1}. ${l.name}`).join('\n');
+                const choice = prompt(`Valitse taso:\n${names}`);
+
+                if (choice) {
+                    const index = parseInt(choice) - 1;
+                    if (index >= 0 && index < levels.length) {
+                        const level = levels[index];
+                        this.lattice = TriangularLattice.fromJSON(level.lattice);
+                        this.numRows = this.lattice.numRows;
+                        this.cellSize = this.lattice.cellSize;
+                        this.renderer.lattice = this.lattice;
+
+                        document.getElementById('level-name').value = level.name;
+
+                        this.updateCanvasSize();
+                        this.resetTest();
+                        this.updateInfo();
+                        this.render();
+                    }
+                }
+            }
+        }
+
+        // Initialize editor
+        let editor;
+        document.addEventListener('DOMContentLoaded', () => {
+            editor = new LevelEditor();
+            window.editor = editor;
+        });
+    </script>
+</body>
+</html>

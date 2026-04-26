@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Määrien arvioiminen - Sovellus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        #shape-app-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #answer-display {
+            height: 60px; /* Reserve fixed space for answer */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #answer-text {
+            color: #2e7d32;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #answer-text.visible {
+            opacity: 1;
+        }
+
+        #image-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #shape-canvas {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            max-width: 100%;
+            height: auto;
+        }
+
+        #loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #666;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
+        #controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #controls label {
+            font-size: 14px;
+            color: #666;
+            margin-right: 2px;
+        }
+
+        #controls input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+            -moz-appearance: textfield; /* Hide spinners in Firefox */
+        }
+
+        /* Hide spinners in Chrome, Safari, Edge */
+        #controls input[type="number"]::-webkit-outer-spin-button,
+        #controls input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #back-button-container {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        #back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            color: #666;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            transition: all 0.2s ease;
+        }
+
+        #back-button:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            #shape-canvas {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            #answer-text {
+                font-size: 24px;
+            }
+
+            #controls {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile-only message (hidden on desktop) -->
+    <div id="mobile-message" style="display: none;"></div>
+
+    <!-- Desktop application (hidden on mobile) -->
+    <div id="shape-app-container">
+        <div id="answer-display">
+            <h2 id="answer-text">Vastaus: <span id="correct-answer">0 muotoa</span></h2>
+        </div>
+
+        <div id="image-container">
+            <canvas id="shape-canvas" width="800" height="600"></canvas>
+            <div id="loading-message">Generoidaan kuvaa...</div>
+        </div>
+
+        <div id="controls">
+            <label for="min-shapes">Min:</label>
+            <input type="number" id="min-shapes" value="10" min="1" max="1000">
+
+            <label for="max-shapes" style="margin-left: 50px;">Max:</label>
+            <input type="number" id="max-shapes" value="100" min="1" max="1000">
+        </div>
+
+        <div id="back-button-container">
+            <a href="/maarien-arvioiminen/muodot/" id="back-button">Takaisin Maailmantutkijaan</a>
+        </div>
+    </div>
+
+    <!-- Mobile compatibility system -->
+    <script src="/assets/js/mobile-compatibility.js"></script>
+    <script>
+        // Initialize mobile compatibility
+        MobileCompatibility.initializeApp({
+            desktopContainerId: 'shape-app-container',
+            backUrl: '/maarien-arvioiminen/muodot/',
+            scripts: [
+                '/assets/js/shape-generator-client.js',
+                '/assets/js/shape-app-minimal-client.js'
+            ]
+        });
+    </script>
+</body>
+</html>

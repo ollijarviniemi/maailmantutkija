@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galton-lauta</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 { margin-bottom: 20px; color: #333; }
+        .container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        .board-area {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        canvas { display: block; cursor: pointer; }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-width: 220px;
+        }
+        .control-group { margin-bottom: 20px; }
+        .control-group h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: #fff;
+            border: 2px solid #333;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn:hover { background: #f0f0f0; }
+        .btn.primary {
+            background: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+        .btn.primary:hover { background: #0056b3; }
+        .size-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .size-control label {
+            flex: 1;
+            font-size: 13px;
+        }
+        .size-control button {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #333;
+            background: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 3px;
+        }
+        .size-control button:hover { background: #f0f0f0; }
+        .size-control span {
+            width: 24px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .histogram {
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 100px;
+            gap: 2px;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 4px;
+        }
+        .histogram-bar {
+            background: #007bff;
+            min-width: 15px;
+            flex: 1;
+            transition: height 0.2s;
+        }
+        .stats { margin-top: 10px; font-size: 13px; color: #666; }
+        .info { font-size: 13px; color: #666; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <h1>Galton-lauta</h1>
+
+    <div class="container">
+        <div class="board-area">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <h3>Ohjeet</h3>
+                <p class="info">
+                    Klikkaa reunoja lisätäksesi tai poistaaksesi seiniä.
+                </p>
+            </div>
+
+            <div class="control-group">
+                <h3>Laudan koko</h3>
+                <div class="size-control">
+                    <label>Rivejä:</label>
+                    <button onclick="changeRows(-1)">−</button>
+                    <span id="rowsDisplay">6</span>
+                    <button onclick="changeRows(1)">+</button>
+                </div>
+                <div class="size-control">
+                    <label>Sarakkeita:</label>
+                    <button onclick="changeCols(-1)">−</button>
+                    <span id="colsDisplay">5</span>
+                    <button onclick="changeCols(1)">+</button>
+                </div>
+                <div class="size-control">
+                    <label>Lokeroita:</label>
+                    <button onclick="changeBins(-1)">−</button>
+                    <span id="binsDisplay">5</span>
+                    <button onclick="changeBins(1)">+</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Testaus</h3>
+                <button class="btn primary" onclick="dropBalls(50)">Pudota 50 palloa</button>
+                <button class="btn" onclick="dropBalls(200)">Pudota 200 palloa</button>
+                <button class="btn" onclick="reset()">Tyhjennä</button>
+                <label style="display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 13px; cursor: pointer;">
+                    <input type="checkbox" id="collisionToggle" onchange="toggleBallCollision(this.checked)">
+                    Pallot törmäävät toisiinsa
+                </label>
+            </div>
+
+            <div class="control-group">
+                <h3>Taso</h3>
+                <button class="btn" onclick="clearWalls()">Tyhjennä seinät</button>
+                <button class="btn" onclick="saveLevel()">Tallenna</button>
+                <button class="btn" onclick="loadLevel()">Lataa</button>
+            </div>
+
+            <div class="histogram" id="histogram"></div>
+            <div class="stats" id="stats"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="core/lattice.js"></script>
+    <script>
+        // Configuration
+        const CONFIG = {
+            wallThickness: 4,
+            frameThickness: 5,
+            pegRadius: 5,
+            ballRadius: 6,
+            funnelHeight: 50,
+            funnelNeckWidth: 24,
+            tunnelHeight: 40,  // Vertical tunnel after funnel
+            funnelPegGap: 25,  // Space between tunnel bottom and first peg row
+            binHeight: 60,
+            frameColor: '#2c2c2c',
+            pegColor: '#333',
+            wallColor: '#333',
+            ballColor: '#c0392b',
+            backgroundColor: '#fafafa',
+            binBackground: 'rgba(180, 180, 180, 0.25)'
+        };
+
+        // State
+        let lattice = new RectangularLattice(6, 5, 60);  // Larger cellSize
+        let numBins = 5;
+        let hoveredWall = null;
+        let hoveredPeg = null;
+        let engine, world;
+        let balls = [];
+        let binCounts = [];
+        let animating = false;
+        let ballsCollide = false;  // Default: balls pass through each other
+
+        let layout = {};
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function calculateLayout() {
+            const margin = 15;
+
+            // Peg area dimensions
+            const pegAreaWidth = lattice.width + margin * 2;
+            const pegAreaHeight = lattice.height + margin + CONFIG.funnelPegGap;
+
+            // Frame dimensions
+            const frameWidth = pegAreaWidth + 20;
+            const totalHeight = CONFIG.funnelHeight + CONFIG.tunnelHeight + pegAreaHeight + CONFIG.binHeight;
+
+            const framePadding = 20;
+            const funnelCenterX = framePadding + frameWidth / 2;
+
+            layout = {
+                frameWidth,
+                totalHeight,
+                framePadding,
+                canvasWidth: frameWidth + framePadding * 2,
+                canvasHeight: totalHeight + framePadding * 2,
+
+                frameLeft: framePadding,
+                frameRight: framePadding + frameWidth,
+                frameTop: framePadding,
+                frameBottom: framePadding + totalHeight,
+
+                // Funnel (angled part)
+                funnelTop: framePadding,
+                funnelBottom: framePadding + CONFIG.funnelHeight,
+                funnelCenterX: funnelCenterX,
+
+                // Vertical tunnel after funnel
+                tunnelTop: framePadding + CONFIG.funnelHeight,
+                tunnelBottom: framePadding + CONFIG.funnelHeight + CONFIG.tunnelHeight,
+                tunnelLeft: funnelCenterX - CONFIG.funnelNeckWidth / 2,
+                tunnelRight: funnelCenterX + CONFIG.funnelNeckWidth / 2,
+
+                // Peg area
+                pegAreaTop: framePadding + CONFIG.funnelHeight + CONFIG.tunnelHeight,
+                pegAreaBottom: framePadding + CONFIG.funnelHeight + CONFIG.tunnelHeight + pegAreaHeight,
+                // Center the middle peg of even rows (at cellSize/2) under funnel
+                pegOffsetX: funnelCenterX - lattice.cellSize / 2 - ((lattice.numCols - 1) / 2) * lattice.cellSize,
+                pegOffsetY: framePadding + CONFIG.funnelHeight + CONFIG.tunnelHeight + CONFIG.funnelPegGap,
+
+                binTop: framePadding + CONFIG.funnelHeight + CONFIG.tunnelHeight + pegAreaHeight,
+                binBottom: framePadding + totalHeight
+            };
+        }
+
+        function init() {
+            calculateLayout();
+            canvas.width = layout.canvasWidth;
+            canvas.height = layout.canvasHeight;
+            initPhysics();
+            updateDisplays();
+            render();
+        }
+
+        function updateDisplays() {
+            document.getElementById('rowsDisplay').textContent = lattice.numRows;
+            document.getElementById('colsDisplay').textContent = lattice.numCols;
+            document.getElementById('binsDisplay').textContent = numBins;
+        }
+
+        function initPhysics() {
+            engine = Matter.Engine.create();
+            world = engine.world;
+            engine.world.gravity.y = 0.6;
+
+            balls = [];
+            binCounts = new Array(numBins).fill(0);
+
+            const t = CONFIG.frameThickness;
+
+            // Outer frame walls
+            Matter.World.add(world, Matter.Bodies.rectangle(
+                layout.frameLeft, layout.frameTop + layout.totalHeight / 2,
+                t, layout.totalHeight,
+                { isStatic: true, restitution: 0.3 }
+            ));
+            Matter.World.add(world, Matter.Bodies.rectangle(
+                layout.frameRight, layout.frameTop + layout.totalHeight / 2,
+                t, layout.totalHeight,
+                { isStatic: true, restitution: 0.3 }
+            ));
+            Matter.World.add(world, Matter.Bodies.rectangle(
+                layout.funnelCenterX, layout.frameBottom,
+                layout.frameWidth, t,
+                { isStatic: true, restitution: 0.3 }
+            ));
+
+            // Funnel walls (angled part)
+            const funnelLeftTop = { x: layout.frameLeft + t/2, y: layout.frameTop + t/2 };
+            const funnelLeftBottom = { x: layout.tunnelLeft, y: layout.funnelBottom };
+            const funnelRightTop = { x: layout.frameRight - t/2, y: layout.frameTop + t/2 };
+            const funnelRightBottom = { x: layout.tunnelRight, y: layout.funnelBottom };
+
+            const leftFunnelLen = Math.hypot(funnelLeftBottom.x - funnelLeftTop.x, funnelLeftBottom.y - funnelLeftTop.y);
+            const leftFunnelAngle = Math.atan2(funnelLeftBottom.y - funnelLeftTop.y, funnelLeftBottom.x - funnelLeftTop.x);
+            Matter.World.add(world, Matter.Bodies.rectangle(
+                (funnelLeftTop.x + funnelLeftBottom.x) / 2,
+                (funnelLeftTop.y + funnelLeftBottom.y) / 2,
+                leftFunnelLen, t,
+                { isStatic: true, angle: leftFunnelAngle, restitution: 0.3 }
+            ));
+
+            const rightFunnelLen = Math.hypot(funnelRightBottom.x - funnelRightTop.x, funnelRightBottom.y - funnelRightTop.y);
+            const rightFunnelAngle = Math.atan2(funnelRightBottom.y - funnelRightTop.y, funnelRightBottom.x - funnelRightTop.x);
+            Matter.World.add(world, Matter.Bodies.rectangle(
+                (funnelRightTop.x + funnelRightBottom.x) / 2,
+                (funnelRightTop.y + funnelRightBottom.y) / 2,
+                rightFunnelLen, t,
+                { isStatic: true, angle: rightFunnelAngle, restitution: 0.3 }
+            ));
+
+            // Vertical tunnel walls
+            Matter.World.add(world, Matter.Bodies.rectangle(
+                layout.tunnelLeft, (layout.tunnelTop + layout.tunnelBottom) / 2,
+                t, CONFIG.tunnelHeight,
+                { isStatic: true, restitution: 0.3 }
+            ));
+            Matter.World.add(world, Matter.Bodies.rectangle(
+                layout.tunnelRight, (layout.tunnelTop + layout.tunnelBottom) / 2,
+                t, CONFIG.tunnelHeight,
+                { isStatic: true, restitution: 0.3 }
+            ));
+
+            // Create pegs (skip removed ones)
+            for (let row = 0; row < lattice.numRows; row++) {
+                const colCount = lattice.getColCount(row);
+                for (let col = 0; col < colCount; col++) {
+                    if (lattice.isPegRemoved(row, col)) continue;
+
+                    const pos = lattice.getPegPosition(row, col);
+                    const peg = Matter.Bodies.circle(
+                        layout.pegOffsetX + pos.x,
+                        layout.pegOffsetY + pos.y,
+                        CONFIG.pegRadius,
+                        { isStatic: true, restitution: 0.5, friction: 0.1 }
+                    );
+                    Matter.World.add(world, peg);
+                }
+            }
+
+            // Create user-placed walls
+            for (const wallKey of lattice.walls) {
+                const [row, col, dir] = wallKey.split(',');
+                const endpoints = lattice.getWallEndpoints(parseInt(row), parseInt(col), dir);
+                if (!endpoints) continue;
+
+                const { start, end } = endpoints;
+                const cx = (start.x + end.x) / 2 + layout.pegOffsetX;
+                const cy = (start.y + end.y) / 2 + layout.pegOffsetY;
+                const len = Math.hypot(end.x - start.x, end.y - start.y);
+                const angle = Math.atan2(end.y - start.y, end.x - start.x);
+
+                const wall = Matter.Bodies.rectangle(cx, cy, len, CONFIG.wallThickness, {
+                    isStatic: true,
+                    angle: angle,
+                    restitution: 0.5
+                });
+                Matter.World.add(world, wall);
+            }
+
+            // Bin dividers - evenly spaced across the frame width
+            // Only interior dividers; outer frame walls serve as the edges
+            const binAreaLeft = layout.frameLeft + t;
+            const binAreaRight = layout.frameRight - t;
+            const binAreaWidth = binAreaRight - binAreaLeft;
+            const binWidth = binAreaWidth / numBins;
+
+            layout.binBoundaries = [];
+            for (let i = 0; i <= numBins; i++) {
+                const dividerX = binAreaLeft + i * binWidth;
+                layout.binBoundaries.push(dividerX);
+
+                // Skip first and last dividers - outer frame walls handle those
+                if (i > 0 && i < numBins) {
+                    Matter.World.add(world, Matter.Bodies.rectangle(
+                        dividerX,
+                        layout.binTop + CONFIG.binHeight / 2,
+                        CONFIG.wallThickness,
+                        CONFIG.binHeight,
+                        { isStatic: true, restitution: 0.2 }
+                    ));
+                }
+            }
+
+            // Bin sensors
+            for (let i = 0; i < numBins; i++) {
+                const sensorX = binAreaLeft + (i + 0.5) * binWidth;
+                const sensor = Matter.Bodies.rectangle(
+                    sensorX,
+                    layout.binTop + CONFIG.binHeight / 2,
+                    binWidth - 8,
+                    CONFIG.binHeight - 10,
+                    { isStatic: true, isSensor: true, label: `bin_${i}` }
+                );
+                Matter.World.add(world, sensor);
+            }
+
+            // Collision detection
+            Matter.Events.on(engine, 'collisionStart', (e) => {
+                for (const pair of e.pairs) {
+                    let ball = null, bin = null;
+                    if (pair.bodyA.label?.startsWith('ball_')) {
+                        ball = pair.bodyA;
+                        if (pair.bodyB.label?.startsWith('bin_')) bin = pair.bodyB;
+                    } else if (pair.bodyB.label?.startsWith('ball_')) {
+                        ball = pair.bodyB;
+                        if (pair.bodyA.label?.startsWith('bin_')) bin = pair.bodyA;
+                    }
+
+                    if (ball && bin && !ball.counted) {
+                        ball.counted = true;
+                        const binIdx = parseInt(bin.label.split('_')[1]);
+                        binCounts[binIdx]++;
+                        updateHistogram();
+                    }
+                }
+            });
+        }
+
+        function dropBalls(count) {
+            reset();
+
+            let dropped = 0;
+            const dropInterval = setInterval(() => {
+                if (dropped >= count) {
+                    clearInterval(dropInterval);
+                    return;
+                }
+
+                // Collision filter: if ballsCollide is false, balls only collide with category 1 (static objects)
+                const collisionFilter = ballsCollide
+                    ? { category: 0x0001, mask: 0xFFFFFFFF }  // Collide with everything
+                    : { category: 0x0002, mask: 0x0001 };     // Only collide with static objects
+
+                const ball = Matter.Bodies.circle(
+                    layout.funnelCenterX + (Math.random() - 0.5) * 20,
+                    layout.frameTop + 15,
+                    CONFIG.ballRadius,
+                    { restitution: 0.4, friction: 0.05, label: `ball_${dropped}`, collisionFilter }
+                );
+                balls.push(ball);
+                Matter.World.add(world, ball);
+                dropped++;
+            }, 50);
+
+            if (!animating) {
+                animating = true;
+                animate();
+            }
+        }
+
+        function animate() {
+            Matter.Engine.update(engine, 16);
+            render();
+
+            if (animating) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        function reset() {
+            Matter.World.clear(world);
+            Matter.Engine.clear(engine);
+            initPhysics();
+            updateHistogram();
+            render();
+        }
+
+        function render() {
+            const t = CONFIG.frameThickness;
+
+            // Background
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Interior background
+            ctx.fillStyle = CONFIG.backgroundColor;
+            ctx.fillRect(
+                layout.frameLeft + t/2,
+                layout.frameTop + t/2,
+                layout.frameWidth - t,
+                layout.totalHeight - t
+            );
+
+            // Outer frame
+            ctx.strokeStyle = CONFIG.frameColor;
+            ctx.lineWidth = t;
+            ctx.lineCap = 'square';
+            ctx.lineJoin = 'miter';
+            ctx.strokeRect(
+                layout.frameLeft,
+                layout.frameTop,
+                layout.frameWidth,
+                layout.totalHeight
+            );
+
+            // Funnel walls (angled part)
+            ctx.lineCap = 'round';
+            const funnelLeftTop = { x: layout.frameLeft + t/2, y: layout.frameTop + t/2 };
+            const funnelLeftBottom = { x: layout.tunnelLeft, y: layout.funnelBottom };
+            const funnelRightTop = { x: layout.frameRight - t/2, y: layout.frameTop + t/2 };
+            const funnelRightBottom = { x: layout.tunnelRight, y: layout.funnelBottom };
+
+            ctx.beginPath();
+            ctx.moveTo(funnelLeftTop.x, funnelLeftTop.y);
+            ctx.lineTo(funnelLeftBottom.x, funnelLeftBottom.y);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(funnelRightTop.x, funnelRightTop.y);
+            ctx.lineTo(funnelRightBottom.x, funnelRightBottom.y);
+            ctx.stroke();
+
+            // Vertical tunnel walls
+            ctx.beginPath();
+            ctx.moveTo(layout.tunnelLeft, layout.tunnelTop);
+            ctx.lineTo(layout.tunnelLeft, layout.tunnelBottom);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(layout.tunnelRight, layout.tunnelTop);
+            ctx.lineTo(layout.tunnelRight, layout.tunnelBottom);
+            ctx.stroke();
+
+            // Draw possible walls (dashed)
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([4, 4]);
+
+            for (const wall of lattice.getAllPossibleWalls()) {
+                if (lattice.hasWall(wall.row, wall.col, wall.direction)) continue;
+                const endpoints = lattice.getWallEndpoints(wall.row, wall.col, wall.direction);
+                if (!endpoints) continue;
+
+                ctx.beginPath();
+                ctx.moveTo(endpoints.start.x + layout.pegOffsetX, endpoints.start.y + layout.pegOffsetY);
+                ctx.lineTo(endpoints.end.x + layout.pegOffsetX, endpoints.end.y + layout.pegOffsetY);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+
+            // Draw active walls
+            ctx.strokeStyle = CONFIG.wallColor;
+            ctx.lineWidth = CONFIG.wallThickness;
+            ctx.lineCap = 'round';
+
+            for (const wallKey of lattice.walls) {
+                const [row, col, dir] = wallKey.split(',');
+                const endpoints = lattice.getWallEndpoints(parseInt(row), parseInt(col), dir);
+                if (!endpoints) continue;
+
+                ctx.beginPath();
+                ctx.moveTo(endpoints.start.x + layout.pegOffsetX, endpoints.start.y + layout.pegOffsetY);
+                ctx.lineTo(endpoints.end.x + layout.pegOffsetX, endpoints.end.y + layout.pegOffsetY);
+                ctx.stroke();
+            }
+
+            // Highlight hovered wall
+            if (hoveredWall) {
+                const endpoints = lattice.getWallEndpoints(
+                    hoveredWall.row, hoveredWall.col, hoveredWall.direction
+                );
+                if (endpoints) {
+                    ctx.strokeStyle = lattice.hasWall(hoveredWall.row, hoveredWall.col, hoveredWall.direction)
+                        ? '#dc3545' : '#28a745';
+                    ctx.lineWidth = CONFIG.wallThickness + 2;
+                    ctx.globalAlpha = 0.7;
+                    ctx.beginPath();
+                    ctx.moveTo(endpoints.start.x + layout.pegOffsetX, endpoints.start.y + layout.pegOffsetY);
+                    ctx.lineTo(endpoints.end.x + layout.pegOffsetX, endpoints.end.y + layout.pegOffsetY);
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            // Draw pegs
+            for (let row = 0; row < lattice.numRows; row++) {
+                const colCount = lattice.getColCount(row);
+                for (let col = 0; col < colCount; col++) {
+                    const pos = lattice.getPegPosition(row, col);
+                    const px = pos.x + layout.pegOffsetX;
+                    const py = pos.y + layout.pegOffsetY;
+                    const isRemoved = lattice.isPegRemoved(row, col);
+                    const isHovered = hoveredPeg && hoveredPeg.row === row && hoveredPeg.col === col;
+
+                    ctx.beginPath();
+                    ctx.arc(px, py, CONFIG.pegRadius, 0, Math.PI * 2);
+
+                    if (isRemoved) {
+                        // Removed peg: just an outline
+                        ctx.strokeStyle = isHovered ? '#28a745' : '#bbb';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    } else {
+                        // Active peg: filled
+                        ctx.fillStyle = isHovered ? '#dc3545' : CONFIG.pegColor;
+                        ctx.fill();
+                    }
+                }
+            }
+
+            // Draw bins
+            if (layout.binBoundaries) {
+                const bounds = layout.binBoundaries;
+
+                ctx.fillStyle = CONFIG.binBackground;
+                for (let i = 0; i < bounds.length - 1; i++) {
+                    ctx.fillRect(
+                        bounds[i],
+                        layout.binTop,
+                        bounds[i + 1] - bounds[i],
+                        CONFIG.binHeight
+                    );
+                }
+
+                // Draw interior dividers only (not first/last which are the frame walls)
+                ctx.strokeStyle = CONFIG.frameColor;
+                ctx.lineWidth = CONFIG.wallThickness;
+                ctx.lineCap = 'square';
+                for (let i = 1; i < bounds.length - 1; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(bounds[i], layout.binTop);
+                    ctx.lineTo(bounds[i], layout.binBottom);
+                    ctx.stroke();
+                }
+            }
+
+            // Draw balls
+            ctx.fillStyle = CONFIG.ballColor;
+            for (const ball of balls) {
+                ctx.beginPath();
+                ctx.arc(ball.position.x, ball.position.y, CONFIG.ballRadius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function updateHistogram() {
+            const container = document.getElementById('histogram');
+            const max = Math.max(...binCounts, 1);
+
+            container.innerHTML = binCounts.map(c =>
+                `<div class="histogram-bar" style="height: ${(c / max) * 100}%"></div>`
+            ).join('');
+
+            const total = binCounts.reduce((a, b) => a + b, 0);
+            document.getElementById('stats').textContent =
+                total > 0 ? `Palloja: ${total}` : '';
+        }
+
+        // Mouse events
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - layout.pegOffsetX;
+            const y = e.clientY - rect.top - layout.pegOffsetY;
+
+            // Check pegs first (smaller target, needs priority)
+            hoveredPeg = lattice.findNearestPeg(x, y, CONFIG.pegRadius + 8);
+            // Only check walls if not hovering a peg
+            hoveredWall = hoveredPeg ? null : lattice.findNearestWall(x, y);
+            render();
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            hoveredWall = null;
+            hoveredPeg = null;
+            render();
+        });
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - layout.pegOffsetX;
+            const y = e.clientY - rect.top - layout.pegOffsetY;
+
+            // Check pegs first
+            const peg = lattice.findNearestPeg(x, y, CONFIG.pegRadius + 8);
+            if (peg) {
+                lattice.togglePeg(peg.row, peg.col);
+                reset();
+                return;
+            }
+
+            // Then check walls
+            const wall = lattice.findNearestWall(x, y);
+            if (wall) {
+                lattice.toggleWall(wall.row, wall.col, wall.direction);
+                reset();
+            }
+        });
+
+        // Controls
+        function changeRows(delta) {
+            const newRows = Math.max(2, Math.min(12, lattice.numRows + delta));
+            if (newRows !== lattice.numRows) {
+                lattice = new RectangularLattice(newRows, lattice.numCols, lattice.cellSize);
+                init();
+            }
+        }
+
+        function changeCols(delta) {
+            const newCols = Math.max(2, Math.min(10, lattice.numCols + delta));
+            if (newCols !== lattice.numCols) {
+                lattice = new RectangularLattice(lattice.numRows, newCols, lattice.cellSize);
+                init();
+            }
+        }
+
+        function changeBins(delta) {
+            const newBins = Math.max(2, Math.min(12, numBins + delta));
+            if (newBins !== numBins) {
+                numBins = newBins;
+                init();
+            }
+        }
+
+        function clearWalls() {
+            lattice.walls.clear();
+            reset();
+        }
+
+        function toggleBallCollision(enabled) {
+            ballsCollide = enabled;
+        }
+
+        function saveLevel() {
+            const data = JSON.stringify({
+                lattice: lattice.toJSON(),
+                numBins: numBins
+            });
+            localStorage.setItem('galton_level', data);
+            alert('Taso tallennettu!');
+        }
+
+        function loadLevel() {
+            const data = localStorage.getItem('galton_level');
+            if (data) {
+                const parsed = JSON.parse(data);
+                lattice = RectangularLattice.fromJSON(parsed.lattice);
+                numBins = parsed.numBins || lattice.numCols;
+                init();
+            } else {
+                alert('Ei tallennettua tasoa.');
+            }
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
